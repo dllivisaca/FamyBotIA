@@ -127,3 +127,39 @@ def search_service(request: SearchRequest):
         "total": len(resultados),
         "resultados": resultados,
     }
+
+
+@app.post("/ask-catalog")
+def ask_catalog(request: SearchRequest):
+    texto = request.texto.strip()
+    resultados = buscar_servicios(request.texto)
+    total = len(resultados)
+
+    if total == 0:
+        accion = "sin_resultados"
+        mensaje = (
+            "No encontré servicios relacionados con tu consulta. Puedes escribir "
+            "el nombre del servicio de otra forma o solicitar ayuda con un asesor."
+        )
+    elif total == 1:
+        accion = "respuesta_directa"
+        servicio = resultados[0]
+        mensaje = (
+            f"El servicio {servicio.get('nombre')} pertenece al área "
+            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')}."
+        )
+    else:
+        accion = "listar_opciones"
+        mensaje = (
+            f"Encontré {total} opciones relacionadas con tu consulta. Puedes "
+            "revisar la lista y responder con el nombre del servicio que deseas "
+            "consultar."
+        )
+
+    return {
+        "texto": texto,
+        "total": total,
+        "accion": accion,
+        "mensaje": mensaje,
+        "resultados": resultados,
+    }
