@@ -136,6 +136,35 @@ def predict(request: PredictRequest):
     }
 
 
+def predecir_intencion(texto):
+    texto = texto.strip()
+
+    if not texto:
+        return {
+            "texto": texto,
+            "intencion": "desconocido",
+            "confianza": None,
+        }
+
+    X = vectorizer.transform([texto])
+    intencion = classifier.predict(X)[0]
+    confianza = None
+
+    try:
+        decision = classifier.decision_function(X)
+        puntajes = decision[0] if hasattr(decision[0], "__iter__") else decision
+        puntaje = max(puntajes)
+        confianza = round(1 / (1 + pow(2.718281828, -float(puntaje))), 4)
+    except Exception:
+        confianza = None
+
+    return {
+        "texto": texto,
+        "intencion": intencion,
+        "confianza": confianza,
+    }
+
+
 def obtener_catalogo():
     try:
         response = requests.get(CATALOG_URL, timeout=15)
@@ -271,8 +300,9 @@ def ask_catalog(request: SearchRequest):
 @app.post("/chat")
 def chat(request: SearchRequest):
     texto = request.texto.strip()
-    prediccion = predict(PredictRequest(texto=texto))
+    prediccion = predecir_intencion(texto)
     intencion = prediccion["intencion"]
+    confianza = prediccion["confianza"]
 
     if intencion in INTENCIONES_CATALOGO:
         consulta_catalogo = preparar_consulta_catalogo(texto)
@@ -280,6 +310,7 @@ def chat(request: SearchRequest):
         return {
             "texto": texto,
             "intencion": intencion,
+            "confianza": confianza,
             "accion": respuesta_catalogo["accion"],
             "mensaje": respuesta_catalogo["mensaje"],
             "total": respuesta_catalogo["total"],
@@ -291,6 +322,7 @@ def chat(request: SearchRequest):
         return {
             "texto": texto,
             "intencion": intencion,
+            "confianza": confianza,
             "accion": accion_flujo["accion"],
             "mensaje": accion_flujo["mensaje"],
         }
@@ -300,6 +332,7 @@ def chat(request: SearchRequest):
         return {
             "texto": texto,
             "intencion": intencion,
+            "confianza": confianza,
             "accion": respuesta_simple["accion"],
             "mensaje": respuesta_simple["mensaje"],
         }
@@ -307,6 +340,7 @@ def chat(request: SearchRequest):
     return {
         "texto": texto,
         "intencion": intencion,
+        "confianza": confianza,
         "accion": "pendiente",
         "mensaje": "Esta intenci\u00f3n a\u00fan no est\u00e1 implementada.",
     }
