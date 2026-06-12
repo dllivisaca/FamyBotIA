@@ -14,6 +14,28 @@ INTENCIONES_CATALOGO = {
     "consulta_servicios",
     "consulta_especialidades",
 }
+RESPUESTAS_SIMPLES = {
+    "saludo": {
+        "accion": "respuesta_simple",
+        "mensaje": "¡Hola! Soy FamyBot IA. Puedo ayudarte con información sobre servicios, precios, horarios, ubicación y opciones de atención.",
+    },
+    "agradecimiento": {
+        "accion": "respuesta_simple",
+        "mensaje": "¡Con gusto! Estoy aquí para ayudarte.",
+    },
+    "consultar_horario": {
+        "accion": "respuesta_simple",
+        "mensaje": "Nuestro horario de atención es de lunes a viernes de 7:30 a 17:30 y sábados de 8:00 a 12:30.",
+    },
+    "consultar_ubicacion": {
+        "accion": "respuesta_simple",
+        "mensaje": "Nos encontramos en Quisquís 1109 y José Mascote, Guayaquil. Si lo prefieres, puedes usar los botones de navegación para ver el croquis o abrir la ubicación directamente en Google Maps.",
+    },
+    "desconocido": {
+        "accion": "fallback",
+        "mensaje": "No estoy seguro de haber entendido tu consulta. Puedes escribirla de otra forma o elegir una opción del menú principal.",
+    },
+}
 PALABRAS_IGNORADAS_CATALOGO = {
     "a",
     "de",
@@ -232,6 +254,15 @@ def chat(request: SearchRequest):
             "mensaje": respuesta_catalogo["mensaje"],
             "total": respuesta_catalogo["total"],
             "resultados": respuesta_catalogo["resultados"],
+        }
+
+    if intencion in RESPUESTAS_SIMPLES:
+        respuesta_simple = RESPUESTAS_SIMPLES[intencion]
+        return {
+            "texto": texto,
+            "intencion": intencion,
+            "accion": respuesta_simple["accion"],
+            "mensaje": respuesta_simple["mensaje"],
         }
 
     return {
