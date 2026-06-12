@@ -9,6 +9,44 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "model"
 
 CATALOG_URL = "https://app.famysaludec.com/chatbot/catalogo-servicios"
+INTENCIONES_CATALOGO = {
+    "cotizar_servicio",
+    "consulta_servicios",
+    "consulta_especialidades",
+}
+PALABRAS_IGNORADAS_CATALOGO = {
+    "a",
+    "de",
+    "del",
+    "el",
+    "en",
+    "especialidad",
+    "especialidades",
+    "hay",
+    "hacen",
+    "hacer",
+    "informacion",
+    "la",
+    "las",
+    "los",
+    "me",
+    "para",
+    "por",
+    "precio",
+    "puede",
+    "puedes",
+    "realiza",
+    "realizan",
+    "realizar",
+    "servicio",
+    "servicios",
+    "sobre",
+    "tiene",
+    "tienen",
+    "un",
+    "una",
+    "valor",
+}
 
 vectorizer = joblib.load(MODEL_DIR / "vectorizer_famybot_v1.pkl")
 classifier = joblib.load(MODEL_DIR / "classifier_famybot_v1.pkl")
@@ -112,6 +150,19 @@ def buscar_servicios(texto_busqueda):
     return resultados
 
 
+def preparar_consulta_catalogo(texto):
+    palabras = []
+
+    for palabra in normalizar_texto(texto).split():
+        if palabra in PALABRAS_IGNORADAS_CATALOGO:
+            continue
+        if palabra.endswith("s") and len(palabra) > 4:
+            palabra = palabra[:-1]
+        palabras.append(palabra)
+
+    return " ".join(palabras) or texto
+
+
 @app.get("/catalog")
 def get_catalog():
     return obtener_catalogo()
@@ -162,4 +213,30 @@ def ask_catalog(request: SearchRequest):
         "accion": accion,
         "mensaje": mensaje,
         "resultados": resultados,
+    }
+
+
+@app.post("/chat")
+def chat(request: SearchRequest):
+    texto = request.texto.strip()
+    prediccion = predict(PredictRequest(texto=texto))
+    intencion = prediccion["intencion"]
+
+    if intencion in INTENCIONES_CATALOGO:
+        consulta_catalogo = preparar_consulta_catalogo(texto)
+        respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
+        return {
+            "texto": texto,
+            "intencion": intencion,
+            "accion": respuesta_catalogo["accion"],
+            "mensaje": respuesta_catalogo["mensaje"],
+            "total": respuesta_catalogo["total"],
+            "resultados": respuesta_catalogo["resultados"],
+        }
+
+    return {
+        "texto": texto,
+        "intencion": intencion,
+        "accion": "pendiente",
+        "mensaje": "Esta intenci\u00f3n a\u00fan no est\u00e1 implementada.",
     }
