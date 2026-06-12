@@ -1,0 +1,18 @@
+FamyBot IA V1
+
+Fecha: 11/06/2026
+
+Dataset:
+- 1569 registros
+- 15 intenciones
+
+Modelo:
+- TF-IDF
+- LinearSVC
+
+Accuracy:
+- 97.77%
+
+Archivos:
+- vectorizer_famybot_v1.pkl
+- classifier_famybot_v1.pkl

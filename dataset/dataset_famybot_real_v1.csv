@@ -1,0 +1,70 @@
+﻿texto,intencion,fuente,version
+Hola buenas,saludo,real,v1
+Buenas tardes,saludo,real,v1
+Buenos días,saludo,real,v1
+Hola,saludo,real,v1
+Buen día,saludo,real,v1
+Buenas noches,saludo,real,v1
+Hhola,saludo,real,v1
+buenas tardes,saludo,real,v1
+holaaaaa,saludo,real,v1
+cardiología,consulta_especialidades,real,v1
+tienen nutrición,consulta_especialidades,real,v1
+Buen día cuenta con la especialidad de Cardiólogia?,consulta_especialidades,real,v1
+Servicio de cardiología,consulta_especialidades,real,v1
+Urología,consulta_especialidades,real,v1
+Oftalmología,consulta_especialidades,real,v1
+quisiera información sobre las áreas de pediatría y dermatologia,consulta_especialidades,real,v1
+Hola atienden mañana o el sábado,consultar_horario,real,v1
+¿Cuál es su horario de atención?,consultar_horario,real,v1
+Atienden los días sábados,consultar_horario,real,v1
+Buenos días disculpe hoy atienden,consultar_horario,real,v1
+Quisiera saber si hoy atienden,consultar_horario,real,v1
+Horarios de atención,consultar_horario,real,v1
+favor indicar dirección y horario,consultar_horario,real,v1
+"me gustaría agendar una cita de laboratorio, que incluya este paquete",agendar_cita,real,v1
+Buenas necesito que me ayuden con una orden de tomografía,agendar_cita,real,v1
+¿Dónde puedo agendar mi cita?,agendar_cita,real,v1
+¿Puedo reservar una cita?,agendar_cita,real,v1
+¿Como puedo agendar una cita?,agendar_cita,real,v1
+Quiero reservar una cita.,agendar_cita,real,v1
+Algún número para comunicarme o sacar cita,agendar_cita,real,v1
+Disculpe una última interrogante hay que agendar cita o solo acercarse?,agendar_cita,real,v1
+¿Cuál es su ubicación?,consultar_ubicacion,real,v1
+Dónde están ubicados,consultar_ubicacion,real,v1
+fonde estan ubicadod yo vivo en Milagro,consultar_ubicacion,real,v1
+favor indicar dirección y horario,consultar_ubicacion,real,v1
+donde están ubicados.,consultar_ubicacion,real,v1
+deme su ubicación,consultar_ubicacion,real,v1
+donde ubicados,consultar_ubicacion,real,v1
+Donde esta ubicado?,consultar_ubicacion,real,v1
+Ola mucho gusto disculpe dirección exacta en Guayaquil,consultar_ubicacion,real,v1
+disculpe dirección exacta en Guayaquil,consultar_ubicacion,real,v1
+dirección exacta en Guayaquil,consultar_ubicacion,real,v1
+Buenos días tiene atención a domicilio gracias,hablar_asesor,real,v1
+Buenas noches para hacerme una ecografia es necesario sacar cita.,hablar_asesor,real,v1
+Quiero hacerme una ecografia es necesario sacar cita.,hablar_asesor,real,v1
+Una pregunta donde puedo entregar mi hoja de vida,trabajo,real,v1
+Muy buenas tardes me comunicaba con ustedes para saber si tienen un correo de recursos humanos que puedan brindarme,trabajo,real,v1
+Soy enfermera auxiliar,trabajo,real,v1
+"Buenas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum",trabajo,real,v1
+Hola buenas noches me ayuda con un correo para enviar mi CV,trabajo,real,v1
+buenas tardes me pueden ayudar con un mail para trabajo soy enfermera profesional,trabajo,real,v1
+Solicito comedidamente me ayude direccionando un correo electrónico para enviar mi hoja de vida,trabajo,real,v1
+Buen día disculpe tienen alguna vacante laboral,trabajo,real,v1
+buenas tardes me llamo yerferzon Urdaneta soy médico general me gustaría trabajar con ustedes,trabajo,real,v1
+Soy medico general,trabajo,real,v1
+Deseo entragar ni curriculo,trabajo,real,v1
+Hola que precio tiene la ecografía venosa,cotizar_servicio,real,v1
+Que valor tiene una audiometría,cotizar_servicio,real,v1
+Cuánto cuesta un lavado de oído?,cotizar_servicio,real,v1
+Qué precio tienen las tomografías,cotizar_servicio,real,v1
+Eco transvaginal precio?,cotizar_servicio,real,v1
+"Valor de la consulta, muchas gracias.",cotizar_servicio,real,v1
+Cuanto salen las protesis,cotizar_servicio,real,v1
+Realizan resonancias magnéticas ?,consulta_servicios,real,v1
+Hola quisiera saber si uds hacen operaciones,consulta_servicios,real,v1
+Tiene servicio para mamografía,consulta_servicios,real,v1
+Realizan tomografia de craneo,consulta_servicios,real,v1
+Quiero saber.sirealisanprotesis,consulta_servicios,real,v1
+uds mismo hacen la radiografía,consulta_servicios,real,v1
