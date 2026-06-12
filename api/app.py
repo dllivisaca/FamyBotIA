@@ -36,6 +36,36 @@ RESPUESTAS_SIMPLES = {
         "mensaje": "No estoy seguro de haber entendido tu consulta. Puedes escribirla de otra forma o elegir una opción del menú principal.",
     },
 }
+ACCIONES_FLUJO = {
+    "agendar_cita": {
+        "accion": "iniciar_agendamiento",
+        "mensaje": "Te ayudo a iniciar el agendamiento de tu cita.",
+    },
+    "hablar_asesor": {
+        "accion": "derivar_asesor",
+        "mensaje": "Te puedo comunicar con un asesor para recibir atención personalizada.",
+    },
+    "consultar_resultados": {
+        "accion": "solicitar_resultados",
+        "mensaje": "Te ayudo a iniciar la solicitud de resultados.",
+    },
+    "proveedores": {
+        "accion": "abrir_proveedores",
+        "mensaje": "Te ayudo con las opciones para proveedores.",
+    },
+    "alianzas": {
+        "accion": "abrir_alianzas",
+        "mensaje": "Te ayudo con las opciones de alianzas estratégicas.",
+    },
+    "trabajo": {
+        "accion": "abrir_trabajo",
+        "mensaje": "Te ayudo con la información para trabajar con nosotros.",
+    },
+    "consultar_promociones": {
+        "accion": "mostrar_promociones",
+        "mensaje": "Te muestro las promociones disponibles.",
+    },
+}
 PALABRAS_IGNORADAS_CATALOGO = {
     "a",
     "de",
@@ -254,6 +284,15 @@ def chat(request: SearchRequest):
             "mensaje": respuesta_catalogo["mensaje"],
             "total": respuesta_catalogo["total"],
             "resultados": respuesta_catalogo["resultados"],
+        }
+
+    if intencion in ACCIONES_FLUJO:
+        accion_flujo = ACCIONES_FLUJO[intencion]
+        return {
+            "texto": texto,
+            "intencion": intencion,
+            "accion": accion_flujo["accion"],
+            "mensaje": accion_flujo["mensaje"],
         }
 
     if intencion in RESPUESTAS_SIMPLES:
