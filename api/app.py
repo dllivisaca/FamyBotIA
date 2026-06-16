@@ -11,6 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "model"
 
 CATALOG_URL = "https://app.famysaludec.com/chatbot/catalogo-servicios"
+MIN_CONF_ACCION_FLUJO = 0.55
 INTENCIONES_CATALOGO = {
     "cotizar_servicio",
     "consulta_servicios",
@@ -348,6 +349,20 @@ def preparar_consulta_catalogo(texto):
     return " ".join(palabras) or texto
 
 
+def construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo):
+    return {
+        "texto": texto,
+        "intencion": intencion,
+        "confianza": confianza,
+        "accion": respuesta_catalogo["accion"],
+        "mensaje": respuesta_catalogo["mensaje"],
+        "total": respuesta_catalogo["total"],
+        "total_real": respuesta_catalogo["total_real"],
+        "total_conocido": respuesta_catalogo["total_conocido"],
+        "resultados": respuesta_catalogo["resultados"],
+    }
+
+
 @app.get("/catalog")
 def get_catalog():
     return obtener_catalogo()
@@ -426,6 +441,7 @@ def chat(request: SearchRequest):
     prediccion = predecir_intencion(texto)
     intencion = prediccion["intencion"]
     confianza = prediccion["confianza"]
+    print(f"FamyBot IA: intencion_original={intencion} confianza={confianza}")
 
     if prediccion.get("error") == "modelo_no_cargado":
         return {
@@ -440,19 +456,36 @@ def chat(request: SearchRequest):
     if intencion in INTENCIONES_CATALOGO:
         consulta_catalogo = preparar_consulta_catalogo(texto)
         respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
-        return {
-            "texto": texto,
-            "intencion": intencion,
-            "confianza": confianza,
-            "accion": respuesta_catalogo["accion"],
-            "mensaje": respuesta_catalogo["mensaje"],
-            "total": respuesta_catalogo["total"],
-            "total_real": respuesta_catalogo["total_real"],
-            "total_conocido": respuesta_catalogo["total_conocido"],
-            "resultados": respuesta_catalogo["resultados"],
-        }
+        print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
+        return construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo)
 
     if intencion in ACCIONES_FLUJO:
+        if confianza is None or confianza < MIN_CONF_ACCION_FLUJO:
+            print(
+                "FamyBot IA: accion_flujo_bloqueada_por_baja_confianza="
+                f"{intencion}"
+            )
+            consulta_catalogo = preparar_consulta_catalogo(texto)
+            respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
+            print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
+
+            if respuesta_catalogo["total"] > 0:
+                return construir_respuesta_catalogo(
+                    texto,
+                    intencion,
+                    confianza,
+                    respuesta_catalogo,
+                )
+
+            respuesta_simple = RESPUESTAS_SIMPLES["desconocido"]
+            return {
+                "texto": texto,
+                "intencion": intencion,
+                "confianza": confianza,
+                "accion": respuesta_simple["accion"],
+                "mensaje": respuesta_simple["mensaje"],
+            }
+
         accion_flujo = ACCIONES_FLUJO[intencion]
         return {
             "texto": texto,
