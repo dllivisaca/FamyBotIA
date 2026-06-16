@@ -1,9 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from difflib import SequenceMatcher
 import joblib
 from pathlib import Path
 import requests
 import unicodedata
+import re
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "model"
@@ -219,10 +221,18 @@ def normalizar_texto(texto):
 def buscar_servicios(texto_busqueda):
     catalogo = obtener_catalogo()
     texto = normalizar_texto(texto_busqueda)
+    tokens_busqueda = obtener_tokens_utiles(texto_busqueda)
     resultados = []
+    total_real = 0
+    total_conocido = True
 
-    if not texto:
-        return resultados
+    if not texto or not tokens_busqueda:
+        return {
+            "total": total_real,
+            "total_real": total_real,
+            "total_conocido": total_conocido,
+            "resultados": resultados,
+        }
 
     areas = catalogo.get("areas", []) if isinstance(catalogo, dict) else []
 
@@ -243,37 +253,98 @@ def buscar_servicios(texto_busqueda):
                 servicio.get("category"),
             ]
             texto_servicio = " ".join(normalizar_texto(campo) for campo in campos if campo)
+            tokens_servicio = obtener_tokens_servicio(texto_servicio)
 
-            if texto in texto_servicio:
-                resultados.append({
-                    "id": servicio.get("id"),
-                    "nombre": servicio.get("title") or servicio.get("name"),
-                    "area": nombre_area,
-                    "precio": servicio.get("price") or servicio.get("precio"),
-                    "precio_promocion": (
-                        servicio.get("promotion_price")
-                        or servicio.get("precio_promocion")
-                    ),
-                    "presencial": bool(servicio.get("presencial")),
-                    "virtual": bool(servicio.get("virtual")),
-                })
+            if servicio_coincide(texto, tokens_busqueda, texto_servicio, tokens_servicio):
+                total_real += 1
 
-                if len(resultados) >= 20:
-                    return resultados
+                if len(resultados) < 20:
+                    resultados.append({
+                        "id": servicio.get("id"),
+                        "nombre": servicio.get("title") or servicio.get("name"),
+                        "area": nombre_area,
+                        "precio": servicio.get("price") or servicio.get("precio"),
+                        "precio_promocion": (
+                            servicio.get("promotion_price")
+                            or servicio.get("precio_promocion")
+                        ),
+                        "presencial": bool(servicio.get("presencial")),
+                        "virtual": bool(servicio.get("virtual")),
+                    })
 
-    return resultados
+    return {
+        "total": total_real,
+        "total_real": total_real,
+        "total_conocido": total_conocido,
+        "resultados": resultados,
+    }
+
+
+def es_palabra_ignorada(palabra):
+    if palabra in PALABRAS_IGNORADAS_CATALOGO:
+        return True
+
+    if len(palabra) <= 4:
+        return False
+
+    return any(
+        SequenceMatcher(None, palabra, ignorada).ratio() >= 0.86
+        for ignorada in PALABRAS_IGNORADAS_CATALOGO
+        if len(ignorada) > 4
+    )
+
+
+def normalizar_token_catalogo(palabra):
+    if palabra.endswith("s") and len(palabra) > 4:
+        return palabra[:-1]
+    return palabra
+
+
+def obtener_tokens_utiles(texto):
+    tokens = []
+
+    for palabra in re.findall(r"[a-z0-9]+", normalizar_texto(texto)):
+        if es_palabra_ignorada(palabra):
+            continue
+        tokens.append(normalizar_token_catalogo(palabra))
+
+    return tokens
+
+
+def obtener_tokens_servicio(texto):
+    return {
+        normalizar_token_catalogo(palabra)
+        for palabra in re.findall(r"[a-z0-9]+", texto)
+        if not es_palabra_ignorada(palabra)
+    }
+
+
+def token_coincide(token_busqueda, tokens_servicio, texto_servicio):
+    if token_busqueda in texto_servicio or token_busqueda in tokens_servicio:
+        return True
+
+    if len(token_busqueda) <= 4:
+        return False
+
+    return any(
+        abs(len(token_busqueda) - len(token_servicio)) <= 2
+        and SequenceMatcher(None, token_busqueda, token_servicio).ratio() >= 0.84
+        for token_servicio in tokens_servicio
+    )
+
+
+def servicio_coincide(texto_busqueda, tokens_busqueda, texto_servicio, tokens_servicio):
+    if texto_busqueda in texto_servicio:
+        return True
+
+    return all(
+        token_coincide(token, tokens_servicio, texto_servicio)
+        for token in tokens_busqueda
+    )
 
 
 def preparar_consulta_catalogo(texto):
-    palabras = []
-
-    for palabra in normalizar_texto(texto).split():
-        if palabra in PALABRAS_IGNORADAS_CATALOGO:
-            continue
-        if palabra.endswith("s") and len(palabra) > 4:
-            palabra = palabra[:-1]
-        palabras.append(palabra)
-
+    palabras = obtener_tokens_utiles(texto)
     return " ".join(palabras) or texto
 
 
@@ -285,20 +356,24 @@ def get_catalog():
 @app.post("/search-service")
 def search_service(request: SearchRequest):
     texto = request.texto.strip()
-    resultados = buscar_servicios(texto)
+    busqueda = buscar_servicios(texto)
 
     return {
         "texto": texto,
-        "total": len(resultados),
-        "resultados": resultados,
+        "total": busqueda["total"],
+        "total_real": busqueda["total_real"],
+        "total_conocido": busqueda["total_conocido"],
+        "resultados": busqueda["resultados"],
     }
 
 
 @app.post("/ask-catalog")
 def ask_catalog(request: SearchRequest):
     texto = request.texto.strip()
-    resultados = buscar_servicios(request.texto)
-    total = len(resultados)
+    busqueda = buscar_servicios(request.texto)
+    resultados = busqueda["resultados"]
+    total = busqueda["total"]
+    total_conocido = busqueda["total_conocido"]
 
     if total == 0:
         accion = "sin_resultados"
@@ -315,15 +390,30 @@ def ask_catalog(request: SearchRequest):
         )
     else:
         accion = "listar_opciones"
-        mensaje = (
-            f"Encontré {total} opciones relacionadas con tu consulta. Puedes "
-            "revisar la lista y responder con el nombre del servicio que deseas "
-            "consultar."
-        )
+        if total > 10 and total_conocido:
+            mensaje = (
+                f"Encontré {total} opciones relacionadas con tu consulta. "
+                "Te muestro las primeras 10. Puedes responder con el nombre "
+                "del servicio que deseas consultar."
+            )
+        elif total > 10:
+            mensaje = (
+                "Encontré varias opciones relacionadas con tu consulta. "
+                "Te muestro las primeras 10. Puedes responder con el nombre "
+                "del servicio que deseas consultar."
+            )
+        else:
+            mensaje = (
+                f"Encontré {total} opciones relacionadas con tu consulta. Puedes "
+                "revisar la lista y responder con el nombre del servicio que deseas "
+                "consultar."
+            )
 
     return {
         "texto": texto,
         "total": total,
+        "total_real": busqueda["total_real"],
+        "total_conocido": total_conocido,
         "accion": accion,
         "mensaje": mensaje,
         "resultados": resultados,
@@ -357,6 +447,8 @@ def chat(request: SearchRequest):
             "accion": respuesta_catalogo["accion"],
             "mensaje": respuesta_catalogo["mensaje"],
             "total": respuesta_catalogo["total"],
+            "total_real": respuesta_catalogo["total_real"],
+            "total_conocido": respuesta_catalogo["total_conocido"],
             "resultados": respuesta_catalogo["resultados"],
         }
 
