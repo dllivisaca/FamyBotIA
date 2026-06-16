@@ -100,8 +100,17 @@ PALABRAS_IGNORADAS_CATALOGO = {
     "valor",
 }
 
-vectorizer = joblib.load(MODEL_DIR / "vectorizer_famybot_v1.pkl")
-classifier = joblib.load(MODEL_DIR / "classifier_famybot_v1.pkl")
+vectorizer = None
+classifier = None
+model_load_error = None
+
+try:
+    vectorizer = joblib.load(MODEL_DIR / "vectorizer_famybot_v1.pkl")
+    classifier = joblib.load(MODEL_DIR / "classifier_famybot_v1.pkl")
+    print("FamyBot IA: modelo cargado correctamente")
+except Exception as exc:
+    model_load_error = str(exc)
+    print(f"FamyBot IA: error cargando modelo: {exc}")
 
 app = FastAPI(title="FamyBot IA API", version="1.0.0")
 
@@ -117,8 +126,23 @@ def home():
     return {"status": "ok", "message": "FamyBot IA API activa"}
 
 
+@app.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "model_loaded": vectorizer is not None and classifier is not None,
+    }
+
+
 @app.post("/predict")
 def predict(request: PredictRequest):
+    if vectorizer is None or classifier is None:
+        return {
+            "texto": request.texto.strip(),
+            "intencion": "desconocido",
+            "error": "modelo_no_cargado",
+        }
+
     texto = request.texto.strip()
 
     if not texto:
@@ -146,6 +170,14 @@ def predecir_intencion(texto):
             "confianza": None,
         }
 
+    if vectorizer is None or classifier is None:
+        return {
+            "texto": texto,
+            "intencion": "desconocido",
+            "confianza": None,
+            "error": "modelo_no_cargado",
+        }
+
     X = vectorizer.transform([texto])
     intencion = classifier.predict(X)[0]
     confianza = None
@@ -167,10 +199,11 @@ def predecir_intencion(texto):
 
 def obtener_catalogo():
     try:
-        response = requests.get(CATALOG_URL, timeout=15)
+        response = requests.get(CATALOG_URL, timeout=5)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as exc:
+        print(f"FamyBot IA: error obteniendo catalogo: {exc}")
         raise HTTPException(
             status_code=502,
             detail="No se pudo obtener el catalogo de servicios",
@@ -303,6 +336,16 @@ def chat(request: SearchRequest):
     prediccion = predecir_intencion(texto)
     intencion = prediccion["intencion"]
     confianza = prediccion["confianza"]
+
+    if prediccion.get("error") == "modelo_no_cargado":
+        return {
+            "texto": texto,
+            "intencion": intencion,
+            "confianza": confianza,
+            "accion": "fallback",
+            "mensaje": "En este momento estoy iniciando mis servicios. Puedes intentar de nuevo en unos segundos o solicitar ayuda con un asesor.",
+            "error": "modelo_no_cargado",
+        }
 
     if intencion in INTENCIONES_CATALOGO:
         consulta_catalogo = preparar_consulta_catalogo(texto)
