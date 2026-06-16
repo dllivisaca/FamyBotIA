@@ -105,6 +105,16 @@ PALABRAS_IGNORADAS_CATALOGO = {
     "una",
     "valor",
 }
+SINONIMOS_CATALOGO = {
+    "prueba de embarazo": "prueba hcg",
+    "test de embarazo": "prueba hcg",
+    "examen de embarazo": "prueba hcg",
+    "embarazo en sangre": "prueba hcg",
+    "beta hcg": "prueba hcg",
+    "bhcg": "prueba hcg",
+    "b hcg": "prueba hcg",
+    "gonadotropina corionica": "prueba hcg",
+}
 
 vectorizer = None
 classifier = None
@@ -243,6 +253,16 @@ def normalizar_texto(texto):
     return "".join(caracter for caracter in texto if unicodedata.category(caracter) != "Mn")
 
 
+def aplicar_sinonimos_catalogo(texto):
+    texto_normalizado = normalizar_texto(texto)
+
+    for frase, termino_catalogo in SINONIMOS_CATALOGO.items():
+        if normalizar_texto(frase) in texto_normalizado:
+            return termino_catalogo
+
+    return texto
+
+
 def buscar_servicios(texto_busqueda):
     catalogo = obtener_catalogo()
     texto = normalizar_texto(texto_busqueda)
@@ -369,8 +389,9 @@ def servicio_coincide(texto_busqueda, tokens_busqueda, texto_servicio, tokens_se
 
 
 def preparar_consulta_catalogo(texto):
-    palabras = obtener_tokens_utiles(texto)
-    return " ".join(palabras) or texto
+    texto_catalogo = aplicar_sinonimos_catalogo(texto)
+    palabras = obtener_tokens_utiles(texto_catalogo)
+    return " ".join(palabras) or texto_catalogo
 
 
 def construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo):
@@ -395,7 +416,8 @@ def get_catalog(_auth: bool = Depends(validar_api_key)):
 @app.post("/search-service")
 def search_service(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     texto = request.texto.strip()
-    busqueda = buscar_servicios(texto)
+    consulta_catalogo = preparar_consulta_catalogo(texto)
+    busqueda = buscar_servicios(consulta_catalogo)
 
     return {
         "texto": texto,
@@ -409,7 +431,8 @@ def search_service(request: SearchRequest, _auth: bool = Depends(validar_api_key
 @app.post("/ask-catalog")
 def ask_catalog(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     texto = request.texto.strip()
-    busqueda = buscar_servicios(request.texto)
+    consulta_catalogo = preparar_consulta_catalogo(texto)
+    busqueda = buscar_servicios(consulta_catalogo)
     resultados = busqueda["resultados"]
     total = busqueda["total"]
     total_conocido = busqueda["total_conocido"]
