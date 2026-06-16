@@ -1,9 +1,11 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from pydantic import BaseModel
 from difflib import SequenceMatcher
 import joblib
+import os
 from pathlib import Path
 import requests
+from typing import Optional
 import unicodedata
 import re
 
@@ -11,6 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "model"
 
 CATALOG_URL = "https://app.famysaludec.com/chatbot/catalogo-servicios"
+FAMYBOT_IA_API_KEY = os.environ.get("FAMYBOT_IA_API_KEY", "").strip()
 MIN_CONF_ACCION_FLUJO = 0.55
 INTENCIONES_CATALOGO = {
     "cotizar_servicio",
@@ -117,12 +120,33 @@ except Exception as exc:
 
 app = FastAPI(title="FamyBot IA API", version="1.0.0")
 
+if not FAMYBOT_IA_API_KEY:
+    print("[AUTH] warning: FAMYBOT_IA_API_KEY no configurada; API sin bloqueo")
+
 
 class PredictRequest(BaseModel):
     texto: str
 
 class SearchRequest(BaseModel):
     texto: str
+
+
+def validar_api_key(
+    request: Request,
+    x_famybot_ia_key: Optional[str] = Header(
+        default=None,
+        alias="X-FamyBot-IA-Key",
+    ),
+):
+    if not FAMYBOT_IA_API_KEY:
+        return True
+
+    if x_famybot_ia_key == FAMYBOT_IA_API_KEY:
+        print(f"[AUTH] request autorizado: {request.url.path}")
+        return True
+
+    print(f"[AUTH] request rechazado: {request.url.path}")
+    raise HTTPException(status_code=401, detail="unauthorized")
 
 @app.get("/")
 def home():
@@ -138,7 +162,7 @@ def health():
 
 
 @app.post("/predict")
-def predict(request: PredictRequest):
+def predict(request: PredictRequest, _auth: bool = Depends(validar_api_key)):
     if vectorizer is None or classifier is None:
         return {
             "texto": request.texto.strip(),
@@ -364,12 +388,12 @@ def construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo
 
 
 @app.get("/catalog")
-def get_catalog():
+def get_catalog(_auth: bool = Depends(validar_api_key)):
     return obtener_catalogo()
 
 
 @app.post("/search-service")
-def search_service(request: SearchRequest):
+def search_service(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     texto = request.texto.strip()
     busqueda = buscar_servicios(texto)
 
@@ -383,7 +407,7 @@ def search_service(request: SearchRequest):
 
 
 @app.post("/ask-catalog")
-def ask_catalog(request: SearchRequest):
+def ask_catalog(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     texto = request.texto.strip()
     busqueda = buscar_servicios(request.texto)
     resultados = busqueda["resultados"]
@@ -436,7 +460,7 @@ def ask_catalog(request: SearchRequest):
 
 
 @app.post("/chat")
-def chat(request: SearchRequest):
+def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     texto = request.texto.strip()
     prediccion = predecir_intencion(texto)
     intencion = prediccion["intencion"]
