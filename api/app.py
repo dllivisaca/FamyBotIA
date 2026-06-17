@@ -126,6 +126,59 @@ PALABRAS_RELLENO_INTENCION = PALABRAS_SALUDO_PURO | {
     "quisiera",
     "saber",
 }
+PALABRAS_COMERCIALES_CATALOGO = {
+    "consulta",
+    "costo",
+    "cuanto",
+    "cuesta",
+    "dispone",
+    "disponen",
+    "hacen",
+    "realizan",
+    "servicio",
+    "servicios",
+    "tiene",
+    "tienen",
+    "valor",
+    "precio",
+}
+PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
+    "al",
+    "con",
+    "consulta",
+    "costo",
+    "cual",
+    "cuanto",
+    "cuesta",
+    "de",
+    "del",
+    "dia",
+    "disculpe",
+    "dispone",
+    "disponen",
+    "el",
+    "es",
+    "la",
+    "las",
+    "lo",
+    "los",
+    "precio",
+    "que",
+    "servicio",
+    "servicios",
+    "tambien",
+    "tiene",
+    "tienen",
+    "un",
+    "una",
+    "valor",
+    "y",
+}
+CONECTORES_SERVICIOS = {
+    "ademas",
+    "tambien",
+    "y",
+}
 PALABRAS_IGNORADAS_CATALOGO = {
     "a",
     "de",
@@ -160,6 +213,10 @@ PALABRAS_IGNORADAS_CATALOGO = {
     "valor",
 }
 SINONIMOS_CATALOGO = {
+    "ecografia venosa": "doppler venoso",
+    "ecografía venosa": "doppler venoso",
+    "lavado de oido": "lavado oidos",
+    "lavado de oído": "lavado oidos",
     "prueba de embarazo": "prueba hcg",
     "test de embarazo": "prueba hcg",
     "examen de embarazo": "prueba hcg",
@@ -513,6 +570,214 @@ def preparar_consulta_catalogo(texto):
     return " ".join(palabras) or texto_catalogo
 
 
+def es_consulta_catalogo_comercial(texto):
+    texto_normalizado = normalizar_texto(texto)
+    palabras = obtener_palabras_normalizadas(texto)
+
+    return (
+        "cuanto cuesta" in texto_normalizado
+        or any(palabra in PALABRAS_COMERCIALES_CATALOGO for palabra in palabras)
+    )
+
+
+def preparar_consulta_comercial_catalogo(texto):
+    texto_catalogo = aplicar_sinonimos_catalogo(texto)
+    palabras = []
+
+    for palabra in obtener_palabras_normalizadas(texto_catalogo):
+        if palabra in PALABRAS_IGNORADAS_COMERCIAL:
+            continue
+        if es_palabra_ignorada(palabra):
+            continue
+        palabras.append(normalizar_token_catalogo(palabra))
+
+    return " ".join(palabras) or texto_catalogo
+
+
+def tiene_conectores_servicios(texto):
+    if "," in texto:
+        return True
+
+    return any(
+        palabra in CONECTORES_SERVICIOS
+        for palabra in obtener_palabras_normalizadas(texto)
+    )
+
+
+def obtener_terminos_comerciales_individuales(texto):
+    texto_catalogo = aplicar_sinonimos_catalogo(texto)
+    terminos = []
+    actual = []
+
+    for palabra in obtener_palabras_normalizadas(texto_catalogo):
+        if palabra in CONECTORES_SERVICIOS:
+            if actual:
+                terminos.append(" ".join(actual))
+                actual = []
+            continue
+        if palabra in PALABRAS_IGNORADAS_COMERCIAL:
+            continue
+        if es_palabra_ignorada(palabra):
+            continue
+        actual.append(normalizar_token_catalogo(palabra))
+
+    if actual:
+        terminos.append(" ".join(actual))
+
+    return [termino for termino in terminos if termino]
+
+
+def combinar_busquedas_catalogo(busquedas):
+    resultados = []
+    vistos = set()
+    total_real = 0
+    total_conocido = True
+
+    for busqueda in busquedas:
+        total_real += busqueda["total_real"]
+        total_conocido = total_conocido and busqueda["total_conocido"]
+
+        for resultado in busqueda["resultados"]:
+            clave = resultado.get("id") or (
+                resultado.get("nombre"),
+                resultado.get("area"),
+            )
+
+            if clave in vistos:
+                continue
+
+            vistos.add(clave)
+            resultados.append(resultado)
+
+            if len(resultados) >= 20:
+                break
+
+    return {
+        "total": len(vistos),
+        "total_real": total_real,
+        "total_conocido": total_conocido,
+        "resultados": resultados,
+    }
+
+
+def filtrar_busqueda_por_tokens_exactos(busqueda, consulta):
+    tokens_consulta = set(obtener_tokens_utiles(consulta))
+
+    if not tokens_consulta or not busqueda["resultados"]:
+        return busqueda
+
+    if len(tokens_consulta) != 1:
+        return busqueda
+
+    resultados_exactos = []
+
+    for resultado in busqueda["resultados"]:
+        tokens_resultado = obtener_tokens_servicio(
+            normalizar_texto(
+                " ".join(
+                    str(valor)
+                    for valor in (
+                        resultado.get("nombre"),
+                        resultado.get("area"),
+                    )
+                    if valor
+                )
+            )
+        )
+
+        if tokens_consulta.issubset(tokens_resultado):
+            resultados_exactos.append(resultado)
+
+    if not resultados_exactos:
+        return busqueda
+
+    return {
+        "total": len(resultados_exactos),
+        "total_real": len(resultados_exactos),
+        "total_conocido": busqueda["total_conocido"],
+        "resultados": resultados_exactos,
+    }
+
+
+def construir_respuesta_busqueda_catalogo(texto, busqueda):
+    resultados = busqueda["resultados"]
+    total = busqueda["total"]
+    total_conocido = busqueda["total_conocido"]
+
+    if total == 0:
+        accion = "sin_resultados"
+        mensaje = (
+            "No encontré servicios relacionados con tu consulta. Puedes escribir "
+            "el nombre del servicio de otra forma o solicitar ayuda con un asesor."
+        )
+    elif total == 1:
+        accion = "respuesta_directa"
+        servicio = resultados[0]
+        mensaje = (
+            f"El servicio {servicio.get('nombre')} pertenece al área "
+            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')}."
+        )
+    else:
+        accion = "listar_opciones"
+        if total > 10 and total_conocido:
+            mensaje = (
+                f"Encontré {total} opciones relacionadas con tu consulta. "
+                "Te muestro las primeras 10. Puedes responder con el nombre "
+                "del servicio que deseas consultar."
+            )
+        elif total > 10:
+            mensaje = (
+                "Encontré varias opciones relacionadas con tu consulta. "
+                "Te muestro las primeras 10. Puedes responder con el nombre "
+                "del servicio que deseas consultar."
+            )
+        else:
+            mensaje = (
+                f"Encontré {total} opciones relacionadas con tu consulta. Puedes "
+                "revisar la lista y responder con el nombre del servicio que deseas "
+                "consultar."
+            )
+
+    return {
+        "texto": texto,
+        "total": total,
+        "total_real": busqueda["total_real"],
+        "total_conocido": total_conocido,
+        "accion": accion,
+        "mensaje": mensaje,
+        "resultados": resultados,
+    }
+
+
+def buscar_catalogo_comercial(texto):
+    consulta_catalogo = preparar_consulta_comercial_catalogo(texto)
+    busqueda = filtrar_busqueda_por_tokens_exactos(
+        buscar_servicios(consulta_catalogo),
+        consulta_catalogo,
+    )
+
+    if busqueda["total"] > 0 or not tiene_conectores_servicios(texto):
+        return construir_respuesta_busqueda_catalogo(consulta_catalogo, busqueda)
+
+    busquedas = []
+
+    for termino in obtener_terminos_comerciales_individuales(texto):
+        busqueda_termino = filtrar_busqueda_por_tokens_exactos(
+            buscar_servicios(termino),
+            termino,
+        )
+        if busqueda_termino["total"] > 0:
+            busquedas.append(busqueda_termino)
+
+    if not busquedas:
+        return construir_respuesta_busqueda_catalogo(consulta_catalogo, busqueda)
+
+    return construir_respuesta_busqueda_catalogo(
+        consulta_catalogo,
+        combinar_busquedas_catalogo(busquedas),
+    )
+
+
 def construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo):
     return {
         "texto": texto,
@@ -618,6 +883,17 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             "mensaje": "En este momento estoy iniciando mis servicios. Puedes intentar de nuevo en unos segundos o solicitar ayuda con un asesor.",
             "error": "modelo_no_cargado",
         }
+
+    if es_consulta_catalogo_comercial(texto):
+        respuesta_catalogo = buscar_catalogo_comercial(texto)
+        print(f"FamyBot IA: total_catalogo_comercial={respuesta_catalogo['total']}")
+        intencion_catalogo = intencion if intencion in INTENCIONES_CATALOGO else "consulta_servicios"
+        return construir_respuesta_catalogo(
+            texto,
+            intencion_catalogo,
+            confianza,
+            respuesta_catalogo,
+        )
 
     if intencion in INTENCIONES_CATALOGO:
         consulta_catalogo = preparar_consulta_catalogo(texto)
