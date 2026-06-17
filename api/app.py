@@ -15,6 +15,7 @@ MODEL_DIR = BASE_DIR / "model"
 CATALOG_URL = "https://app.famysaludec.com/chatbot/catalogo-servicios"
 FAMYBOT_IA_API_KEY = os.environ.get("FAMYBOT_IA_API_KEY", "").strip()
 MIN_CONF_ACCION_FLUJO = 0.55
+MIN_RATIO_FUZZY_INTENCION = 0.86
 INTENCIONES_CATALOGO = {
     "cotizar_servicio",
     "consulta_servicios",
@@ -71,6 +72,59 @@ ACCIONES_FLUJO = {
         "accion": "mostrar_promociones",
         "mensaje": "Te muestro las promociones disponibles.",
     },
+}
+PALABRAS_SALUDO_PURO = {
+    "buen",
+    "buena",
+    "buenas",
+    "buenos",
+    "dia",
+    "dias",
+    "hola",
+    "holaa",
+    "holaaa",
+    "holaaaa",
+    "noche",
+    "noches",
+    "ola",
+    "saludo",
+    "saludos",
+    "tarde",
+    "tardes",
+}
+PALABRAS_FUZZY_INTENCION = {
+    "consultar_ubicacion": {
+        "ubicacion",
+        "ubicaciones",
+        "ubicado",
+        "ubicados",
+    },
+    "consultar_horario": {
+        "horario",
+        "horarios",
+    },
+    "agendar_cita": {
+        "agendar",
+        "ajendar",
+    },
+    "proveedores": {
+        "proveedor",
+        "proveedores",
+    },
+    "alianzas": {
+        "alianza",
+        "alianzas",
+        "aliansa",
+    },
+}
+PALABRAS_RELLENO_INTENCION = PALABRAS_SALUDO_PURO | {
+    "ayuda",
+    "ayudas",
+    "informacion",
+    "necesito",
+    "quiero",
+    "quisiera",
+    "saber",
 }
 PALABRAS_IGNORADAS_CATALOGO = {
     "a",
@@ -207,6 +261,14 @@ def predecir_intencion(texto):
             "confianza": None,
         }
 
+    intencion_saludo = detectar_saludo_puro(texto)
+    if intencion_saludo:
+        return {
+            "texto": texto,
+            "intencion": intencion_saludo,
+            "confianza": 1.0,
+        }
+
     if vectorizer is None or classifier is None:
         return {
             "texto": texto,
@@ -251,6 +313,63 @@ def normalizar_texto(texto):
     texto = str(texto or "").strip().lower()
     texto = unicodedata.normalize("NFD", texto)
     return "".join(caracter for caracter in texto if unicodedata.category(caracter) != "Mn")
+
+
+def obtener_palabras_normalizadas(texto):
+    return re.findall(r"[a-z0-9]+", normalizar_texto(texto))
+
+
+def obtener_palabras_clave_intencion(texto):
+    return [
+        palabra
+        for palabra in obtener_palabras_normalizadas(texto)
+        if palabra not in PALABRAS_RELLENO_INTENCION
+    ]
+
+
+def detectar_saludo_puro(texto):
+    palabras = obtener_palabras_normalizadas(texto)
+
+    if not palabras:
+        return None
+
+    if all(palabra in PALABRAS_SALUDO_PURO for palabra in palabras):
+        return "saludo"
+
+    return None
+
+
+def palabra_coincide_fuzzy(palabra, referencia):
+    if palabra == referencia:
+        return True
+
+    if len(palabra) < 5 or len(referencia) < 5:
+        return False
+
+    if abs(len(palabra) - len(referencia)) > 2:
+        return False
+
+    return SequenceMatcher(None, palabra, referencia).ratio() >= MIN_RATIO_FUZZY_INTENCION
+
+
+def detectar_intencion_frecuente_fuzzy(texto):
+    palabras = obtener_palabras_clave_intencion(texto)
+
+    if len(palabras) != 1:
+        return None
+
+    palabra = palabras[0]
+
+    for intencion, referencias in PALABRAS_FUZZY_INTENCION.items():
+        if any(palabra_coincide_fuzzy(palabra, referencia) for referencia in referencias):
+            return intencion
+
+    return None
+
+
+def preparar_consulta_sin_relleno(texto):
+    palabras = obtener_palabras_clave_intencion(texto)
+    return " ".join(palabras) or texto
 
 
 def aplicar_sinonimos_catalogo(texto):
@@ -512,6 +631,28 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
                 "FamyBot IA: accion_flujo_bloqueada_por_baja_confianza="
                 f"{intencion}"
             )
+            intencion_fuzzy = detectar_intencion_frecuente_fuzzy(texto)
+
+            if intencion_fuzzy in ACCIONES_FLUJO:
+                accion_flujo = ACCIONES_FLUJO[intencion_fuzzy]
+                return {
+                    "texto": texto,
+                    "intencion": intencion_fuzzy,
+                    "confianza": confianza,
+                    "accion": accion_flujo["accion"],
+                    "mensaje": accion_flujo["mensaje"],
+                }
+
+            if intencion_fuzzy in RESPUESTAS_SIMPLES:
+                respuesta_simple = RESPUESTAS_SIMPLES[intencion_fuzzy]
+                return {
+                    "texto": texto,
+                    "intencion": intencion_fuzzy,
+                    "confianza": confianza,
+                    "accion": respuesta_simple["accion"],
+                    "mensaje": respuesta_simple["mensaje"],
+                }
+
             consulta_catalogo = preparar_consulta_catalogo(texto)
             respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
             print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
@@ -541,6 +682,41 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             "accion": accion_flujo["accion"],
             "mensaje": accion_flujo["mensaje"],
         }
+
+    if intencion == "saludo" and not detectar_saludo_puro(texto):
+        intencion_fuzzy = detectar_intencion_frecuente_fuzzy(texto)
+
+        if intencion_fuzzy in ACCIONES_FLUJO:
+            accion_flujo = ACCIONES_FLUJO[intencion_fuzzy]
+            return {
+                "texto": texto,
+                "intencion": intencion_fuzzy,
+                "confianza": confianza,
+                "accion": accion_flujo["accion"],
+                "mensaje": accion_flujo["mensaje"],
+            }
+
+        if intencion_fuzzy in RESPUESTAS_SIMPLES:
+            respuesta_simple = RESPUESTAS_SIMPLES[intencion_fuzzy]
+            return {
+                "texto": texto,
+                "intencion": intencion_fuzzy,
+                "confianza": confianza,
+                "accion": respuesta_simple["accion"],
+                "mensaje": respuesta_simple["mensaje"],
+            }
+
+        consulta_catalogo = preparar_consulta_sin_relleno(texto)
+        respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
+        print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
+
+        if respuesta_catalogo["total"] > 0:
+            return construir_respuesta_catalogo(
+                texto,
+                "consulta_servicios",
+                confianza,
+                respuesta_catalogo,
+            )
 
     if intencion in RESPUESTAS_SIMPLES:
         respuesta_simple = RESPUESTAS_SIMPLES[intencion]
