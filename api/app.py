@@ -258,6 +258,25 @@ SINONIMOS_CATALOGO = {
     "extraccion de muela": "extraccion dental",
     "extraccion muela": "extraccion dental",
     "sacar muela": "extraccion dental",
+    "ecografia abdominal completa": "ecografia abdominal",
+    "quitan caries": "restauracion",
+    "tapar caries": "restauracion",
+    "caries": "restauracion",
+    "operaciones": "cirugia",
+    "operacion": "cirugia",
+    "resonancia cerebral con contraste": "resonancia craneo simple contrastada",
+    "resonancia cerebral contrastada": "resonancia craneo simple contrastada",
+    "examenes de audiometria": "audiometria",
+    "examen de audiometria": "audiometria",
+    "eco morfologico": "ecografia morfologica",
+    "eco de las 20 semanas": "ecografia morfologica",
+    "3er molar": "extraccion de tercer molar",
+    "3er molares": "extraccion de tercer molar",
+    "cordales": "extraccion de tercer molar",
+    "examenes en las mamas": "mamas",
+    "examen de mamas": "mamas",
+    "resonancia contrastada abdominal": "resonancia abdomen simple contrastado",
+    "resonancia abdominal contrastada": "resonancia abdomen simple contrastado",
 }
 
 vectorizer = None
@@ -470,6 +489,10 @@ def aplicar_sinonimos_catalogo(texto):
             return termino_catalogo
 
     return texto
+
+
+def aplico_sinonimo_catalogo(texto):
+    return normalizar_texto(aplicar_sinonimos_catalogo(texto)) != normalizar_texto(texto)
 
 
 def buscar_servicios(texto_busqueda):
@@ -983,6 +1006,22 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             confianza,
             respuesta_catalogo,
         )
+
+    if aplico_sinonimo_catalogo(texto):
+        consulta_catalogo = preparar_consulta_catalogo(texto)
+        respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
+        print(f"FamyBot IA: total_catalogo_sinonimo={respuesta_catalogo['total']}")
+
+        if respuesta_catalogo["total"] > 0:
+            intencion_catalogo = (
+                intencion if intencion in INTENCIONES_CATALOGO else "consulta_servicios"
+            )
+            return construir_respuesta_catalogo(
+                texto,
+                intencion_catalogo,
+                confianza,
+                respuesta_catalogo,
+            )
 
     if intencion in INTENCIONES_CATALOGO:
         consulta_catalogo = preparar_consulta_catalogo(texto)
