@@ -163,7 +163,9 @@ PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
     "lo",
     "los",
     "precio",
+    "q",
     "que",
+    "salen",
     "servicio",
     "servicios",
     "tambien",
@@ -172,10 +174,13 @@ PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
     "un",
     "una",
     "valor",
+    "vale",
     "y",
+    "si",
 }
 CONECTORES_SERVICIOS = {
     "ademas",
+    "o",
     "tambien",
     "y",
 }
@@ -246,6 +251,13 @@ SINONIMOS_CATALOGO = {
     "extraccion tercer molar": "extraccion de tercer molar",
     "muela del juicio": "extraccion de tercer molar",
     "cordal": "extraccion de tercer molar",
+    "calce de muela": "restauracion",
+    "calce dental": "restauracion",
+    "calce de diente": "restauracion",
+    "restauracion dental": "restauracion",
+    "extraccion de muela": "extraccion dental",
+    "extraccion muela": "extraccion dental",
+    "sacar muela": "extraccion dental",
 }
 
 vectorizer = None
@@ -601,6 +613,30 @@ def es_consulta_catalogo_comercial(texto):
     )
 
 
+def es_consulta_precio_y_ubicacion(texto):
+    texto_normalizado = normalizar_texto(texto)
+    palabras = set(obtener_palabras_normalizadas(texto))
+
+    pide_consulta = "consulta" in palabras
+    pide_precio = (
+        "cuanto cuesta" in texto_normalizado
+        or any(palabra in PALABRAS_COMERCIALES_CATALOGO for palabra in palabras)
+    )
+    pide_ubicacion = bool(
+        {
+            "direccion",
+            "donde",
+            "ubicacion",
+            "ubicaciones",
+            "ubicado",
+            "ubicados",
+        }
+        & palabras
+    )
+
+    return pide_consulta and pide_precio and pide_ubicacion
+
+
 def preparar_consulta_comercial_catalogo(texto):
     texto_catalogo = aplicar_sinonimos_catalogo(texto)
     palabras = []
@@ -625,27 +661,39 @@ def tiene_conectores_servicios(texto):
     )
 
 
-def obtener_terminos_comerciales_individuales(texto):
-    texto_catalogo = aplicar_sinonimos_catalogo(texto)
-    terminos = []
-    actual = []
+def termino_comercial_util(termino):
+    tokens = []
 
-    for palabra in obtener_palabras_normalizadas(texto_catalogo):
-        if palabra in CONECTORES_SERVICIOS:
-            if actual:
-                terminos.append(" ".join(actual))
-                actual = []
-            continue
+    for palabra in obtener_palabras_normalizadas(termino):
         if palabra in PALABRAS_IGNORADAS_COMERCIAL:
             continue
         if es_palabra_ignorada(palabra):
             continue
-        actual.append(normalizar_token_catalogo(palabra))
+        tokens.append(normalizar_token_catalogo(palabra))
+
+    return any(len(token) > 2 for token in tokens)
+
+
+def obtener_terminos_comerciales_individuales(texto):
+    terminos = []
+    actual = []
+
+    for palabra in obtener_palabras_normalizadas(texto):
+        if palabra in CONECTORES_SERVICIOS:
+            if actual:
+                termino = preparar_consulta_comercial_catalogo(" ".join(actual))
+                if termino_comercial_util(termino):
+                    terminos.append(termino)
+                actual = []
+            continue
+        actual.append(palabra)
 
     if actual:
-        terminos.append(" ".join(actual))
+        termino = preparar_consulta_comercial_catalogo(" ".join(actual))
+        if termino_comercial_util(termino):
+            terminos.append(termino)
 
-    return [termino for termino in terminos if termino]
+    return terminos
 
 
 def combinar_busquedas_catalogo(busquedas):
@@ -736,7 +784,8 @@ def construir_respuesta_busqueda_catalogo(texto, busqueda):
         servicio = resultados[0]
         mensaje = (
             f"El servicio {servicio.get('nombre')} pertenece al área "
-            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')}."
+            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')} "
+            "en efectivo o transferencia."
         )
     else:
         accion = "listar_opciones"
@@ -777,7 +826,7 @@ def buscar_catalogo_comercial(texto):
         consulta_catalogo,
     )
 
-    if busqueda["total"] > 0 or not tiene_conectores_servicios(texto):
+    if not tiene_conectores_servicios(texto):
         return construir_respuesta_busqueda_catalogo(consulta_catalogo, busqueda)
 
     busquedas = []
@@ -853,7 +902,8 @@ def ask_catalog(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
         servicio = resultados[0]
         mensaje = (
             f"El servicio {servicio.get('nombre')} pertenece al área "
-            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')}."
+            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')} "
+            "en efectivo o transferencia."
         )
     else:
         accion = "listar_opciones"
@@ -903,6 +953,24 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             "accion": "fallback",
             "mensaje": "En este momento estoy iniciando mis servicios. Puedes intentar de nuevo en unos segundos o solicitar ayuda con un asesor.",
             "error": "modelo_no_cargado",
+        }
+
+    if es_consulta_precio_y_ubicacion(texto):
+        return {
+            "texto": texto,
+            "intencion": "consulta_servicios",
+            "confianza": confianza,
+            "accion": "consulta_ubicacion",
+            "mensaje": (
+                "Para indicarte el valor exacto de la consulta, por favor dime "
+                "la especialidad o área que necesitas. Como referencia, la "
+                "consulta de Medicina General tiene un valor de $15 en efectivo "
+                "o transferencia. También puedo compartirte nuestra ubicación."
+            ),
+            "total": 0,
+            "total_real": 0,
+            "total_conocido": True,
+            "resultados": [],
         }
 
     if es_consulta_catalogo_comercial(texto):
