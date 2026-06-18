@@ -1,0 +1,3065 @@
+{
+  "total_cases": 118,
+  "intent_cases": 118,
+  "intent_correct": 115,
+  "intent_errors": 3,
+  "intent_accuracy": 0.9746,
+  "service_cases": 62,
+  "service_top1_correct": 49,
+  "service_top3_correct": 52,
+  "service_top5_correct": 52,
+  "service_top1_accuracy": 0.7903,
+  "service_top3_accuracy": 0.8387,
+  "service_top5_accuracy": 0.8387,
+  "errors": [
+    {
+      "text": "Buenas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?",
+      "expected_intent": "cotizar_servicio",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "expected_service": null,
+      "expected_services": [
+        "Neumología",
+        "Espirometría",
+        "Electrocardiograma"
+      ],
+      "service_rank": null,
+      "top_services": []
+    },
+    {
+      "text": "Una consulta que costo tiene electromiografia",
+      "expected_intent": "cotizar_servicio",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "expected_service": "Electromiografía",
+      "expected_services": [
+        "Electromiografía"
+      ],
+      "service_rank": null,
+      "top_services": []
+    },
+    {
+      "text": "Buen día que costo tiene la consulta para neumólogia ??",
+      "expected_intent": "cotizar_servicio",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "expected_service": "Neumología",
+      "expected_services": [
+        "Neumología"
+      ],
+      "service_rank": null,
+      "top_services": []
+    },
+    {
+      "text": "Hola buenas noches Quisiera saber si hacen resonancia cerebral con contraste y en que precio?",
+      "expected_intent": null,
+      "expected_intents": [
+        "cotizar_servicio",
+        "consulta_servicios"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "expected_service": "cráneo",
+      "expected_services": [
+        "cráneo"
+      ],
+      "service_rank": 6,
+      "top_services": [
+        {
+          "id": 776,
+          "nombre": "Resonancia Magnética de órbita simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 759,
+          "nombre": "Resonancia Magnética de cadera simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 760,
+          "nombre": "Resonancia Magnética de parótida simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 783,
+          "nombre": "Resonancia Magnética de sacro-coxis simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 784,
+          "nombre": "Resonancia Magnética de tobillo simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        }
+      ]
+    },
+    {
+      "text": "Cuanto salen las protesis",
+      "expected_intent": "cotizar_servicio",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "expected_service": "Prótesis",
+      "expected_services": [
+        "Prótesis"
+      ],
+      "service_rank": null,
+      "top_services": []
+    },
+    {
+      "text": "Buenas noches precio de un ecocardiogrma y una.prueba de holter de arritmia",
+      "expected_intent": "cotizar_servicio",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "expected_service": null,
+      "expected_services": [
+        "Ecocardiograma",
+        "Holter"
+      ],
+      "service_rank": null,
+      "top_services": [
+        {
+          "id": 923,
+          "nombre": "ECOGRAFIA SCREENING DE 2DO TRIMESTRE",
+          "area": "Ecografías",
+          "precio": 40
+        },
+        {
+          "id": 42,
+          "nombre": "Ecografía Doppler de Arterial de Extremidades Superiores",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 958,
+          "nombre": "Ecografia de cadera",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 43,
+          "nombre": "Ecografía Doppler Arterial de Extremidades Inferiores",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 34,
+          "nombre": "Ecografía  Monitoreo Folicular",
+          "area": "Ecografías",
+          "precio": 80
+        }
+      ]
+    },
+    {
+      "text": "hiperplasia prostatica, calcificaciones en la prostata",
+      "expected_intent": "consulta_servicios",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consultar_horario",
+      "expected_service": null,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": []
+    },
+    {
+      "text": "3er molares",
+      "expected_intent": "consulta_servicios",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "trabajo",
+      "expected_service": "Extracción de tercer molar",
+      "expected_services": [
+        "Extracción de tercer molar"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 577,
+          "nombre": "Extracción de tercer molar no posicionado",
+          "area": "Odontología",
+          "precio": 85
+        },
+        {
+          "id": 575,
+          "nombre": "Extracción de tercer molar posicionado",
+          "area": "Odontología",
+          "precio": 70
+        },
+        {
+          "id": 576,
+          "nombre": "Extracción de tercer molar semiposicionado",
+          "area": "Odontología",
+          "precio": 75
+        }
+      ]
+    },
+    {
+      "text": "Quiero saber.sirealisanprotesis",
+      "expected_intent": "consulta_servicios",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "expected_service": "Prótesis",
+      "expected_services": [
+        "Prótesis"
+      ],
+      "service_rank": null,
+      "top_services": []
+    },
+    {
+      "text": "Buen día cuenta con la especialidad de Cardiólogia?",
+      "expected_intent": "consulta_especialidades",
+      "expected_intents": [
+        "consulta_especialidades"
+      ],
+      "predicted_intent": "consulta_especialidades",
+      "expected_service": "Cardiología",
+      "expected_services": [
+        "Cardiología"
+      ],
+      "service_rank": null,
+      "top_services": []
+    },
+    {
+      "text": "Buenas necesito que me ayuden con una orden de tomografía",
+      "expected_intent": "agendar_cita",
+      "expected_intents": [
+        "agendar_cita"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "expected_service": "Tomografía",
+      "expected_services": [
+        "Tomografía"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 839,
+          "nombre": "Tomografía de tórax con alta resolución",
+          "area": "Tomografías",
+          "precio": 100
+        },
+        {
+          "id": 836,
+          "nombre": "Tomografía de tórax simple",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 894,
+          "nombre": "Tomografía de tórax simple y contrastada",
+          "area": "Tomografías",
+          "precio": 235
+        },
+        {
+          "id": 823,
+          "nombre": "Tomografía de cúbito y radio simple",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 834,
+          "nombre": "Tomografía de sacro-coxis simple",
+          "area": "Tomografías",
+          "precio": 95
+        }
+      ]
+    },
+    {
+      "text": "Buenas noches para hacerme una ecografia es necesario sacar cita.",
+      "expected_intent": null,
+      "expected_intents": [
+        "hablar_asesor",
+        "agendar_cita"
+      ],
+      "predicted_intent": "agendar_cita",
+      "expected_service": "Ecografía",
+      "expected_services": [
+        "Ecografía"
+      ],
+      "service_rank": null,
+      "top_services": []
+    },
+    {
+      "text": "Me recomendaron hacerme una mamografía. puedo agendar el examen directamente? Qué horarios tienen disponibles y cuál sería el costo?",
+      "expected_intent": null,
+      "expected_intents": [
+        "consulta_servicios",
+        "agendar_cita",
+        "consultar_horario",
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "expected_service": "Mamografía",
+      "expected_services": [
+        "Mamografía"
+      ],
+      "service_rank": null,
+      "top_services": []
+    }
+  ],
+  "evaluations": [
+    {
+      "text": "Hola buenas",
+      "expected_intents": [
+        "saludo"
+      ],
+      "predicted_intent": "saludo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenas tardes",
+      "expected_intents": [
+        "saludo"
+      ],
+      "predicted_intent": "saludo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenos días",
+      "expected_intents": [
+        "saludo"
+      ],
+      "predicted_intent": "saludo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Hola",
+      "expected_intents": [
+        "saludo"
+      ],
+      "predicted_intent": "saludo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buen día",
+      "expected_intents": [
+        "saludo"
+      ],
+      "predicted_intent": "saludo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenas noches",
+      "expected_intents": [
+        "saludo"
+      ],
+      "predicted_intent": "saludo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Hhola",
+      "expected_intents": [
+        "saludo"
+      ],
+      "predicted_intent": "saludo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "buenas tardes",
+      "expected_intents": [
+        "saludo"
+      ],
+      "predicted_intent": "saludo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "holaaaaa",
+      "expected_intents": [
+        "saludo"
+      ],
+      "predicted_intent": "saludo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Hola que precio tiene la ecografía venosa",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Doppler venoso"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 924,
+          "nombre": "Ecografia Doppler Venoso de extremidades inferiores",
+          "area": "Ecografías",
+          "precio": 100
+        },
+        {
+          "id": 44,
+          "nombre": "Ecografía Doppler Venoso de Extremidades Superiores",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 932,
+          "nombre": "Ecografía Doppler venoso de una extremidad",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 925,
+          "nombre": "Ecografia doppler venoso y arterial de una extremidad",
+          "area": "Ecografías",
+          "precio": 100
+        }
+      ],
+      "search_total": 4
+    },
+    {
+      "text": "Que valor tiene una audiometría",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Audiometría"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 557,
+          "nombre": "Audiometría",
+          "area": "Diagnósticos especiales",
+          "precio": 15
+        },
+        {
+          "id": 747,
+          "nombre": "Resonancia Magnética de oídos simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 775,
+          "nombre": "Resonancia Magnética de oídos simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 884,
+          "nombre": "Tomografía de oídos simple y contrastada",
+          "area": "Tomografías",
+          "precio": 235
+        },
+        {
+          "id": 829,
+          "nombre": "Tomografía de oídos simple",
+          "area": "Tomografías",
+          "precio": 95
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Buenas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Neumología",
+        "Espirometría",
+        "Electrocardiograma"
+      ],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": 0
+    },
+    {
+      "text": "Buenas, que costo tiene una ecografia hepatobiliar?",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía  Abdominal"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 29,
+          "nombre": "Ecografía  Abdominal",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 931,
+          "nombre": "Ecografía Abdomino pelvica",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 938,
+          "nombre": "Ecografía abdominal y pelvica",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 40,
+          "nombre": "Eco Doppler de aorta abdominal",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 958,
+          "nombre": "Ecografia de cadera",
+          "area": "Ecografías",
+          "precio": 30
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Necesito saber el costo de una ecografia hepatobiliar",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía  Abdominal"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 29,
+          "nombre": "Ecografía  Abdominal",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 931,
+          "nombre": "Ecografía Abdomino pelvica",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 938,
+          "nombre": "Ecografía abdominal y pelvica",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 40,
+          "nombre": "Eco Doppler de aorta abdominal",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 41,
+          "nombre": "Ecografía Doppler de Pene",
+          "area": "Ecografías",
+          "precio": 40
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Cuánto cuesta un lavado de oído?",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Lavado"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 543,
+          "nombre": "Lavado de oídos",
+          "area": "Procedimientos médicos especiales",
+          "precio": 25
+        }
+      ],
+      "search_total": 1
+    },
+    {
+      "text": "Que precio tiene la consulta con traumatología",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Traumatología"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 4,
+          "nombre": "Traumatología",
+          "area": "Especialidades Médicas",
+          "precio": 30
+        },
+        {
+          "id": 474,
+          "nombre": "Consulta de valoración con el especialista",
+          "area": "Cirugías y Partos",
+          "precio": 35
+        },
+        {
+          "id": 6,
+          "nombre": "Consulta médica",
+          "area": "Medicina General",
+          "precio": 15
+        },
+        {
+          "id": 10,
+          "nombre": "Psicología",
+          "area": "Especialidades Médicas",
+          "precio": 25
+        },
+        {
+          "id": 567,
+          "nombre": "Consulta odontológica (Diagnóstico)",
+          "area": "Odontología",
+          "precio": 5
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Hola buen dia cual es el costo de la resonancia magnética",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Resonancia"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 766,
+          "nombre": "Resonancia Magnética de cúbito y radio simple y contrastado",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 729,
+          "nombre": "Resonancia Magnética de cúbito y radio simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 722,
+          "nombre": "Resonancia Magnética de cadera simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 723,
+          "nombre": "Resonancia Magnética de parótida simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 725,
+          "nombre": "Resonancia Magnética de codo simple",
+          "area": "Resonancias",
+          "precio": 180
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Una consulta que costo tiene electromiografia",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Electromiografía"
+      ],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": 0
+    },
+    {
+      "text": "Qué precio tienen las tomografías",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Tomografía"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 839,
+          "nombre": "Tomografía de tórax con alta resolución",
+          "area": "Tomografías",
+          "precio": 100
+        },
+        {
+          "id": 836,
+          "nombre": "Tomografía de tórax simple",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 894,
+          "nombre": "Tomografía de tórax simple y contrastada",
+          "area": "Tomografías",
+          "precio": 235
+        },
+        {
+          "id": 834,
+          "nombre": "Tomografía de sacro-coxis simple",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 821,
+          "nombre": "Tomografía de cráneo simple",
+          "area": "Tomografías",
+          "precio": 95
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Buen día que costo tiene la consulta para neumólogia ??",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Neumología"
+      ],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": 0
+    },
+    {
+      "text": "Cuál es el costo de la primera consulta para embarazo y ecografía",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 27,
+          "nombre": "Ecografía Obstétrica",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 52,
+          "nombre": "Ecografía Doppler Obstétrico",
+          "area": "Ecografías",
+          "precio": 35
+        },
+        {
+          "id": 36,
+          "nombre": "Ecografía de mamas",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 923,
+          "nombre": "ECOGRAFIA SCREENING DE 2DO TRIMESTRE",
+          "area": "Ecografías",
+          "precio": 40
+        },
+        {
+          "id": 37,
+          "nombre": "Ecografía doppler de testiculos",
+          "area": "Ecografías",
+          "precio": 40
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Quisiera saber cuánto cuesta la consulta de primer embarazo y ecografía",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 27,
+          "nombre": "Ecografía Obstétrica",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 36,
+          "nombre": "Ecografía de mamas",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 52,
+          "nombre": "Ecografía Doppler Obstétrico",
+          "area": "Ecografías",
+          "precio": 35
+        },
+        {
+          "id": 923,
+          "nombre": "ECOGRAFIA SCREENING DE 2DO TRIMESTRE",
+          "area": "Ecografías",
+          "precio": 40
+        },
+        {
+          "id": 927,
+          "nombre": "Ecografía Screening",
+          "area": "Ecografías",
+          "precio": 40
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Hola buenas noches Quisiera saber si hacen resonancia cerebral con contraste y en que precio?",
+      "expected_intents": [
+        "cotizar_servicio",
+        "consulta_servicios"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "cráneo"
+      ],
+      "service_rank": 6,
+      "top_services": [
+        {
+          "id": 776,
+          "nombre": "Resonancia Magnética de órbita simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 759,
+          "nombre": "Resonancia Magnética de cadera simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 760,
+          "nombre": "Resonancia Magnética de parótida simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 783,
+          "nombre": "Resonancia Magnética de sacro-coxis simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 784,
+          "nombre": "Resonancia Magnética de tobillo simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Buenas noches disculpe hacen ecografías de tórax?? Y si , si que costó tiene",
+      "expected_intents": [
+        "cotizar_servicio",
+        "consulta_servicios"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 30,
+          "nombre": "Ecografía Pélvica",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 962,
+          "nombre": "Ecografia de manguito rotador",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 958,
+          "nombre": "Ecografia de cadera",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 41,
+          "nombre": "Ecografía Doppler de Pene",
+          "area": "Ecografías",
+          "precio": 40
+        },
+        {
+          "id": 51,
+          "nombre": "Ecografía Pleural",
+          "area": "Ecografías",
+          "precio": 30
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Buenas noches, que cuesta el lavado de oidos?",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Lavado"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 543,
+          "nombre": "Lavado de oídos",
+          "area": "Procedimientos médicos especiales",
+          "precio": 25
+        }
+      ],
+      "search_total": 1
+    },
+    {
+      "text": "buenas tardes m puede ayudar con el costo d la consulta",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Cuál es el valor de una resonancia magnética de columna completa",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Resonancia Columna Total"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 961,
+          "nombre": "Resonancia de columna total simple y contrastada",
+          "area": "Resonancias",
+          "precio": 550
+        },
+        {
+          "id": 802,
+          "nombre": "Resonancia Magnética de columna total",
+          "area": "Resonancias",
+          "precio": 450
+        }
+      ],
+      "search_total": 2
+    },
+    {
+      "text": "Buenos días que precio tiene la consulta y donde están ubicados disculpe gracias",
+      "expected_intents": [
+        "cotizar_servicio",
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Muy buenas noches, querria saber si en esta sección se hace las pruebas de embarazo de sangre? cuanto seria el costo?",
+      "expected_intents": [
+        "cotizar_servicio",
+        "consulta_servicios"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "HCG"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 214,
+          "nombre": "Prueba de HCG cualitativa",
+          "area": "Laboratorio Clínico",
+          "precio": 7
+        },
+        {
+          "id": 215,
+          "nombre": "Prueba de HCG cuantitativa",
+          "area": "Laboratorio Clínico",
+          "precio": 15
+        }
+      ],
+      "search_total": 2
+    },
+    {
+      "text": "Eco transvaginal precio?",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Endovaginal"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 28,
+          "nombre": "Ecografía Endovaginal",
+          "area": "Ecografías",
+          "precio": 30
+        }
+      ],
+      "search_total": 1
+    },
+    {
+      "text": "Valor de la consulta, muchas gracias.",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Cuanto salen las protesis",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Prótesis"
+      ],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": 0
+    },
+    {
+      "text": "Buenas noches que precio tiene la recanalizacion de trompas",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "para sacar un tercer molar q vale.",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Extracción de tercer molar"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 577,
+          "nombre": "Extracción de tercer molar no posicionado",
+          "area": "Odontología",
+          "precio": 85
+        },
+        {
+          "id": 575,
+          "nombre": "Extracción de tercer molar posicionado",
+          "area": "Odontología",
+          "precio": 70
+        },
+        {
+          "id": 576,
+          "nombre": "Extracción de tercer molar semiposicionado",
+          "area": "Odontología",
+          "precio": 75
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "costo de un tratamiento de conducto",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Endodoncia"
+      ],
+      "service_rank": 3,
+      "top_services": [
+        {
+          "id": 574,
+          "nombre": "Exodoncia simple con sutura",
+          "area": "Odontología",
+          "precio": 40
+        },
+        {
+          "id": 957,
+          "nombre": "Retiro de puntos",
+          "area": "Odontología",
+          "precio": 5
+        },
+        {
+          "id": 591,
+          "nombre": "Tratamiento de conducto (endodoncia) en dientes anteriores",
+          "area": "Odontología",
+          "precio": 140
+        },
+        {
+          "id": 593,
+          "nombre": "Tratamiento de conducto (endodoncia) en molares",
+          "area": "Odontología",
+          "precio": 180
+        },
+        {
+          "id": 592,
+          "nombre": "Tratamiento de conducto (endodoncia) en premolares",
+          "area": "Odontología",
+          "precio": 160
+        }
+      ],
+      "search_total": 5
+    },
+    {
+      "text": "Q precio tiene el calce de muela",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Restauración"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 589,
+          "nombre": "Restauración grande",
+          "area": "Odontología",
+          "precio": 30
+        },
+        {
+          "id": 588,
+          "nombre": "Restauración mediana",
+          "area": "Odontología",
+          "precio": 25
+        },
+        {
+          "id": 587,
+          "nombre": "Restauración pequeña",
+          "area": "Odontología",
+          "precio": 20
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "Precio de blancamiento dental",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Blanqueamiento"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 570,
+          "nombre": "Blanqueamiento dental (dos sesiones)",
+          "area": "Odontología",
+          "precio": 85
+        },
+        {
+          "id": 569,
+          "nombre": "Blanqueamiento dental (tres sesiones)",
+          "area": "Odontología",
+          "precio": 100
+        },
+        {
+          "id": 571,
+          "nombre": "Blanqueamiento dental (una sesión)",
+          "area": "Odontología",
+          "precio": 75
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "Los calces q precio tienen",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Restauración"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 589,
+          "nombre": "Restauración grande",
+          "area": "Odontología",
+          "precio": 30
+        },
+        {
+          "id": 588,
+          "nombre": "Restauración mediana",
+          "area": "Odontología",
+          "precio": 25
+        },
+        {
+          "id": 587,
+          "nombre": "Restauración pequeña",
+          "area": "Odontología",
+          "precio": 20
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "Buen dia , precio de extracion de muela o tercer molar",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Extracción dental",
+        "Extracción de tercer molar"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 578,
+          "nombre": "Extracción dental simple",
+          "area": "Odontología",
+          "precio": 35
+        },
+        {
+          "id": 579,
+          "nombre": "Extracción dental simple-compleja",
+          "area": "Odontología",
+          "precio": 40
+        }
+      ],
+      "search_total": 2
+    },
+    {
+      "text": "Quisiera saber precio de una extracion de muela o tercer molar",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Extracción dental",
+        "Extracción de tercer molar"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 578,
+          "nombre": "Extracción dental simple",
+          "area": "Odontología",
+          "precio": 35
+        },
+        {
+          "id": 579,
+          "nombre": "Extracción dental simple-compleja",
+          "area": "Odontología",
+          "precio": 40
+        }
+      ],
+      "search_total": 2
+    },
+    {
+      "text": "Donde están ubicados y cuanto vale la consulta con el gastroenterologo",
+      "expected_intents": [
+        "cotizar_servicio",
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Gastroenterología"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 8,
+          "nombre": "Gastroenterología",
+          "area": "Especialidades Médicas",
+          "precio": 30
+        }
+      ],
+      "search_total": 1
+    },
+    {
+      "text": "Buenas noches precio de un ecocardiogrma y una.prueba de holter de arritmia",
+      "expected_intents": [
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecocardiograma",
+        "Holter"
+      ],
+      "service_rank": null,
+      "top_services": [
+        {
+          "id": 923,
+          "nombre": "ECOGRAFIA SCREENING DE 2DO TRIMESTRE",
+          "area": "Ecografías",
+          "precio": 40
+        },
+        {
+          "id": 42,
+          "nombre": "Ecografía Doppler de Arterial de Extremidades Superiores",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 958,
+          "nombre": "Ecografia de cadera",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 43,
+          "nombre": "Ecografía Doppler Arterial de Extremidades Inferiores",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 34,
+          "nombre": "Ecografía  Monitoreo Folicular",
+          "area": "Ecografías",
+          "precio": 80
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Realizan resonancias magnéticas ?",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Resonancia"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 722,
+          "nombre": "Resonancia Magnética de cadera simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 759,
+          "nombre": "Resonancia Magnética de cadera simple y contrastada",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 725,
+          "nombre": "Resonancia Magnética de codo simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 762,
+          "nombre": "Resonancia Magnética de codo simple y contrastado",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 766,
+          "nombre": "Resonancia Magnética de cúbito y radio simple y contrastado",
+          "area": "Resonancias",
+          "precio": 260
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Información de ecografía abdominal completa",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía  Abdominal"
+      ],
+      "service_rank": 2,
+      "top_services": [
+        {
+          "id": 40,
+          "nombre": "Eco Doppler de aorta abdominal",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 29,
+          "nombre": "Ecografía  Abdominal",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 938,
+          "nombre": "Ecografía abdominal y pelvica",
+          "area": "Ecografías",
+          "precio": 50
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "Buenas, tmb quitan caries?",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Restauración"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 589,
+          "nombre": "Restauración grande",
+          "area": "Odontología",
+          "precio": 30
+        },
+        {
+          "id": 588,
+          "nombre": "Restauración mediana",
+          "area": "Odontología",
+          "precio": 25
+        },
+        {
+          "id": 587,
+          "nombre": "Restauración pequeña",
+          "area": "Odontología",
+          "precio": 20
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "Hola quisiera saber si uds hacen operaciones",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Cirugia"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 474,
+          "nombre": "Consulta de valoración con el especialista",
+          "area": "Cirugías y Partos",
+          "precio": 35
+        },
+        {
+          "id": 963,
+          "nombre": "Cirugia general",
+          "area": "Especialidades Médicas",
+          "precio": 35
+        },
+        {
+          "id": 568,
+          "nombre": "Cirugía maxilofacial",
+          "area": "Odontología",
+          "precio": 85
+        },
+        {
+          "id": 567,
+          "nombre": "Consulta odontológica (Diagnóstico)",
+          "area": "Odontología",
+          "precio": 5
+        }
+      ],
+      "search_total": 4
+    },
+    {
+      "text": "hiperplasia prostatica, calcificaciones en la prostata",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consultar_horario",
+      "intent_ok": false,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenas tardes resonancia magnética",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Resonancia"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 723,
+          "nombre": "Resonancia Magnética de parótida simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 722,
+          "nombre": "Resonancia Magnética de cadera simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 732,
+          "nombre": "Resonancia Magnética de húmero simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 725,
+          "nombre": "Resonancia Magnética de codo simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 749,
+          "nombre": "Resonancia Magnética de sacro-coxis simple",
+          "area": "Resonancias",
+          "precio": 180
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Buenos días, quisiera saber si hacen exámenes de audiometría",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Audiometría"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 557,
+          "nombre": "Audiometría",
+          "area": "Diagnósticos especiales",
+          "precio": 15
+        },
+        {
+          "id": 698,
+          "nombre": "Radiometría de Farill",
+          "area": "Radiografías",
+          "precio": 45
+        }
+      ],
+      "search_total": 2
+    },
+    {
+      "text": "Hola buenas que cuesta una prueba de embarazo",
+      "expected_intents": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "HCG"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 214,
+          "nombre": "Prueba de HCG cualitativa",
+          "area": "Laboratorio Clínico",
+          "precio": 7
+        },
+        {
+          "id": 215,
+          "nombre": "Prueba de HCG cuantitativa",
+          "area": "Laboratorio Clínico",
+          "precio": 15
+        }
+      ],
+      "search_total": 2
+    },
+    {
+      "text": "Buenas tardes que precio tiene el eco de las 20 semanas, eco morfológico",
+      "expected_intents": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía Morfológica"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 31,
+          "nombre": "Ecografía Morfológica",
+          "area": "Ecografías",
+          "precio": 40
+        }
+      ],
+      "search_total": 1
+    },
+    {
+      "text": "Precio de la ecografía de las 20 semanas de embarazo",
+      "expected_intents": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía Morfológica"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 31,
+          "nombre": "Ecografía Morfológica",
+          "area": "Ecografías",
+          "precio": 40
+        },
+        {
+          "id": 27,
+          "nombre": "Ecografía Obstétrica",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 36,
+          "nombre": "Ecografía de mamas",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 52,
+          "nombre": "Ecografía Doppler Obstétrico",
+          "area": "Ecografías",
+          "precio": 35
+        },
+        {
+          "id": 923,
+          "nombre": "ECOGRAFIA SCREENING DE 2DO TRIMESTRE",
+          "area": "Ecografías",
+          "precio": 40
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "3er molares",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": false,
+      "expected_services": [
+        "Extracción de tercer molar"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 577,
+          "nombre": "Extracción de tercer molar no posicionado",
+          "area": "Odontología",
+          "precio": 85
+        },
+        {
+          "id": 575,
+          "nombre": "Extracción de tercer molar posicionado",
+          "area": "Odontología",
+          "precio": 70
+        },
+        {
+          "id": 576,
+          "nombre": "Extracción de tercer molar semiposicionado",
+          "area": "Odontología",
+          "precio": 75
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "Buen día realizan exámenes en las mamas",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "mamas"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 36,
+          "nombre": "Ecografía de mamas",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 49,
+          "nombre": "Ecografía Doppler Mamaria",
+          "area": "Ecografías",
+          "precio": 35
+        },
+        {
+          "id": 477,
+          "nombre": "Elastografía mamaria - ecografía",
+          "area": "Procedimientos Especiales",
+          "precio": 60
+        },
+        {
+          "id": 918,
+          "nombre": "Punción y drenaje de quiste mamario",
+          "area": "Procedimientos ginecológicos",
+          "precio": 60
+        }
+      ],
+      "search_total": 4
+    },
+    {
+      "text": "Tiene servicio para mamografía",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Mamografía"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 479,
+          "nombre": "Mamografía bilateral",
+          "area": "Procedimientos Especiales",
+          "precio": 40
+        },
+        {
+          "id": 480,
+          "nombre": "Mamografía unilateral",
+          "area": "Procedimientos Especiales",
+          "precio": 30
+        }
+      ],
+      "search_total": 2
+    },
+    {
+      "text": "Realizan tomografia de craneo",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "cráneo"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 822,
+          "nombre": "Tomografía de cráneo simple con ventana ósea",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 876,
+          "nombre": "Tomografía de cráneo simple y contrastada",
+          "area": "Tomografías",
+          "precio": 235
+        },
+        {
+          "id": 821,
+          "nombre": "Tomografía de cráneo simple",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 885,
+          "nombre": "Tomografía de órbita simple y contrastada",
+          "area": "Tomografías",
+          "precio": 235
+        },
+        {
+          "id": 875,
+          "nombre": "Tomografía de cráneo simple y contrastada (silla turca)",
+          "area": "Tomografías",
+          "precio": 235
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Tomografia de craneo",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "cráneo"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 822,
+          "nombre": "Tomografía de cráneo simple con ventana ósea",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 876,
+          "nombre": "Tomografía de cráneo simple y contrastada",
+          "area": "Tomografías",
+          "precio": 235
+        },
+        {
+          "id": 821,
+          "nombre": "Tomografía de cráneo simple",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 885,
+          "nombre": "Tomografía de órbita simple y contrastada",
+          "area": "Tomografías",
+          "precio": 235
+        },
+        {
+          "id": 875,
+          "nombre": "Tomografía de cráneo simple y contrastada (silla turca)",
+          "area": "Tomografías",
+          "precio": 235
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Le pregunto si realizan tomografia de craneo",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "cráneo"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 822,
+          "nombre": "Tomografía de cráneo simple con ventana ósea",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 876,
+          "nombre": "Tomografía de cráneo simple y contrastada",
+          "area": "Tomografías",
+          "precio": 235
+        },
+        {
+          "id": 821,
+          "nombre": "Tomografía de cráneo simple",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 848,
+          "nombre": "Tomografía de cráneo por estereotaxia",
+          "area": "Tomografías",
+          "precio": 110
+        },
+        {
+          "id": 875,
+          "nombre": "Tomografía de cráneo simple y contrastada (silla turca)",
+          "area": "Tomografías",
+          "precio": 235
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Buenos días que precio tiene el eco enal",
+      "expected_intents": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía Renal"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 33,
+          "nombre": "Ecografía Renal",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 48,
+          "nombre": "Ecografia Doppler Renal",
+          "area": "Ecografías",
+          "precio": 35
+        },
+        {
+          "id": 32,
+          "nombre": "Ecografía de Próstata",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 42,
+          "nombre": "Ecografía Doppler de Arterial de Extremidades Superiores",
+          "area": "Ecografías",
+          "precio": 50
+        },
+        {
+          "id": 50,
+          "nombre": "Ecografía Doppler de Tiroides",
+          "area": "Ecografías",
+          "precio": 35
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Siasenprotesis",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Prótesis"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 584,
+          "nombre": "Prótesis removible acrílica de 1 a 4 dientes",
+          "area": "Odontología",
+          "precio": 150
+        },
+        {
+          "id": 585,
+          "nombre": "Prótesis removible acrílica de 5 a 8 dientes",
+          "area": "Odontología",
+          "precio": 180
+        },
+        {
+          "id": 583,
+          "nombre": "Prótesis removible acrílica de 9 a 14 piezas",
+          "area": "Odontología",
+          "precio": 200
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "Quiero saber.sirealisanprotesis",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Prótesis"
+      ],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": 0
+    },
+    {
+      "text": "uds mismo hacen la radiografía",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Radiografía"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 681,
+          "nombre": "Radiografía de tórax - oblicuas",
+          "area": "Radiografías",
+          "precio": 30
+        },
+        {
+          "id": 680,
+          "nombre": "Radiografía de tórax oblicua",
+          "area": "Radiografías",
+          "precio": 15
+        },
+        {
+          "id": 714,
+          "nombre": "Radiografía de tórax AP",
+          "area": "Radiografías",
+          "precio": 15
+        },
+        {
+          "id": 666,
+          "nombre": "Radiografía de húmero AP",
+          "area": "Radiografías",
+          "precio": 15
+        },
+        {
+          "id": 612,
+          "nombre": "Radiografía de cadera - oblicuas",
+          "area": "Radiografías",
+          "precio": 30
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Buenos dias en su centro realizan resonancia contrastada abdominal",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "abdomen simple y contrastado"
+      ],
+      "service_rank": 2,
+      "top_services": [
+        {
+          "id": 753,
+          "nombre": "Resonancia Magnética de abdomen simple",
+          "area": "Resonancias",
+          "precio": 180
+        },
+        {
+          "id": 758,
+          "nombre": "Resonancia Magnética de abdomen simple y contrastado",
+          "area": "Resonancias",
+          "precio": 260
+        },
+        {
+          "id": 803,
+          "nombre": "Resonancia Magnética de abdomen y pelvis simple y contrastado",
+          "area": "Resonancias",
+          "precio": 380
+        },
+        {
+          "id": 798,
+          "nombre": "Resonancia Magnética de abdomen y pelvis simple",
+          "area": "Resonancias",
+          "precio": 300
+        },
+        {
+          "id": 777,
+          "nombre": "Resonancia Magnética de pelvis simple y contrastado",
+          "area": "Resonancias",
+          "precio": 260
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años",
+      "expected_intents": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Quiero aserme limpieza y tapar . Cáries X fa",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Limpieza",
+        "Restauración"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 589,
+          "nombre": "Restauración grande",
+          "area": "Odontología",
+          "precio": 30
+        },
+        {
+          "id": 588,
+          "nombre": "Restauración mediana",
+          "area": "Odontología",
+          "precio": 25
+        },
+        {
+          "id": 587,
+          "nombre": "Restauración pequeña",
+          "area": "Odontología",
+          "precio": 20
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "Necesito sacarme las cordales ya tengo la panorámica",
+      "expected_intents": [
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
+      "expected_services": [
+        "Extracción de tercer molar"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 577,
+          "nombre": "Extracción de tercer molar no posicionado",
+          "area": "Odontología",
+          "precio": 85
+        },
+        {
+          "id": 575,
+          "nombre": "Extracción de tercer molar posicionado",
+          "area": "Odontología",
+          "precio": 70
+        },
+        {
+          "id": 576,
+          "nombre": "Extracción de tercer molar semiposicionado",
+          "area": "Odontología",
+          "precio": 75
+        }
+      ],
+      "search_total": 3
+    },
+    {
+      "text": "cardiología",
+      "expected_intents": [
+        "consulta_especialidades"
+      ],
+      "predicted_intent": "consulta_especialidades",
+      "intent_ok": true,
+      "expected_services": [
+        "Cardiología"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 26,
+          "nombre": "Cardiología",
+          "area": "Especialidades Médicas",
+          "precio": 35
+        }
+      ],
+      "search_total": 1
+    },
+    {
+      "text": "tienen nutrición",
+      "expected_intents": [
+        "consulta_especialidades"
+      ],
+      "predicted_intent": "consulta_especialidades",
+      "intent_ok": true,
+      "expected_services": [
+        "Nutrición"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 12,
+          "nombre": "Nutrición",
+          "area": "Especialidades Médicas",
+          "precio": 35
+        },
+        {
+          "id": 310,
+          "nombre": "Test nutricional avanzado (nutrigenético)",
+          "area": "Laboratorio Clínico",
+          "precio": 290
+        }
+      ],
+      "search_total": 2
+    },
+    {
+      "text": "Buen día cuenta con la especialidad de Cardiólogia?",
+      "expected_intents": [
+        "consulta_especialidades"
+      ],
+      "predicted_intent": "consulta_especialidades",
+      "intent_ok": true,
+      "expected_services": [
+        "Cardiología"
+      ],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": 0
+    },
+    {
+      "text": "Servicio de cardiología",
+      "expected_intents": [
+        "consulta_especialidades"
+      ],
+      "predicted_intent": "consulta_especialidades",
+      "intent_ok": true,
+      "expected_services": [
+        "Cardiología"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 26,
+          "nombre": "Cardiología",
+          "area": "Especialidades Médicas",
+          "precio": 35
+        }
+      ],
+      "search_total": 1
+    },
+    {
+      "text": "Urología",
+      "expected_intents": [
+        "consulta_especialidades"
+      ],
+      "predicted_intent": "consulta_especialidades",
+      "intent_ok": true,
+      "expected_services": [
+        "Urología"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 16,
+          "nombre": "Neurología",
+          "area": "Especialidades Médicas",
+          "precio": 35
+        },
+        {
+          "id": 3,
+          "nombre": "Urología",
+          "area": "Especialidades Médicas",
+          "precio": 30
+        }
+      ],
+      "search_total": 2
+    },
+    {
+      "text": "Oftalmología",
+      "expected_intents": [
+        "consulta_especialidades"
+      ],
+      "predicted_intent": "consulta_especialidades",
+      "intent_ok": true,
+      "expected_services": [
+        "Oftalmología"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 939,
+          "nombre": "Oftalmologia",
+          "area": "Especialidades Médicas",
+          "precio": 30
+        }
+      ],
+      "search_total": 1
+    },
+    {
+      "text": "Hola atienden mañana o el sábado",
+      "expected_intents": [
+        "consultar_horario"
+      ],
+      "predicted_intent": "consultar_horario",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "¿Cuál es su horario de atención?",
+      "expected_intents": [
+        "consultar_horario"
+      ],
+      "predicted_intent": "consultar_horario",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Atienden los días sábados",
+      "expected_intents": [
+        "consultar_horario"
+      ],
+      "predicted_intent": "consultar_horario",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenos días disculpe hoy atienden",
+      "expected_intents": [
+        "consultar_horario"
+      ],
+      "predicted_intent": "consultar_horario",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Quisiera saber si hoy atienden",
+      "expected_intents": [
+        "consultar_horario"
+      ],
+      "predicted_intent": "consultar_horario",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Horarios de atención",
+      "expected_intents": [
+        "consultar_horario"
+      ],
+      "predicted_intent": "consultar_horario",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "favor indicar dirección y horario",
+      "expected_intents": [
+        "consultar_horario",
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_horario",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "me gustaría agendar una cita de laboratorio, que incluya este paquete",
+      "expected_intents": [
+        "agendar_cita"
+      ],
+      "predicted_intent": "agendar_cita",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenas necesito que me ayuden con una orden de tomografía",
+      "expected_intents": [
+        "agendar_cita"
+      ],
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": false,
+      "expected_services": [
+        "Tomografía"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 839,
+          "nombre": "Tomografía de tórax con alta resolución",
+          "area": "Tomografías",
+          "precio": 100
+        },
+        {
+          "id": 836,
+          "nombre": "Tomografía de tórax simple",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 894,
+          "nombre": "Tomografía de tórax simple y contrastada",
+          "area": "Tomografías",
+          "precio": 235
+        },
+        {
+          "id": 823,
+          "nombre": "Tomografía de cúbito y radio simple",
+          "area": "Tomografías",
+          "precio": 95
+        },
+        {
+          "id": 834,
+          "nombre": "Tomografía de sacro-coxis simple",
+          "area": "Tomografías",
+          "precio": 95
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "¿Dónde puedo agendar mi cita?",
+      "expected_intents": [
+        "agendar_cita"
+      ],
+      "predicted_intent": "agendar_cita",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "¿Puedo reservar una cita?",
+      "expected_intents": [
+        "agendar_cita"
+      ],
+      "predicted_intent": "agendar_cita",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "¿Como puedo agendar una cita?",
+      "expected_intents": [
+        "agendar_cita"
+      ],
+      "predicted_intent": "agendar_cita",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Quiero reservar una cita.",
+      "expected_intents": [
+        "agendar_cita"
+      ],
+      "predicted_intent": "agendar_cita",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Algún número para comunicarme o sacar cita",
+      "expected_intents": [
+        "agendar_cita"
+      ],
+      "predicted_intent": "agendar_cita",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Una pregunta donde puedo entregar mi hoja de vida",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Muy buenas tardes me comunicaba con ustedes para saber si tienen un correo de recursos humanos que puedan brindarme",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Soy enfermera auxiliar",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Hola buenas noches me ayuda con un correo para enviar mi CV",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia. Quedo muy agradecido de antemano ante cualquier respuesta",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "buenas tardes me pueden ayudar con un mail para trabajo soy enfermera profesional",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Reciba mi cordial saludo Solicito comedidamente me ayude direccionando un correo electrónico para enviar mi hoja de vida, estoy buscando una oportunidad laboral. Espero comprenda la situación. Atte Betsabeth Jaramillo",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buen día disculpe tienen alguna vacante laboral",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenas noches con mi respeto usted no nesesita una doc odontologa mi hija decea trabajar ella tiene muchas experiencias en su especialidad me gustaría q mi hija trabaje con usteds muchas bendiciones espero su repuestas mi hija pueda mandar su hoja de vida muchas gracias su noble corazon lluvias de bendiciones",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "buenas tardes me llamo yerferzon Urdaneta soy médico general me gustaría trabajar con ustedes",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "buenas noches de pronto no estarán contratando aux de fisioterapia...???",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buen día Mi nombre es Jennyfer Patiño Paredes He trabajado como asistente dental desde hace años, tengo experiencia en lo que es el área. Estoy en busca de un trabajo me gustaría ser parte de su equipo. Soy una persona responsable, alegre, puntual y honrada. Espero y me pueda dar esa oportunidad o una entrevista para conocerme. De antemano le agradezco.",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenos días, el día de ayer envié a su correo electrónico un mail con mi CV aplicando a la vacante de Médico general que apareció en LinkedIn, pero me sale este mensaje. Por ende me tomo el atrevimiento de enviar captura del mensaje y mi cv por este medio.",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "buenas tardes disculpe la molestia pero dentro de su personal requieren de terapeuta respiratorio?",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Soy medico general Deseo entragar ni curriculo Tiene algun correo para poderlo enviar ? O me puedo hacercar a entregarlo?",
+      "expected_intents": [
+        "trabajo"
+      ],
+      "predicted_intent": "trabajo",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "¿Cuál es su ubicación?",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Dónde están ubicados",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "fonde estan ubicadod yo vivo en Milagro",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "donde están ubicados.",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "deme su ubicación",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "donde ubicados",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Donde esta ubicado?",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Ola mucho gusto disculpe dirección exacta en Guayaquil",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "disculpe dirección exacta en Guayaquil",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "dirección exacta en Guayaquil",
+      "expected_intents": [
+        "consultar_ubicacion"
+      ],
+      "predicted_intent": "consultar_ubicacion",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenos días tiene atención a domicilio gracias",
+      "expected_intents": [
+        "hablar_asesor"
+      ],
+      "predicted_intent": "hablar_asesor",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    },
+    {
+      "text": "Buenas noches para hacerme una ecografia es necesario sacar cita.",
+      "expected_intents": [
+        "hablar_asesor",
+        "agendar_cita"
+      ],
+      "predicted_intent": "agendar_cita",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía"
+      ],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": 0
+    },
+    {
+      "text": "Quiero hacerme una ecografia es necesario sacar cita.",
+      "expected_intents": [
+        "hablar_asesor",
+        "agendar_cita"
+      ],
+      "predicted_intent": "agendar_cita",
+      "intent_ok": true,
+      "expected_services": [
+        "Ecografía"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 958,
+          "nombre": "Ecografia de cadera",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 38,
+          "nombre": "Ecografía de partes blandas",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 51,
+          "nombre": "Ecografía Pleural",
+          "area": "Ecografías",
+          "precio": 30
+        },
+        {
+          "id": 923,
+          "nombre": "ECOGRAFIA SCREENING DE 2DO TRIMESTRE",
+          "area": "Ecografías",
+          "precio": 40
+        },
+        {
+          "id": 30,
+          "nombre": "Ecografía Pélvica",
+          "area": "Ecografías",
+          "precio": 30
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Me recomendaron hacerme una mamografía. puedo agendar el examen directamente? Qué horarios tienen disponibles y cuál sería el costo?",
+      "expected_intents": [
+        "consulta_servicios",
+        "agendar_cita",
+        "consultar_horario",
+        "cotizar_servicio"
+      ],
+      "predicted_intent": "cotizar_servicio",
+      "intent_ok": true,
+      "expected_services": [
+        "Mamografía"
+      ],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": 0
+    },
+    {
+      "text": "quisiera información sobre las áreas de pediatría y dermatologia",
+      "expected_intents": [
+        "consulta_especialidades",
+        "consulta_servicios"
+      ],
+      "predicted_intent": "consulta_especialidades",
+      "intent_ok": true,
+      "expected_services": [
+        "Pediatría",
+        "Dermatología"
+      ],
+      "service_rank": 1,
+      "top_services": [
+        {
+          "id": 11,
+          "nombre": "Dermatología",
+          "area": "Especialidades Médicas",
+          "precio": 30
+        },
+        {
+          "id": 2,
+          "nombre": "Pediatría",
+          "area": "Especialidades Médicas",
+          "precio": 25
+        },
+        {
+          "id": 20,
+          "nombre": "Proctología",
+          "area": "Especialidades Médicas",
+          "precio": 40
+        },
+        {
+          "id": 954,
+          "nombre": "Ficha medica y certificado de aptitud",
+          "area": "Medicina General",
+          "precio": 15
+        },
+        {
+          "id": 427,
+          "nombre": "Prueba de paternidad",
+          "area": "Laboratorio Clínico",
+          "precio": 250
+        }
+      ],
+      "search_total": 20
+    },
+    {
+      "text": "Disculpe una última interrogante hay que agendar cita o solo acercarse?",
+      "expected_intents": [
+        "agendar_cita",
+        "hablar_asesor"
+      ],
+      "predicted_intent": "agendar_cita",
+      "intent_ok": true,
+      "expected_services": [],
+      "service_rank": null,
+      "top_services": [],
+      "search_total": null
+    }
+  ]
+}

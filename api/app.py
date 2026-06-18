@@ -154,6 +154,77 @@ PALABRAS_COMERCIALES_CATALOGO = {
     "valor",
     "precio",
 }
+PALABRAS_COTIZACION = {
+    "costo",
+    "cuesta",
+    "precio",
+    "salen",
+    "valor",
+    "vale",
+}
+FRASES_COTIZACION = {
+    "cuanto cuesta",
+    "cuanto sale",
+    "cuanto salen",
+    "que cuesta",
+    "que vale",
+    "costo d",
+    "precio de",
+    "valor de",
+}
+PALABRAS_TRABAJO = {
+    "contratando",
+    "contratar",
+    "curriculum",
+    "curriculo",
+    "cv",
+    "laboral",
+    "trabajar",
+    "trabajo",
+    "vacante",
+}
+FRASES_TRABAJO = {
+    "asistente dental",
+    "busca de trabajo",
+    "buscando una oportunidad laboral",
+    "correo de recursos humanos",
+    "correo para enviar",
+    "enviar mi cv",
+    "enviar mi hoja de vida",
+    "hoja de vida",
+    "medico general",
+    "personal requieren",
+    "recursos humanos",
+    "requieren de terapeuta",
+    "soy enfermera",
+    "soy medico",
+    "terapeuta respiratorio",
+}
+PALABRAS_CONSULTA_SERVICIOS = {
+    "caries",
+    "examen",
+    "examenes",
+    "hacen",
+    "limpieza",
+    "quitan",
+    "realizan",
+    "realizar",
+    "servicio",
+    "tapar",
+    "tiene",
+    "tienen",
+}
+ESPECIALIDADES_CONOCIDAS = {
+    "cardiologia",
+    "dermatologia",
+    "gastroenterologia",
+    "neumologia",
+    "nutricion",
+    "oftalmologia",
+    "pediatria",
+    "traumatologia",
+    "urologia",
+}
 PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
     "al",
     "con",
@@ -192,6 +263,8 @@ PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
 }
 CONECTORES_SERVICIOS = {
     "ademas",
+    "dispone",
+    "disponen",
     "o",
     "tambien",
     "y",
@@ -289,7 +362,28 @@ SINONIMOS_CATALOGO = {
     "examen de mamas": "mamas",
     "resonancia contrastada abdominal": "resonancia abdomen simple contrastado",
     "resonancia abdominal contrastada": "resonancia abdomen simple contrastado",
+    "tratamiento de conducto": "endodoncia",
+    "calce": "restauracion",
+    "calces": "restauracion",
+    "blancamiento dental": "blanqueamiento dental",
+    "gastroenterologo": "gastroenterologia",
 }
+
+CORRECCIONES_TEXTO = (
+    (r"\bh+ola+\b", "hola"),
+    (r"\bsiasen(?=\w)", "si hacen "),
+    (r"\bsiasen\b", "si hacen"),
+    (r"\bsirealisan(?=\w)", "si realizan "),
+    (r"\bsirealisan\b", "si realizan"),
+    (r"\brealisan\b", "realizan"),
+    (r"\basen\b", "hacen"),
+    (r"\becocardiogrma\b", "ecocardiograma"),
+    (r"\bextracion\b", "extraccion"),
+    (r"\bblancamiento\b", "blanqueamiento"),
+    (r"\benal\b", "renal"),
+    (r"\bneumologia\b", "neumologia"),
+    (r"\bprotesi\b", "protesis"),
+)
 
 vectorizer = None
 classifier = None
@@ -483,26 +577,35 @@ def predict(request: PredictRequest, _auth: bool = Depends(validar_api_key)):
 
 
 def predecir_intencion(texto):
-    texto = texto.strip()
+    texto_original = texto.strip()
+    texto = aplicar_correcciones_texto(texto_original)
 
     if not texto:
         return {
-            "texto": texto,
+            "texto": texto_original,
             "intencion": "desconocido",
             "confianza": None,
+        }
+
+    intencion_regla = detectar_intencion_defensiva(texto)
+    if intencion_regla:
+        return {
+            "texto": texto_original,
+            "intencion": intencion_regla,
+            "confianza": 1.0,
         }
 
     intencion_saludo = detectar_saludo_puro(texto)
     if intencion_saludo:
         return {
-            "texto": texto,
+            "texto": texto_original,
             "intencion": intencion_saludo,
             "confianza": 1.0,
         }
 
     if vectorizer is None or classifier is None:
         return {
-            "texto": texto,
+            "texto": texto_original,
             "intencion": "desconocido",
             "confianza": None,
             "error": "modelo_no_cargado",
@@ -521,7 +624,7 @@ def predecir_intencion(texto):
         confianza = None
 
     return {
-        "texto": texto,
+        "texto": texto_original,
         "intencion": intencion,
         "confianza": confianza,
     }
@@ -543,7 +646,19 @@ def obtener_catalogo():
 def normalizar_texto(texto):
     texto = str(texto or "").strip().lower()
     texto = unicodedata.normalize("NFD", texto)
-    return "".join(caracter for caracter in texto if unicodedata.category(caracter) != "Mn")
+    texto = "".join(caracter for caracter in texto if unicodedata.category(caracter) != "Mn")
+    return aplicar_correcciones_texto(texto)
+
+
+def aplicar_correcciones_texto(texto):
+    texto = str(texto or "").strip().lower()
+    texto = unicodedata.normalize("NFD", texto)
+    texto = "".join(caracter for caracter in texto if unicodedata.category(caracter) != "Mn")
+
+    for patron, reemplazo in CORRECCIONES_TEXTO:
+        texto = re.sub(patron, reemplazo, texto)
+
+    return re.sub(r"\s+", " ", texto).strip()
 
 
 def obtener_palabras_normalizadas(texto):
@@ -564,8 +679,97 @@ def detectar_saludo_puro(texto):
     if not palabras:
         return None
 
+    if texto_tiene_contexto_no_saludo(texto):
+        return None
+
     if all(palabra in PALABRAS_SALUDO_PURO for palabra in palabras):
         return "saludo"
+
+    return None
+
+
+def texto_tiene_contexto_no_saludo(texto):
+    texto_normalizado = normalizar_texto(texto)
+    palabras = set(obtener_palabras_normalizadas(texto))
+
+    return (
+        contiene_indicador_trabajo(texto_normalizado, palabras)
+        or contiene_indicador_cotizacion(texto_normalizado, palabras)
+        or contiene_indicador_servicio(texto_normalizado, palabras)
+        or contiene_indicador_agendamiento(palabras)
+    )
+
+
+def contiene_indicador_trabajo(texto_normalizado, palabras):
+    if any(frase in texto_normalizado for frase in FRASES_TRABAJO):
+        return True
+
+    if PALABRAS_TRABAJO & palabras:
+        return True
+
+    if "correo" in palabras and {"curriculo", "cv", "trabajo", "laboral"} & palabras:
+        return True
+
+    return False
+
+
+def contiene_indicador_cotizacion(texto_normalizado, palabras):
+    return (
+        any(frase in texto_normalizado for frase in FRASES_COTIZACION)
+        or bool(PALABRAS_COTIZACION & palabras)
+    )
+
+
+def contiene_indicador_servicio(texto_normalizado, palabras):
+    if PALABRAS_CONSULTA_SERVICIOS & palabras:
+        return True
+
+    if ESPECIALIDADES_CONOCIDAS & palabras:
+        return True
+
+    return any(
+        termino in texto_normalizado
+        for termino in (
+            "ecografia",
+            "electrocardiograma",
+            "electromiografia",
+            "mamografia",
+            "protesis",
+            "radiografia",
+            "resonancia",
+            "tomografia",
+            "tercer molar",
+            "cordal",
+            "cordales",
+        )
+    )
+
+
+def contiene_indicador_agendamiento(palabras):
+    return bool({"agendar", "cita", "reservar", "turno"} & palabras)
+
+
+def detectar_intencion_defensiva(texto):
+    texto_normalizado = normalizar_texto(texto)
+    palabras = set(obtener_palabras_normalizadas(texto))
+
+    if contiene_indicador_trabajo(texto_normalizado, palabras):
+        return "trabajo"
+
+    if contiene_indicador_cotizacion(texto_normalizado, palabras):
+        return "cotizar_servicio"
+
+    if contiene_indicador_agendamiento(palabras) or "sacar cita" in texto_normalizado:
+        return "agendar_cita"
+
+    if "atencion a domicilio" in texto_normalizado:
+        return "hablar_asesor"
+
+    if ESPECIALIDADES_CONOCIDAS & palabras:
+        return "consulta_especialidades"
+
+    if contiene_indicador_servicio(texto_normalizado, palabras):
+        return "consulta_servicios"
 
     return None
 

@@ -75,6 +75,18 @@ def obtener_terminos_medicos_controlados(servicio):
             "3er molar",
         ])
 
+    if "tratamiento de conducto" in nombre or "endodoncia" in nombre:
+        terminos.extend(["endodoncia", "tratamiento de conducto"])
+
+    if "restauracion" in nombre:
+        terminos.extend(["calce", "calces", "calce dental", "tapar caries"])
+
+    if "protesis" in nombre:
+        terminos.extend(["protesis", "protesis dental", "dientes postizos"])
+
+    if "blanqueamiento" in nombre:
+        terminos.extend(["blanqueamiento", "blanqueamiento dental"])
+
     return terminos
 
 

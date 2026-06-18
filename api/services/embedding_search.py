@@ -14,7 +14,7 @@ CACHE_DIR = BASE_DIR / "api" / "cache"
 INDEX_PATH = CACHE_DIR / "service_index.json"
 EMBEDDINGS_PATH = CACHE_DIR / "service_embeddings.npy"
 MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-INDEX_VERSION = 2
+INDEX_VERSION = 3
 DEFAULT_TOP_K = 10
 MIN_SIMILARITY = 0.25
 MIN_FINAL_SCORE = 0.25
@@ -41,7 +41,24 @@ EXPANSIONES_CONSULTA = {
     "higado": ["hepatobiliar", "hepatico"],
     "vesicula": ["biliar", "hepatobiliar"],
     "muela del juicio": ["tercer molar"],
+    "tratamiento de conducto": ["endodoncia"],
+    "calce": ["restauracion"],
+    "calces": ["restauracion"],
 }
+
+CORRECCIONES_TEXTO = (
+    (r"\bsiasen(?=\w)", "si hacen "),
+    (r"\bsiasen\b", "si hacen"),
+    (r"\bsirealisan(?=\w)", "si realizan "),
+    (r"\bsirealisan\b", "si realizan"),
+    (r"\brealisan\b", "realizan"),
+    (r"\basen\b", "hacen"),
+    (r"\becocardiogrma\b", "ecocardiograma"),
+    (r"\bextracion\b", "extraccion"),
+    (r"\bblancamiento\b", "blanqueamiento"),
+    (r"\benal\b", "renal"),
+    (r"\bprotesi\b", "protesis"),
+)
 
 STOPWORDS_CONSULTA = {
     "a",
@@ -64,11 +81,16 @@ STOPWORDS_CONSULTA = {
 def normalizar_texto_simple(texto):
     texto = str(texto or "").strip().lower()
     texto = unicodedata.normalize("NFD", texto)
-    return "".join(
+    texto = "".join(
         caracter
         for caracter in texto
         if unicodedata.category(caracter) != "Mn"
     )
+
+    for patron, reemplazo in CORRECCIONES_TEXTO:
+        texto = re.sub(patron, reemplazo, texto)
+
+    return re.sub(r"\s+", " ", texto).strip()
 
 
 def obtener_tokens(texto):
