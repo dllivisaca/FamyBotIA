@@ -5,3 +5,4 @@ joblib
 pydantic
 requests
 a2wsgi
+sentence-transformers

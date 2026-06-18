@@ -1,0 +1,137 @@
+[
+  {
+    "texto": "Información de ecografía abdominal completa",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "Ecografía  Abdominal",
+    "total_minimo": 1
+  },
+  {
+    "texto": "Buenas, tmb quitan caries?",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "Restauración",
+    "total_minimo": 1
+  },
+  {
+    "texto": "Hola quisiera saber si uds hacen operaciones",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "Cirugia",
+    "total_minimo": 1
+  },
+  {
+    "texto": "resonancia cerebral con contraste y en que precio",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "cráneo simple y contrastada",
+    "total_minimo": 1
+  },
+  {
+    "texto": "exámenes de audiometría",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "Audiometría",
+    "total_minimo": 1
+  },
+  {
+    "texto": "eco de las 20 semanas / eco morfológico",
+    "debe_encontrar": true,
+    "accion_esperada": "respuesta_directa",
+    "contiene_resultado": "Ecografía Morfológica",
+    "total_minimo": 1
+  },
+  {
+    "texto": "3er molares",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple", "abrir_trabajo"],
+    "contiene_resultado": "Extracción de tercer molar",
+    "total_minimo": 3
+  },
+  {
+    "texto": "Buen día realizan exámenes en las mamas",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "Ecografía de mamas",
+    "total_minimo": 1
+  },
+  {
+    "texto": "si hacen protesis / realizan protesis",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "Prótesis removible",
+    "total_minimo": 3
+  },
+  {
+    "texto": "radiografía",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "Radiografía",
+    "total_minimo": 20
+  },
+  {
+    "texto": "resonancia contrastada abdominal",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple", "abrir_trabajo"],
+    "contiene_resultado": "abdomen simple y contrastado",
+    "total_minimo": 1
+  },
+  {
+    "texto": "gas de la risa para niño",
+    "debe_encontrar": false,
+    "accion_esperada": "sin_resultados",
+    "total_minimo": 0
+  },
+  {
+    "texto": "cordales con panorámica",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["derivar_asesor", "respuesta_simple", "consulta_ubicacion"],
+    "contiene_resultado": "Extracción de tercer molar",
+    "total_minimo": 3
+  },
+  {
+    "texto": "necesito sacarme las cordales ya tengo la panorámica",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["derivar_asesor", "respuesta_simple", "consulta_ubicacion"],
+    "contiene_resultado": "Extracción de tercer molar",
+    "total_minimo": 3
+  },
+  {
+    "texto": "consulta con especialista",
+    "debe_encontrar": true,
+    "contiene_resultado": "Consulta de valoración con el especialista",
+    "total_minimo": 1
+  },
+  {
+    "texto": "Buenos días que precio tiene la consulta y donde están ubicados disculpe gracias",
+    "debe_encontrar": false,
+    "accion_esperada": "consulta_ubicacion",
+    "acciones_no_permitidas": ["sin_resultados", "respuesta_simple"]
+  },
+  {
+    "texto": "pruebas de embarazo de sangre",
+    "debe_encontrar": true,
+    "contiene_resultado": "Prueba de HCG",
+    "total_minimo": 2
+  },
+  {
+    "texto": "Eco transvaginal precio",
+    "debe_encontrar": true,
+    "contiene_resultado": "Ecografía Endovaginal",
+    "total_minimo": 1
+  },
+  {
+    "texto": "para sacar un tercer molar q vale",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "Extracción de tercer molar",
+    "total_minimo": 3
+  },
+  {
+    "texto": "Q precio tiene el calce de muela",
+    "debe_encontrar": true,
+    "acciones_no_permitidas": ["fallback", "respuesta_simple"],
+    "contiene_resultado": "Restauración",
+    "total_minimo": 3
+  }
+]

@@ -16,6 +16,7 @@ CATALOG_URL = "https://app.famysaludec.com/chatbot/catalogo-servicios"
 FAMYBOT_IA_API_KEY = os.environ.get("FAMYBOT_IA_API_KEY", "").strip()
 MIN_CONF_ACCION_FLUJO = 0.55
 MIN_RATIO_FUZZY_INTENCION = 0.86
+EMBEDDING_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 INTENCIONES_CATALOGO = {
     "cotizar_servicio",
     "consulta_servicios",
@@ -282,6 +283,8 @@ SINONIMOS_CATALOGO = {
 vectorizer = None
 classifier = None
 model_load_error = None
+embedding_model = None
+embedding_model_error = None
 
 try:
     vectorizer = joblib.load(MODEL_DIR / "vectorizer_famybot_v1.pkl")
@@ -321,6 +324,37 @@ def validar_api_key(
     print(f"[AUTH] request rechazado: {request.url.path}")
     raise HTTPException(status_code=401, detail="unauthorized")
 
+
+def obtener_embedding_model():
+    global embedding_model
+    global embedding_model_error
+
+    if embedding_model is not None:
+        return embedding_model
+
+    try:
+        from sentence_transformers import SentenceTransformer
+
+        embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+        embedding_model_error = None
+        return embedding_model
+    except Exception as exc:
+        embedding_model_error = str(exc)
+        raise
+
+
+def calcular_similitud_coseno(vector_a, vector_b):
+    valores_a = [float(valor) for valor in vector_a]
+    valores_b = [float(valor) for valor in vector_b]
+    producto = sum(a * b for a, b in zip(valores_a, valores_b))
+    norma_a = sum(a * a for a in valores_a) ** 0.5
+    norma_b = sum(b * b for b in valores_b) ** 0.5
+
+    if norma_a == 0 or norma_b == 0:
+        return 0.0
+
+    return producto / (norma_a * norma_b)
+
 @app.get("/")
 def home():
     return {"status": "ok", "message": "FamyBot IA API activa"}
@@ -332,6 +366,30 @@ def health():
         "status": "ok",
         "model_loaded": vectorizer is not None and classifier is not None,
     }
+
+
+@app.get("/embedding-health")
+def embedding_health(_auth: bool = Depends(validar_api_key)):
+    try:
+        model = obtener_embedding_model()
+        frases = [
+            "ecografia abdominal",
+            "ultrasonido de abdomen",
+        ]
+        embeddings = model.encode(frases)
+        similarity = calcular_similitud_coseno(embeddings[0], embeddings[1])
+
+        return {
+            "status": "ok",
+            "model_loaded": True,
+            "embedding_dimension": len(embeddings[0]),
+            "similarity": round(float(similarity), 4),
+        }
+    except Exception as exc:
+        return {
+            "status": "error",
+            "message": str(exc),
+        }
 
 
 @app.post("/predict")
