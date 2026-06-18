@@ -19,6 +19,15 @@ FAMYBOT_IA_API_KEY = os.environ.get("FAMYBOT_IA_API_KEY", "").strip()
 MIN_CONF_ACCION_FLUJO = 0.55
 MIN_RATIO_FUZZY_INTENCION = 0.86
 EMBEDDING_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+MIN_SCORE_SEMANTICO_CATALOGO = 0.62
+MIN_SCORE_SEMANTICO_CON_EXACTO_FUZZY = 0.82
+CONSULTAS_AMBIGUAS_SEMANTICAS = {
+    "eco",
+    "ecografia",
+    "electro",
+    "resonancia",
+    "tomografia",
+}
 INTENCIONES_CATALOGO = {
     "cotizar_servicio",
     "consulta_servicios",
@@ -408,7 +417,7 @@ def semantic_search_test(
 
         if busqueda["total"] == 0:
             consulta_catalogo = preparar_consulta_catalogo(texto)
-            fallback = buscar_servicios(consulta_catalogo)
+            fallback = buscar_servicios_fuzzy(consulta_catalogo)
             return {
                 "status": "fallback",
                 "texto": texto,
@@ -429,7 +438,7 @@ def semantic_search_test(
     except Exception as exc:
         try:
             consulta_catalogo = preparar_consulta_catalogo(texto)
-            fallback = buscar_servicios(consulta_catalogo)
+            fallback = buscar_servicios_fuzzy(consulta_catalogo)
             return {
                 "status": "fallback",
                 "texto": texto,
@@ -608,7 +617,7 @@ def aplico_sinonimo_catalogo(texto):
     return normalizar_texto(aplicar_sinonimos_catalogo(texto)) != normalizar_texto(texto)
 
 
-def buscar_servicios(texto_busqueda):
+def buscar_servicios_fuzzy(texto_busqueda):
     catalogo = obtener_catalogo()
     texto = normalizar_texto(texto_busqueda)
     tokens_busqueda = obtener_tokens_utiles(texto_busqueda)
@@ -655,11 +664,20 @@ def buscar_servicios(texto_busqueda):
                         "area": nombre_area,
                         "precio": servicio.get("price") or servicio.get("precio"),
                         "precio_promocion": (
-                            servicio.get("promotion_price")
+                            servicio.get("sale_price")
+                            or servicio.get("promotion_price")
                             or servicio.get("precio_promocion")
                         ),
-                        "presencial": bool(servicio.get("presencial")),
-                        "virtual": bool(servicio.get("virtual")),
+                        "presencial": bool(
+                            servicio.get("is_presential")
+                            if "is_presential" in servicio
+                            else servicio.get("presencial")
+                        ),
+                        "virtual": bool(
+                            servicio.get("is_virtual")
+                            if "is_virtual" in servicio
+                            else servicio.get("virtual")
+                        ),
                     })
 
     return {
@@ -668,6 +686,148 @@ def buscar_servicios(texto_busqueda):
         "total_conocido": total_conocido,
         "resultados": resultados,
     }
+
+
+def limpiar_resultado_semantico(resultado):
+    return {
+        "id": resultado.get("id"),
+        "nombre": resultado.get("nombre"),
+        "area": resultado.get("area"),
+        "precio": resultado.get("precio"),
+        "precio_promocion": resultado.get("precio_promocion"),
+        "presencial": bool(resultado.get("presencial")),
+        "virtual": bool(resultado.get("virtual")),
+    }
+
+
+def limpiar_busqueda_semantica(busqueda):
+    resultados = [
+        limpiar_resultado_semantico(resultado)
+        for resultado in busqueda.get("resultados", [])
+    ]
+
+    return {
+        "total": len(resultados),
+        "total_real": len(resultados),
+        "total_conocido": True,
+        "resultados": resultados,
+    }
+
+
+def obtener_score_semantico_maximo(busqueda):
+    scores = [
+        float(resultado.get("score") or resultado.get("final_score") or 0)
+        for resultado in busqueda.get("resultados", [])
+    ]
+    return max(scores) if scores else 0.0
+
+
+def es_consulta_semantica_ambigua(texto):
+    tokens = obtener_tokens_utiles(texto)
+    return len(tokens) == 1 and tokens[0] in CONSULTAS_AMBIGUAS_SEMANTICAS
+
+
+def fuzzy_tiene_coincidencia_exacta(texto_busqueda, busqueda_fuzzy):
+    tokens_consulta = set(obtener_tokens_utiles(texto_busqueda))
+
+    if not tokens_consulta:
+        return False
+
+    for resultado in busqueda_fuzzy.get("resultados", [])[:5]:
+        tokens_resultado = obtener_tokens_servicio(
+            normalizar_texto(
+                " ".join(
+                    str(valor)
+                    for valor in (
+                        resultado.get("nombre"),
+                        resultado.get("area"),
+                    )
+                    if valor
+                )
+            )
+        )
+
+        if tokens_consulta.issubset(tokens_resultado):
+            return True
+
+    return False
+
+
+def debe_evaluar_fuzzy_exacto(texto_busqueda):
+    tokens = obtener_tokens_utiles(texto_busqueda)
+    return 0 < len(tokens) <= 3
+
+
+def log_busqueda_catalogo(origen, texto, total, detalle=None):
+    mensaje = f"FamyBot IA: catalog_search={origen} texto={texto!r} total={total}"
+    if detalle:
+        mensaje = f"{mensaje} {detalle}"
+    print(mensaje)
+
+
+def buscar_servicios(texto_busqueda):
+    if es_consulta_semantica_ambigua(texto_busqueda):
+        busqueda_fuzzy = buscar_servicios_fuzzy(texto_busqueda)
+        log_busqueda_catalogo("fuzzy", texto_busqueda, busqueda_fuzzy["total"], "ambigua")
+        return busqueda_fuzzy
+
+    try:
+        busqueda_semantica = buscar_servicios_semanticos(
+            texto_busqueda,
+            top_k=20,
+            sinonimos_catalogo=SINONIMOS_CATALOGO,
+        )
+        score_semantico = obtener_score_semantico_maximo(busqueda_semantica)
+
+        if busqueda_semantica["total"] == 0 or score_semantico < MIN_SCORE_SEMANTICO_CATALOGO:
+            busqueda_fuzzy = buscar_servicios_fuzzy(texto_busqueda)
+            log_busqueda_catalogo(
+                "semantic_with_fuzzy_fallback",
+                texto_busqueda,
+                busqueda_fuzzy["total"],
+                f"score={score_semantico:.4f}",
+            )
+            return busqueda_fuzzy
+
+        if (
+            score_semantico < MIN_SCORE_SEMANTICO_CON_EXACTO_FUZZY
+            or debe_evaluar_fuzzy_exacto(texto_busqueda)
+        ):
+            busqueda_fuzzy = buscar_servicios_fuzzy(texto_busqueda)
+            if (
+                busqueda_fuzzy["total"] > 0
+                and fuzzy_tiene_coincidencia_exacta(texto_busqueda, busqueda_fuzzy)
+                and busqueda_fuzzy["total"] <= busqueda_semantica["total"]
+                and (
+                    score_semantico < MIN_SCORE_SEMANTICO_CON_EXACTO_FUZZY
+                    or busqueda_fuzzy["total"] <= 5
+                )
+            ):
+                log_busqueda_catalogo(
+                    "fuzzy_exact_override",
+                    texto_busqueda,
+                    busqueda_fuzzy["total"],
+                    f"score={score_semantico:.4f}",
+                )
+                return busqueda_fuzzy
+
+        busqueda_limpia = limpiar_busqueda_semantica(busqueda_semantica)
+        log_busqueda_catalogo(
+            "semantic",
+            texto_busqueda,
+            busqueda_limpia["total"],
+            f"score={score_semantico:.4f}",
+        )
+        return busqueda_limpia
+    except Exception as exc:
+        busqueda_fuzzy = buscar_servicios_fuzzy(texto_busqueda)
+        log_busqueda_catalogo(
+            "semantic_with_fuzzy_fallback",
+            texto_busqueda,
+            busqueda_fuzzy["total"],
+            f"error={exc}",
+        )
+        return busqueda_fuzzy
 
 
 def es_palabra_ignorada(palabra):
