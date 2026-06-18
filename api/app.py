@@ -388,16 +388,42 @@ CORRECCIONES_TEXTO = (
 vectorizer = None
 classifier = None
 model_load_error = None
+model_version = None
 embedding_model = None
 embedding_model_error = None
 
-try:
-    vectorizer = joblib.load(MODEL_DIR / "vectorizer_famybot_v1.pkl")
-    classifier = joblib.load(MODEL_DIR / "classifier_famybot_v1.pkl")
-    print("FamyBot IA: modelo cargado correctamente")
-except Exception as exc:
-    model_load_error = str(exc)
-    print(f"FamyBot IA: error cargando modelo: {exc}")
+
+def cargar_modelo_intenciones():
+    global vectorizer
+    global classifier
+    global model_load_error
+    global model_version
+
+    try:
+        vectorizer = joblib.load(MODEL_DIR / "vectorizer_famybot_v2.pkl")
+        classifier = joblib.load(MODEL_DIR / "classifier_famybot_v2.pkl")
+        model_load_error = None
+        model_version = "v2"
+        print("FamyBot IA: modelo de intenciones activo: v2")
+        return
+    except Exception as exc_v2:
+        print(f"FamyBot IA: error cargando modelo v2: {exc_v2}")
+
+    try:
+        vectorizer = joblib.load(MODEL_DIR / "vectorizer_famybot_v1.pkl")
+        classifier = joblib.load(MODEL_DIR / "classifier_famybot_v1.pkl")
+        model_load_error = None
+        model_version = "v1_fallback"
+        print("FamyBot IA: modelo de intenciones activo: v1_fallback")
+    except Exception as exc_v1:
+        vectorizer = None
+        classifier = None
+        model_load_error = str(exc_v1)
+        model_version = None
+        print(f"FamyBot IA: error cargando modelo fallback v1: {exc_v1}")
+
+
+cargar_modelo_intenciones()
 
 app = FastAPI(title="FamyBot IA API", version="1.0.0")
 
@@ -470,6 +496,7 @@ def health():
     return {
         "status": "ok",
         "model_loaded": vectorizer is not None and classifier is not None,
+        "model_version": model_version,
     }
 
 

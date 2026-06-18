@@ -1,9 +1,9 @@
 {
   "total_cases": 118,
   "intent_cases": 118,
-  "intent_correct": 115,
-  "intent_errors": 3,
-  "intent_accuracy": 0.9746,
+  "intent_correct": 116,
+  "intent_errors": 2,
+  "intent_accuracy": 0.9831,
   "service_cases": 62,
   "service_top1_correct": 49,
   "service_top3_correct": 52,
@@ -11,7 +11,7 @@
   "service_top1_accuracy": 0.7903,
   "service_top3_accuracy": 0.8387,
   "service_top5_accuracy": 0.8387,
-  "model_version": "v1",
+  "model_version": "v2",
   "errors": [
     {
       "text": "Buenas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?",
@@ -164,51 +164,6 @@
       ]
     },
     {
-      "text": "hiperplasia prostatica, calcificaciones en la prostata",
-      "expected_intent": "consulta_servicios",
-      "expected_intents": [
-        "consulta_servicios"
-      ],
-      "predicted_intent": "consultar_horario",
-      "expected_service": null,
-      "expected_services": [],
-      "service_rank": null,
-      "top_services": []
-    },
-    {
-      "text": "3er molares",
-      "expected_intent": "consulta_servicios",
-      "expected_intents": [
-        "consulta_servicios"
-      ],
-      "predicted_intent": "trabajo",
-      "expected_service": "Extracción de tercer molar",
-      "expected_services": [
-        "Extracción de tercer molar"
-      ],
-      "service_rank": 1,
-      "top_services": [
-        {
-          "id": 577,
-          "nombre": "Extracción de tercer molar no posicionado",
-          "area": "Odontología",
-          "precio": 85
-        },
-        {
-          "id": 575,
-          "nombre": "Extracción de tercer molar posicionado",
-          "area": "Odontología",
-          "precio": 70
-        },
-        {
-          "id": 576,
-          "nombre": "Extracción de tercer molar semiposicionado",
-          "area": "Odontología",
-          "precio": 75
-        }
-      ]
-    },
-    {
       "text": "Quiero saber.sirealisanprotesis",
       "expected_intent": "consulta_servicios",
       "expected_intents": [
@@ -233,6 +188,18 @@
       "expected_services": [
         "Cardiología"
       ],
+      "service_rank": null,
+      "top_services": []
+    },
+    {
+      "text": "Buenos días disculpe hoy atienden",
+      "expected_intent": "consultar_horario",
+      "expected_intents": [
+        "consultar_horario"
+      ],
+      "predicted_intent": "saludo",
+      "expected_service": null,
+      "expected_services": [],
       "service_rank": null,
       "top_services": []
     },
@@ -1595,8 +1562,8 @@
       "expected_intents": [
         "consulta_servicios"
       ],
-      "predicted_intent": "consultar_horario",
-      "intent_ok": false,
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
       "expected_services": [],
       "service_rank": null,
       "top_services": [],
@@ -1775,8 +1742,8 @@
       "expected_intents": [
         "consulta_servicios"
       ],
-      "predicted_intent": "trabajo",
-      "intent_ok": false,
+      "predicted_intent": "consulta_servicios",
+      "intent_ok": true,
       "expected_services": [
         "Extracción de tercer molar"
       ],
@@ -2439,8 +2406,8 @@
       "expected_intents": [
         "consultar_horario"
       ],
-      "predicted_intent": "consultar_horario",
-      "intent_ok": true,
+      "predicted_intent": "saludo",
+      "intent_ok": false,
       "expected_services": [],
       "service_rank": null,
       "top_services": [],
@@ -2476,7 +2443,7 @@
         "consultar_horario",
         "consultar_ubicacion"
       ],
-      "predicted_intent": "consultar_horario",
+      "predicted_intent": "consultar_ubicacion",
       "intent_ok": true,
       "expected_services": [],
       "service_rank": null,

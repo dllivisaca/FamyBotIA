@@ -4,6 +4,8 @@ import sys
 import unicodedata
 from pathlib import Path
 
+import joblib
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_CASES_PATH = BASE_DIR / "tests" / "real_cases_v1.json"
@@ -13,6 +15,25 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 from api import app  # noqa: E402
+
+
+def default_report_path(model_version):
+    if model_version == "v1":
+        return DEFAULT_REPORT_PATH
+
+    return BASE_DIR / "reports" / f"evaluation_report_{model_version}.json"
+
+
+def configurar_modelo(model_version):
+    if model_version == "v1":
+        return
+
+    vectorizer_path = BASE_DIR / "model" / f"vectorizer_famybot_{model_version}.pkl"
+    classifier_path = BASE_DIR / "model" / f"classifier_famybot_{model_version}.pkl"
+
+    app.vectorizer = joblib.load(vectorizer_path)
+    app.classifier = joblib.load(classifier_path)
+    app.model_load_error = None
 
 
 def normalizar(texto):
@@ -301,37 +322,42 @@ def main():
         description="Evalua casos reales de FamyBot IA."
     )
     parser.add_argument("--cases", type=Path, default=DEFAULT_CASES_PATH)
-    parser.add_argument("--report", type=Path, default=DEFAULT_REPORT_PATH)
+    parser.add_argument("--report", type=Path, default=None)
+    parser.add_argument("--model-version", default="v1", choices=("v1", "v2"))
     args = parser.parse_args()
+    report_path = args.report or default_report_path(args.model_version)
 
     casos = cargar_casos(args.cases)
     if not casos:
         print(f"No hay casos para evaluar en {args.cases}")
         return 1
 
+    configurar_modelo(args.model_version)
     cachear_catalogo()
     evaluaciones = [evaluar_caso(caso) for caso in casos]
     metricas = calcular_metricas(evaluaciones)
     errores = construir_errores(evaluaciones)
     reporte = {
         **metricas,
+        "model_version": args.model_version,
         "errors": errores,
         "evaluations": evaluaciones,
     }
 
-    args.report.parent.mkdir(parents=True, exist_ok=True)
-    with args.report.open("w", encoding="utf-8") as archivo:
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    with report_path.open("w", encoding="utf-8") as archivo:
         json.dump(reporte, archivo, ensure_ascii=False, indent=2)
 
     print(
         "Resumen: "
+        f"model_version={args.model_version} "
         f"total={metricas['total_cases']} "
         f"intent_accuracy={metricas['intent_accuracy']} "
         f"service_top1={metricas['service_top1_accuracy']} "
         f"service_top3={metricas['service_top3_accuracy']} "
         f"service_top5={metricas['service_top5_accuracy']}"
     )
-    print(f"Reporte: {args.report}")
+    print(f"Reporte: {report_path}")
     return 0
 
 
