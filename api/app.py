@@ -9,6 +9,8 @@ from typing import Optional
 import unicodedata
 import re
 
+from api.services.embedding_search import buscar_servicios_semanticos
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "model"
 
@@ -390,6 +392,59 @@ def embedding_health(_auth: bool = Depends(validar_api_key)):
             "status": "error",
             "message": str(exc),
         }
+
+
+@app.get("/semantic-search-test")
+def semantic_search_test(
+    texto: str = "",
+    _auth: bool = Depends(validar_api_key),
+):
+    try:
+        busqueda = buscar_servicios_semanticos(
+            texto,
+            top_k=10,
+            sinonimos_catalogo=SINONIMOS_CATALOGO,
+        )
+
+        if busqueda["total"] == 0:
+            consulta_catalogo = preparar_consulta_catalogo(texto)
+            fallback = buscar_servicios(consulta_catalogo)
+            return {
+                "status": "fallback",
+                "texto": texto,
+                "total": fallback["total"],
+                "total_real": fallback["total_real"],
+                "total_conocido": fallback["total_conocido"],
+                "resultados": fallback["resultados"],
+            }
+
+        return {
+            "status": "ok",
+            "texto": texto,
+            "total": busqueda["total"],
+            "total_real": busqueda["total_real"],
+            "total_conocido": busqueda["total_conocido"],
+            "resultados": busqueda["resultados"],
+        }
+    except Exception as exc:
+        try:
+            consulta_catalogo = preparar_consulta_catalogo(texto)
+            fallback = buscar_servicios(consulta_catalogo)
+            return {
+                "status": "fallback",
+                "texto": texto,
+                "message": str(exc),
+                "total": fallback["total"],
+                "total_real": fallback["total_real"],
+                "total_conocido": fallback["total_conocido"],
+                "resultados": fallback["resultados"],
+            }
+        except Exception as fallback_exc:
+            return {
+                "status": "error",
+                "message": str(exc),
+                "fallback_message": str(fallback_exc),
+            }
 
 
 @app.post("/predict")

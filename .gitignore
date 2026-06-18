@@ -17,6 +17,11 @@ __pycache__/
 # Logs
 *.log
 
+# Cache de embeddings semanticos
+api/cache/service_index.json
+api/cache/service_embeddings.npy
+api/cache/*.npy
+
 # Variables de entorno
 .env
 
