@@ -996,11 +996,46 @@ def log_busqueda_catalogo(origen, texto, total, detalle=None):
     print(mensaje)
 
 
+def agregar_search_mode(busqueda, search_mode):
+    busqueda = dict(busqueda)
+    busqueda["_search_mode"] = search_mode or "none"
+    return busqueda
+
+
+def obtener_search_mode_busqueda(busqueda):
+    if not isinstance(busqueda, dict):
+        return "none"
+    return busqueda.get("_search_mode") or "none"
+
+
+def combinar_search_modes(search_modes):
+    modos = [modo for modo in search_modes if modo and modo != "none"]
+
+    if not modos:
+        return "none"
+
+    if len(set(modos)) == 1:
+        return modos[0]
+
+    for modo_prioritario in ("semantic_fallback", "fuzzy_exact_override", "semantic", "fuzzy"):
+        if modo_prioritario in modos:
+            return modo_prioritario
+
+    return "none"
+
+
+def construir_respuesta_chat(respuesta, search_mode=None):
+    respuesta = dict(respuesta)
+    respuesta["model_version"] = model_version
+    respuesta["search_mode"] = search_mode or respuesta.get("search_mode") or "none"
+    return respuesta
+
+
 def buscar_servicios(texto_busqueda):
     if es_consulta_semantica_ambigua(texto_busqueda):
         busqueda_fuzzy = buscar_servicios_fuzzy(texto_busqueda)
         log_busqueda_catalogo("fuzzy", texto_busqueda, busqueda_fuzzy["total"], "ambigua")
-        return busqueda_fuzzy
+        return agregar_search_mode(busqueda_fuzzy, "fuzzy")
 
     try:
         busqueda_semantica = buscar_servicios_semanticos(
@@ -1018,7 +1053,7 @@ def buscar_servicios(texto_busqueda):
                 busqueda_fuzzy["total"],
                 f"score={score_semantico:.4f}",
             )
-            return busqueda_fuzzy
+            return agregar_search_mode(busqueda_fuzzy, "semantic_fallback")
 
         if (
             score_semantico < MIN_SCORE_SEMANTICO_CON_EXACTO_FUZZY
@@ -1040,7 +1075,7 @@ def buscar_servicios(texto_busqueda):
                     busqueda_fuzzy["total"],
                     f"score={score_semantico:.4f}",
                 )
-                return busqueda_fuzzy
+                return agregar_search_mode(busqueda_fuzzy, "fuzzy_exact_override")
 
         busqueda_limpia = limpiar_busqueda_semantica(busqueda_semantica)
         log_busqueda_catalogo(
@@ -1049,7 +1084,7 @@ def buscar_servicios(texto_busqueda):
             busqueda_limpia["total"],
             f"score={score_semantico:.4f}",
         )
-        return busqueda_limpia
+        return agregar_search_mode(busqueda_limpia, "semantic")
     except Exception as exc:
         busqueda_fuzzy = buscar_servicios_fuzzy(texto_busqueda)
         log_busqueda_catalogo(
@@ -1058,7 +1093,7 @@ def buscar_servicios(texto_busqueda):
             busqueda_fuzzy["total"],
             f"error={exc}",
         )
-        return busqueda_fuzzy
+        return agregar_search_mode(busqueda_fuzzy, "semantic_fallback")
 
 
 def es_palabra_ignorada(palabra):
@@ -1228,10 +1263,14 @@ def combinar_busquedas_catalogo(busquedas):
     vistos = set()
     total_real = 0
     total_conocido = True
+    search_modes = []
 
     for busqueda in busquedas:
         total_real += busqueda["total_real"]
         total_conocido = total_conocido and busqueda["total_conocido"]
+        search_mode = obtener_search_mode_busqueda(busqueda)
+        if search_mode and search_mode != "none":
+            search_modes.append(search_mode)
 
         for resultado in busqueda["resultados"]:
             clave = resultado.get("id") or (
@@ -1253,6 +1292,7 @@ def combinar_busquedas_catalogo(busquedas):
         "total_real": total_real,
         "total_conocido": total_conocido,
         "resultados": resultados,
+        "_search_mode": combinar_search_modes(search_modes),
     }
 
 
@@ -1292,6 +1332,7 @@ def filtrar_busqueda_por_tokens_exactos(busqueda, consulta):
         "total_real": len(resultados_exactos),
         "total_conocido": busqueda["total_conocido"],
         "resultados": resultados_exactos,
+        "_search_mode": obtener_search_mode_busqueda(busqueda),
     }
 
 
@@ -1343,6 +1384,7 @@ def construir_respuesta_busqueda_catalogo(texto, busqueda):
         "accion": accion,
         "mensaje": mensaje,
         "resultados": resultados,
+        "_search_mode": obtener_search_mode_busqueda(busqueda),
     }
 
 
@@ -1376,7 +1418,7 @@ def buscar_catalogo_comercial(texto):
 
 
 def construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo):
-    return {
+    return construir_respuesta_chat({
         "texto": texto,
         "intencion": intencion,
         "confianza": confianza,
@@ -1386,7 +1428,7 @@ def construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo
         "total_real": respuesta_catalogo["total_real"],
         "total_conocido": respuesta_catalogo["total_conocido"],
         "resultados": respuesta_catalogo["resultados"],
-    }
+    }, respuesta_catalogo.get("_search_mode"))
 
 
 @app.get("/catalog")
@@ -1473,17 +1515,17 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     print(f"FamyBot IA: intencion_original={intencion} confianza={confianza}")
 
     if prediccion.get("error") == "modelo_no_cargado":
-        return {
+        return construir_respuesta_chat({
             "texto": texto,
             "intencion": intencion,
             "confianza": confianza,
             "accion": "fallback",
             "mensaje": "En este momento estoy iniciando mis servicios. Puedes intentar de nuevo en unos segundos o solicitar ayuda con un asesor.",
             "error": "modelo_no_cargado",
-        }
+        })
 
     if es_consulta_precio_y_ubicacion(texto):
-        return {
+        return construir_respuesta_chat({
             "texto": texto,
             "intencion": "consulta_servicios",
             "confianza": confianza,
@@ -1498,7 +1540,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             "total_real": 0,
             "total_conocido": True,
             "resultados": [],
-        }
+        })
 
     if es_consulta_catalogo_comercial(texto):
         respuesta_catalogo = buscar_catalogo_comercial(texto)
@@ -1513,7 +1555,11 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
 
     if aplico_sinonimo_catalogo(texto):
         consulta_catalogo = preparar_consulta_catalogo(texto)
-        respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
+        busqueda = buscar_servicios(consulta_catalogo)
+        respuesta_catalogo = construir_respuesta_busqueda_catalogo(
+            consulta_catalogo,
+            busqueda,
+        )
         print(f"FamyBot IA: total_catalogo_sinonimo={respuesta_catalogo['total']}")
 
         if respuesta_catalogo["total"] > 0:
@@ -1529,7 +1575,11 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
 
     if intencion in INTENCIONES_CATALOGO:
         consulta_catalogo = preparar_consulta_catalogo(texto)
-        respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
+        busqueda = buscar_servicios(consulta_catalogo)
+        respuesta_catalogo = construir_respuesta_busqueda_catalogo(
+            consulta_catalogo,
+            busqueda,
+        )
         print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
         return construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo)
 
@@ -1543,26 +1593,30 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
 
             if intencion_fuzzy in ACCIONES_FLUJO:
                 accion_flujo = ACCIONES_FLUJO[intencion_fuzzy]
-                return {
+                return construir_respuesta_chat({
                     "texto": texto,
                     "intencion": intencion_fuzzy,
                     "confianza": confianza,
                     "accion": accion_flujo["accion"],
                     "mensaje": accion_flujo["mensaje"],
-                }
+                })
 
             if intencion_fuzzy in RESPUESTAS_SIMPLES:
                 respuesta_simple = RESPUESTAS_SIMPLES[intencion_fuzzy]
-                return {
+                return construir_respuesta_chat({
                     "texto": texto,
                     "intencion": intencion_fuzzy,
                     "confianza": confianza,
                     "accion": respuesta_simple["accion"],
                     "mensaje": respuesta_simple["mensaje"],
-                }
+                })
 
             consulta_catalogo = preparar_consulta_catalogo(texto)
-            respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
+            busqueda = buscar_servicios(consulta_catalogo)
+            respuesta_catalogo = construir_respuesta_busqueda_catalogo(
+                consulta_catalogo,
+                busqueda,
+            )
             print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
 
             if respuesta_catalogo["total"] > 0:
@@ -1574,48 +1628,52 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
                 )
 
             respuesta_simple = RESPUESTAS_SIMPLES["desconocido"]
-            return {
+            return construir_respuesta_chat({
                 "texto": texto,
                 "intencion": intencion,
                 "confianza": confianza,
                 "accion": respuesta_simple["accion"],
                 "mensaje": respuesta_simple["mensaje"],
-            }
+            })
 
         accion_flujo = ACCIONES_FLUJO[intencion]
-        return {
+        return construir_respuesta_chat({
             "texto": texto,
             "intencion": intencion,
             "confianza": confianza,
             "accion": accion_flujo["accion"],
             "mensaje": accion_flujo["mensaje"],
-        }
+        })
 
     if intencion == "saludo" and not detectar_saludo_puro(texto):
         intencion_fuzzy = detectar_intencion_frecuente_fuzzy(texto)
 
         if intencion_fuzzy in ACCIONES_FLUJO:
             accion_flujo = ACCIONES_FLUJO[intencion_fuzzy]
-            return {
+            return construir_respuesta_chat({
                 "texto": texto,
                 "intencion": intencion_fuzzy,
                 "confianza": confianza,
                 "accion": accion_flujo["accion"],
                 "mensaje": accion_flujo["mensaje"],
-            }
+            })
 
         if intencion_fuzzy in RESPUESTAS_SIMPLES:
             respuesta_simple = RESPUESTAS_SIMPLES[intencion_fuzzy]
-            return {
+            return construir_respuesta_chat({
                 "texto": texto,
                 "intencion": intencion_fuzzy,
                 "confianza": confianza,
                 "accion": respuesta_simple["accion"],
                 "mensaje": respuesta_simple["mensaje"],
-            }
+            })
 
         consulta_catalogo = preparar_consulta_sin_relleno(texto)
-        respuesta_catalogo = ask_catalog(SearchRequest(texto=consulta_catalogo))
+        busqueda = buscar_servicios(consulta_catalogo)
+        respuesta_catalogo = construir_respuesta_busqueda_catalogo(
+            consulta_catalogo,
+            busqueda,
+        )
         print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
 
         if respuesta_catalogo["total"] > 0:
@@ -1628,18 +1686,18 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
 
     if intencion in RESPUESTAS_SIMPLES:
         respuesta_simple = RESPUESTAS_SIMPLES[intencion]
-        return {
+        return construir_respuesta_chat({
             "texto": texto,
             "intencion": intencion,
             "confianza": confianza,
             "accion": respuesta_simple["accion"],
             "mensaje": respuesta_simple["mensaje"],
-        }
+        })
 
-    return {
+    return construir_respuesta_chat({
         "texto": texto,
         "intencion": intencion,
         "confianza": confianza,
         "accion": "pendiente",
         "mensaje": "Esta intenci\u00f3n a\u00fan no est\u00e1 implementada.",
-    }
+    })
