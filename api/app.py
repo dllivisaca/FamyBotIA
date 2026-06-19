@@ -261,10 +261,35 @@ PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
     "y",
     "si",
 }
+MODIFICADORES_COMERCIALES_NO_SERVICIO = {
+    "atencion",
+    "atender",
+    "atienden",
+    "consulta",
+    "costo",
+    "cuesta",
+    "examen",
+    "examenes",
+    "horario",
+    "horarios",
+    "precio",
+    "prueba",
+    "servicio",
+    "servicios",
+    "valor",
+    "vale",
+}
+NORMALIZACIONES_COMERCIALES_CONTROLADAS = (
+    (r"\bprueba\s+de\s+holter\b", "holter"),
+    (r"\bprueba\s+holter\b", "holter"),
+    (r"\bexamen\s+de\s+holter\b", "holter"),
+    (r"\becocardiogrma\b", "ecocardiograma"),
+)
 CONECTORES_SERVICIOS = {
     "ademas",
     "dispone",
     "disponen",
+    "e",
     "o",
     "tambien",
     "y",
@@ -1199,22 +1224,51 @@ def es_consulta_precio_y_ubicacion(texto):
     return pide_consulta and pide_precio and pide_ubicacion
 
 
-def preparar_consulta_comercial_catalogo(texto):
-    texto_catalogo = aplicar_sinonimos_catalogo(texto)
-    palabras = []
+def aplicar_normalizaciones_comerciales_controladas(texto):
+    texto_normalizado = normalizar_texto(aplicar_sinonimos_catalogo(texto))
+
+    for patron, reemplazo in NORMALIZACIONES_COMERCIALES_CONTROLADAS:
+        texto_normalizado = re.sub(patron, reemplazo, texto_normalizado)
+
+    return re.sub(r"\s+", " ", texto_normalizado).strip()
+
+
+def obtener_tokens_comerciales_limpios(texto):
+    texto_catalogo = aplicar_normalizaciones_comerciales_controladas(texto)
+    tokens = []
 
     for palabra in obtener_palabras_normalizadas(texto_catalogo):
         if palabra in PALABRAS_IGNORADAS_COMERCIAL:
             continue
         if es_palabra_ignorada(palabra):
             continue
-        palabras.append(normalizar_token_catalogo(palabra))
+        tokens.append(normalizar_token_catalogo(palabra))
 
-    return " ".join(palabras) or texto_catalogo
+    tokens_fuertes = [
+        token
+        for token in tokens
+        if token not in MODIFICADORES_COMERCIALES_NO_SERVICIO
+    ]
+
+    return tokens_fuertes or tokens
+
+
+def obtener_tokens_fuertes_comerciales(texto):
+    return [
+        token
+        for token in obtener_tokens_comerciales_limpios(texto)
+        if token not in MODIFICADORES_COMERCIALES_NO_SERVICIO
+    ]
+
+
+def preparar_consulta_comercial_catalogo(texto):
+    texto_catalogo = aplicar_normalizaciones_comerciales_controladas(texto)
+    tokens = obtener_tokens_comerciales_limpios(texto_catalogo)
+    return " ".join(tokens) or texto_catalogo
 
 
 def tiene_conectores_servicios(texto):
-    if "," in texto:
+    if "," in texto or "." in texto:
         return True
 
     return any(
@@ -1224,34 +1278,31 @@ def tiene_conectores_servicios(texto):
 
 
 def termino_comercial_util(termino):
-    tokens = []
+    return any(len(token) > 2 for token in obtener_tokens_fuertes_comerciales(termino))
 
-    for palabra in obtener_palabras_normalizadas(termino):
-        if palabra in PALABRAS_IGNORADAS_COMERCIAL:
-            continue
-        if es_palabra_ignorada(palabra):
-            continue
-        tokens.append(normalizar_token_catalogo(palabra))
 
-    return any(len(token) > 2 for token in tokens)
+def iterar_segmentos_comerciales(texto):
+    texto_normalizado = aplicar_normalizaciones_comerciales_controladas(texto)
+    tokens = re.findall(r"[a-z0-9]+|[,.]", texto_normalizado)
+    actual = []
+
+    for token in tokens:
+        if token in {",", "."} or token in CONECTORES_SERVICIOS:
+            if actual:
+                yield " ".join(actual)
+                actual = []
+            continue
+        actual.append(token)
+
+    if actual:
+        yield " ".join(actual)
 
 
 def obtener_terminos_comerciales_individuales(texto):
     terminos = []
-    actual = []
 
-    for palabra in obtener_palabras_normalizadas(texto):
-        if palabra in CONECTORES_SERVICIOS:
-            if actual:
-                termino = preparar_consulta_comercial_catalogo(" ".join(actual))
-                if termino_comercial_util(termino):
-                    terminos.append(termino)
-                actual = []
-            continue
-        actual.append(palabra)
-
-    if actual:
-        termino = preparar_consulta_comercial_catalogo(" ".join(actual))
+    for segmento in iterar_segmentos_comerciales(texto):
+        termino = preparar_consulta_comercial_catalogo(segmento)
         if termino_comercial_util(termino):
             terminos.append(termino)
 
