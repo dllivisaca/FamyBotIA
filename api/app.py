@@ -280,8 +280,21 @@ MODIFICADORES_COMERCIALES_NO_SERVICIO = {
     "vale",
 }
 MODIFICADORES_ENTIDAD_CATALOGO = MODIFICADORES_COMERCIALES_NO_SERVICIO | {
+    "agendar",
+    "cita",
     "direccion",
+    "donde",
+    "estan",
+    "necesito",
+    "quiero",
+    "quisiera",
+    "reservar",
+    "saber",
+    "turno",
     "ubicacion",
+    "ubicaciones",
+    "ubicado",
+    "ubicados",
 }
 PALABRAS_HORARIO_CONSULTA = {
     "atencion",
@@ -1576,6 +1589,34 @@ def construir_respuesta_busqueda_catalogo(texto, busqueda):
     }
 
 
+def enriquecer_mensaje_catalogo_con_flags(respuesta_catalogo, entidades):
+    respuesta_catalogo = dict(respuesta_catalogo)
+
+    if respuesta_catalogo.get("total", 0) <= 0:
+        return respuesta_catalogo
+
+    mensaje = str(respuesta_catalogo.get("mensaje") or "")
+    partes_adicionales = []
+    extras = (
+        ("asks_schedule", RESPUESTAS_SIMPLES["consultar_horario"]["mensaje"]),
+        ("asks_location", RESPUESTAS_SIMPLES["consultar_ubicacion"]["mensaje"]),
+        ("asks_booking", ACCIONES_FLUJO["agendar_cita"]["mensaje"]),
+    )
+    mensaje_normalizado = normalizar_texto(mensaje)
+
+    for flag, texto_extra in extras:
+        if not entidades.get(flag):
+            continue
+        if normalizar_texto(texto_extra) in mensaje_normalizado:
+            continue
+        partes_adicionales.append(texto_extra)
+
+    if partes_adicionales:
+        respuesta_catalogo["mensaje"] = "\n\n".join([mensaje, *partes_adicionales])
+
+    return respuesta_catalogo
+
+
 def buscar_catalogo_comercial(texto):
     consulta_catalogo = preparar_consulta_comercial_catalogo(texto)
     busqueda = filtrar_busqueda_por_tokens_exactos(
@@ -1738,6 +1779,10 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades_catalogo)
         else:
             respuesta_catalogo = buscar_catalogo_comercial(texto)
+        respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
+            respuesta_catalogo,
+            entidades_catalogo,
+        )
         print(f"FamyBot IA: total_catalogo_comercial={respuesta_catalogo['total']}")
         intencion_catalogo = intencion if intencion in INTENCIONES_CATALOGO else "consulta_servicios"
         return construir_respuesta_catalogo(
@@ -1760,9 +1805,29 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             intencion_catalogo = (
                 intencion if intencion in INTENCIONES_CATALOGO else "consulta_servicios"
             )
+            respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
+                respuesta_catalogo,
+                entidades_catalogo,
+            )
             return construir_respuesta_catalogo(
                 texto,
                 intencion_catalogo,
+                confianza,
+                respuesta_catalogo,
+            )
+
+    if usar_entidades_catalogo:
+        respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades_catalogo)
+        respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
+            respuesta_catalogo,
+            entidades_catalogo,
+        )
+        print(f"FamyBot IA: total_catalogo_entidades={respuesta_catalogo['total']}")
+
+        if respuesta_catalogo["total"] > 0:
+            return construir_respuesta_catalogo(
+                texto,
+                "consulta_servicios",
                 confianza,
                 respuesta_catalogo,
             )
@@ -1777,6 +1842,10 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
                 consulta_catalogo,
                 busqueda,
             )
+        respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
+            respuesta_catalogo,
+            entidades_catalogo,
+        )
         print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
         return construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo)
 
