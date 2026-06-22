@@ -279,6 +279,31 @@ MODIFICADORES_COMERCIALES_NO_SERVICIO = {
     "valor",
     "vale",
 }
+MODIFICADORES_ENTIDAD_CATALOGO = MODIFICADORES_COMERCIALES_NO_SERVICIO | {
+    "direccion",
+    "ubicacion",
+}
+PALABRAS_HORARIO_CONSULTA = {
+    "atencion",
+    "atienden",
+    "horario",
+    "horarios",
+    "sabado",
+}
+PALABRAS_UBICACION_CONSULTA = {
+    "direccion",
+    "donde",
+    "ubicacion",
+    "ubicaciones",
+    "ubicado",
+    "ubicados",
+}
+PALABRAS_AGENDAMIENTO_CONSULTA = {
+    "agendar",
+    "cita",
+    "reservar",
+    "turno",
+}
 NORMALIZACIONES_COMERCIALES_CONTROLADAS = (
     (r"\bprueba\s+de\s+holter\b", "holter"),
     (r"\bprueba\s+holter\b", "holter"),
@@ -1267,6 +1292,84 @@ def preparar_consulta_comercial_catalogo(texto):
     return " ".join(tokens) or texto_catalogo
 
 
+def limpiar_segmento_entidad_catalogo(segmento):
+    tokens = []
+
+    for palabra in obtener_palabras_normalizadas(segmento):
+        if palabra in PALABRAS_IGNORADAS_COMERCIAL:
+            continue
+        if es_palabra_ignorada(palabra):
+            continue
+        tokens.append(normalizar_token_catalogo(palabra))
+
+    tokens_fuertes = [
+        token
+        for token in tokens
+        if token not in MODIFICADORES_ENTIDAD_CATALOGO
+    ]
+
+    if tokens and not tokens_fuertes:
+        return ""
+
+    return " ".join(tokens_fuertes).strip()
+
+
+def extraer_entidades_consulta_catalogo(texto):
+    texto_normalizado = aplicar_normalizaciones_comerciales_controladas(texto)
+    palabras = set(obtener_palabras_normalizadas(texto_normalizado))
+    entidades = {
+        "services": [],
+        "asks_price": (
+            any(frase in texto_normalizado for frase in FRASES_COTIZACION)
+            or bool(PALABRAS_COTIZACION & palabras)
+        ),
+        "asks_schedule": bool(PALABRAS_HORARIO_CONSULTA & palabras),
+        "asks_location": bool(PALABRAS_UBICACION_CONSULTA & palabras),
+        "asks_booking": (
+            bool(PALABRAS_AGENDAMIENTO_CONSULTA & palabras)
+            or "sacar cita" in texto_normalizado
+        ),
+    }
+    servicios_vistos = set()
+    tokens = re.findall(r"[a-z0-9]+|[,.]", texto_normalizado)
+    segmento = []
+
+    for token in tokens:
+        if token in {",", "."} or token in CONECTORES_SERVICIOS:
+            if segmento:
+                servicio = limpiar_segmento_entidad_catalogo(" ".join(segmento))
+                if servicio and servicio not in servicios_vistos:
+                    servicios_vistos.add(servicio)
+                    entidades["services"].append(servicio)
+                segmento = []
+            continue
+        segmento.append(token)
+
+    if segmento:
+        servicio = limpiar_segmento_entidad_catalogo(" ".join(segmento))
+        if servicio and servicio not in servicios_vistos:
+            servicios_vistos.add(servicio)
+            entidades["services"].append(servicio)
+
+    return entidades
+
+
+def consulta_catalogo_mixta_extraida(entidades):
+    if len(entidades["services"]) > 1:
+        return True
+
+    tiene_flags_mixtos = any(
+        entidades[clave]
+        for clave in (
+            "asks_schedule",
+            "asks_location",
+            "asks_booking",
+        )
+    )
+
+    return bool(entidades["services"] and tiene_flags_mixtos)
+
+
 def tiene_conectores_servicios(texto):
     if "," in texto or "." in texto:
         return True
@@ -1307,6 +1410,40 @@ def obtener_terminos_comerciales_individuales(texto):
             terminos.append(termino)
 
     return terminos
+
+
+def buscar_catalogo_por_entidades(texto, entidades):
+    consulta_catalogo = preparar_consulta_comercial_catalogo(texto)
+    busquedas = []
+
+    for servicio in entidades["services"]:
+        busqueda_servicio = filtrar_busqueda_por_tokens_exactos(
+            buscar_servicios(servicio),
+            servicio,
+        )
+        if busqueda_servicio["total"] > 0:
+            busquedas.append(busqueda_servicio)
+
+    if not busquedas:
+        busqueda = filtrar_busqueda_por_tokens_exactos(
+            buscar_servicios(consulta_catalogo),
+            consulta_catalogo,
+        )
+        return construir_respuesta_busqueda_catalogo(consulta_catalogo, busqueda)
+
+    print(
+        "FamyBot IA: query_entity_extractor "
+        f"services={entidades['services']} "
+        f"price={entidades['asks_price']} "
+        f"schedule={entidades['asks_schedule']} "
+        f"location={entidades['asks_location']} "
+        f"booking={entidades['asks_booking']}"
+    )
+
+    return construir_respuesta_busqueda_catalogo(
+        consulta_catalogo,
+        combinar_busquedas_catalogo(busquedas),
+    )
 
 
 def combinar_busquedas_catalogo(busquedas):
@@ -1575,6 +1712,9 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             "error": "modelo_no_cargado",
         })
 
+    entidades_catalogo = extraer_entidades_consulta_catalogo(texto)
+    usar_entidades_catalogo = consulta_catalogo_mixta_extraida(entidades_catalogo)
+
     if es_consulta_precio_y_ubicacion(texto):
         return construir_respuesta_chat({
             "texto": texto,
@@ -1594,7 +1734,10 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
         })
 
     if es_consulta_catalogo_comercial(texto):
-        respuesta_catalogo = buscar_catalogo_comercial(texto)
+        if usar_entidades_catalogo:
+            respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades_catalogo)
+        else:
+            respuesta_catalogo = buscar_catalogo_comercial(texto)
         print(f"FamyBot IA: total_catalogo_comercial={respuesta_catalogo['total']}")
         intencion_catalogo = intencion if intencion in INTENCIONES_CATALOGO else "consulta_servicios"
         return construir_respuesta_catalogo(
@@ -1625,12 +1768,15 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             )
 
     if intencion in INTENCIONES_CATALOGO:
-        consulta_catalogo = preparar_consulta_catalogo(texto)
-        busqueda = buscar_servicios(consulta_catalogo)
-        respuesta_catalogo = construir_respuesta_busqueda_catalogo(
-            consulta_catalogo,
-            busqueda,
-        )
+        if usar_entidades_catalogo:
+            respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades_catalogo)
+        else:
+            consulta_catalogo = preparar_consulta_catalogo(texto)
+            busqueda = buscar_servicios(consulta_catalogo)
+            respuesta_catalogo = construir_respuesta_busqueda_catalogo(
+                consulta_catalogo,
+                busqueda,
+            )
         print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
         return construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo)
 
