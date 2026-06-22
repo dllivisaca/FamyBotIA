@@ -1,10 +1,12 @@
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from pydantic import BaseModel
 from difflib import SequenceMatcher
+import json
 import joblib
 import os
 from pathlib import Path
 import requests
+import traceback
 from typing import Optional
 import unicodedata
 import re
@@ -16,6 +18,7 @@ MODEL_DIR = BASE_DIR / "model"
 
 CATALOG_URL = "https://app.famysaludec.com/chatbot/catalogo-servicios"
 FAMYBOT_IA_API_KEY = os.environ.get("FAMYBOT_IA_API_KEY", "").strip()
+APP_CODE_VERSION = "2026-06-22-mixed-intent-v3"
 MIN_CONF_ACCION_FLUJO = 0.55
 MIN_RATIO_FUZZY_INTENCION = 0.86
 EMBEDDING_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
@@ -282,10 +285,13 @@ MODIFICADORES_COMERCIALES_NO_SERVICIO = {
 MODIFICADORES_ENTIDAD_CATALOGO = MODIFICADORES_COMERCIALES_NO_SERVICIO | {
     "agendar",
     "cita",
+    "como",
     "direccion",
     "donde",
     "estan",
+    "mi",
     "necesito",
+    "puedo",
     "quiero",
     "quisiera",
     "reservar",
@@ -560,6 +566,7 @@ def health():
         "status": "ok",
         "model_loaded": vectorizer is not None and classifier is not None,
         "model_version": model_version,
+        "app_code_version": APP_CODE_VERSION,
     }
 
 
@@ -585,6 +592,307 @@ def embedding_health(_auth: bool = Depends(validar_api_key)):
             "status": "error",
             "message": str(exc),
         }
+
+
+@app.get("/debug-entity-extractor")
+def debug_entity_extractor(
+    texto: str = "",
+    _auth: bool = Depends(validar_api_key),
+):
+    entidades = extraer_entidades_consulta_catalogo(texto)
+
+    return {
+        "texto": texto,
+        "model_version": model_version,
+        "entidades": entidades,
+        "usar_entidades_catalogo": consulta_catalogo_mixta_extraida(entidades),
+        "has_extraer_entidades": callable(globals().get("extraer_entidades_consulta_catalogo")),
+        "has_enriquecer_mensaje": callable(globals().get("enriquecer_mensaje_catalogo_con_flags")),
+    }
+
+
+@app.get("/debug-chat-flow")
+def debug_chat_flow(
+    texto: str = "",
+    _auth: bool = Depends(validar_api_key),
+):
+    texto = texto.strip()
+    prediccion = predecir_intencion(texto)
+    intencion = prediccion["intencion"]
+    entidades = extraer_entidades_consulta_catalogo(texto)
+    usar_entidades_catalogo = consulta_catalogo_mixta_extraida(entidades)
+    entro_branch_entidades = False
+    total_catalogo = None
+    accion_final = None
+    search_mode_final = "none"
+
+    if usar_entidades_catalogo:
+        entro_branch_entidades = True
+        respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades)
+        total_catalogo = respuesta_catalogo["total"]
+
+        if total_catalogo > 0:
+            respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
+                respuesta_catalogo,
+                entidades,
+            )
+            accion_final = respuesta_catalogo["accion"]
+            search_mode_final = obtener_search_mode_busqueda(respuesta_catalogo)
+
+    entro_acciones_flujo = accion_final is None and intencion in ACCIONES_FLUJO
+
+    if accion_final is None and entro_acciones_flujo:
+        accion_final = ACCIONES_FLUJO[intencion]["accion"]
+
+    return {
+        "texto": texto,
+        "app_code_version": APP_CODE_VERSION,
+        "intencion_predicha": intencion,
+        "usar_entidades_catalogo": usar_entidades_catalogo,
+        "entidades": entidades,
+        "entro_branch_entidades": entro_branch_entidades,
+        "total_catalogo": total_catalogo,
+        "entro_acciones_flujo": entro_acciones_flujo,
+        "accion_final": accion_final,
+        "search_mode_final": search_mode_final,
+    }
+
+
+@app.get("/debug-service-search")
+def debug_service_search(
+    texto: str = "",
+    _auth: bool = Depends(validar_api_key),
+):
+    def resumir_top5(busqueda):
+        return [
+            {
+                "id": resultado.get("id"),
+                "nombre": resultado.get("nombre"),
+                "area": resultado.get("area"),
+                "precio": resultado.get("precio"),
+            }
+            for resultado in busqueda.get("resultados", [])[:5]
+        ]
+
+    entidades = extraer_entidades_consulta_catalogo(texto)
+    respuesta = {
+        "texto": texto,
+        "entidades": entidades,
+        "buscar_servicios_total": None,
+        "buscar_servicios_search_mode": "none",
+        "buscar_servicios_top5": [],
+        "buscar_catalogo_por_entidades_total": None,
+        "buscar_catalogo_por_entidades_search_mode": "none",
+        "buscar_catalogo_por_entidades_top5": [],
+        "error": None,
+    }
+
+    try:
+        busqueda_servicios = buscar_servicios(texto)
+        respuesta["buscar_servicios_total"] = busqueda_servicios["total"]
+        respuesta["buscar_servicios_search_mode"] = obtener_search_mode_busqueda(
+            busqueda_servicios
+        )
+        respuesta["buscar_servicios_top5"] = resumir_top5(busqueda_servicios)
+
+        busqueda_entidades = buscar_catalogo_por_entidades(texto, entidades)
+        respuesta["buscar_catalogo_por_entidades_total"] = busqueda_entidades["total"]
+        respuesta["buscar_catalogo_por_entidades_search_mode"] = (
+            obtener_search_mode_busqueda(busqueda_entidades)
+        )
+        respuesta["buscar_catalogo_por_entidades_top5"] = resumir_top5(busqueda_entidades)
+    except Exception as exc:
+        respuesta["error"] = {
+            "type": type(exc).__name__,
+            "message": str(exc),
+        }
+
+    return respuesta
+
+
+@app.get("/debug-catalog-status")
+def debug_catalog_status(_auth: bool = Depends(validar_api_key)):
+    cache_dir = BASE_DIR / "api" / "cache"
+    cache_index_path = cache_dir / "service_index.json"
+    cache_embeddings_path = cache_dir / "service_embeddings.npy"
+    respuesta = {
+        "catalog_ok": False,
+        "updated_at": None,
+        "areas_count": 0,
+        "services_count": 0,
+        "resonancias_count": 0,
+        "sample_resonancias": [],
+        "cache_dir": str(cache_dir),
+        "cache_dir_exists": cache_dir.exists(),
+        "cache_dir_writable": os.access(cache_dir, os.W_OK) if cache_dir.exists() else False,
+        "cache_dir_listing": (
+            sorted(item.name for item in cache_dir.iterdir())
+            if cache_dir.exists()
+            else []
+        ),
+        "index_path": str(cache_index_path),
+        "embeddings_path": str(cache_embeddings_path),
+        "cache_index_exists": cache_index_path.exists(),
+        "cache_embeddings_exists": cache_embeddings_path.exists(),
+        "cache_index_updated_at": None,
+        "cache_documents_count": 0,
+        "cache_contains_resonancia": False,
+        "error": None,
+    }
+
+    try:
+        from api.services.famysalud_api import obtener_servicios_normalizados
+
+        catalogo = obtener_catalogo()
+        servicios_normalizados = obtener_servicios_normalizados(catalogo)
+        servicios = servicios_normalizados.get("servicios", [])
+        areas = catalogo.get("areas", []) if isinstance(catalogo, dict) else []
+        muestras = []
+
+        for servicio in servicios:
+            texto_servicio = normalizar_texto(
+                " ".join(
+                    str(valor)
+                    for valor in (
+                        servicio.get("nombre"),
+                        servicio.get("area"),
+                        servicio.get("slug"),
+                        servicio.get("excerpt"),
+                        servicio.get("description"),
+                    )
+                    if valor
+                )
+            )
+            if any(
+                termino in texto_servicio
+                for termino in ("resonancia", "craneo", "cerebro")
+            ):
+                muestras.append({
+                    "id": servicio.get("id"),
+                    "nombre": servicio.get("nombre"),
+                    "area": servicio.get("area"),
+                    "precio": servicio.get("precio"),
+                })
+
+        respuesta.update({
+            "catalog_ok": True,
+            "updated_at": servicios_normalizados.get("updated_at"),
+            "areas_count": len(areas),
+            "services_count": len(servicios),
+            "resonancias_count": sum(
+                1
+                for servicio in servicios
+                if normalizar_texto(servicio.get("area")) == "resonancias"
+            ),
+            "sample_resonancias": muestras[:10],
+        })
+
+        if cache_index_path.exists():
+            with cache_index_path.open("r", encoding="utf-8") as archivo:
+                cache_index = json.load(archivo)
+
+            documentos = cache_index.get("documentos", [])
+            respuesta["cache_index_updated_at"] = cache_index.get("updated_at")
+            respuesta["cache_documents_count"] = len(documentos)
+            respuesta["cache_contains_resonancia"] = any(
+                any(
+                    termino in normalizar_texto(documento.get("texto"))
+                    for termino in ("resonancia", "craneo", "cerebro")
+                )
+                for documento in documentos
+            )
+    except Exception as exc:
+        respuesta["error"] = {
+            "type": type(exc).__name__,
+            "message": str(exc),
+        }
+
+    return respuesta
+
+
+@app.get("/debug-build-service-index")
+def debug_build_service_index(_auth: bool = Depends(validar_api_key)):
+    cache_dir = BASE_DIR / "api" / "cache"
+    cache_index_path = cache_dir / "service_index.json"
+    cache_embeddings_path = cache_dir / "service_embeddings.npy"
+    respuesta = {
+        "ok": False,
+        "total_documents": 0,
+        "embeddings_shape": None,
+        "cache_index_exists_after": False,
+        "cache_embeddings_exists_after": False,
+        "cache_dir_writable": os.access(cache_dir, os.W_OK) if cache_dir.exists() else False,
+        "error_type": None,
+        "error_message": None,
+        "traceback": None,
+    }
+
+    try:
+        from api.services import embedding_search
+
+        indice = embedding_search.construir_indice_semantico(
+            sinonimos_catalogo=SINONIMOS_CATALOGO,
+            force_refresh=True,
+        )
+        embeddings = indice.get("embeddings")
+        respuesta.update({
+            "ok": True,
+            "total_documents": len(indice.get("documentos", [])),
+            "embeddings_shape": (
+                str(getattr(embeddings, "shape", None))
+                if embeddings is not None
+                else None
+            ),
+            "cache_index_exists_after": cache_index_path.exists(),
+            "cache_embeddings_exists_after": cache_embeddings_path.exists(),
+            "cache_dir_writable": os.access(cache_dir, os.W_OK) if cache_dir.exists() else False,
+        })
+    except Exception as exc:
+        respuesta.update({
+            "error_type": type(exc).__name__,
+            "error_message": str(exc),
+            "traceback": traceback.format_exc(),
+            "cache_index_exists_after": cache_index_path.exists(),
+            "cache_embeddings_exists_after": cache_embeddings_path.exists(),
+            "cache_dir_writable": os.access(cache_dir, os.W_OK) if cache_dir.exists() else False,
+        })
+
+    return respuesta
+
+
+@app.get("/debug-clear-service-cache")
+def debug_clear_service_cache(_auth: bool = Depends(validar_api_key)):
+    cache_paths = [
+        BASE_DIR / "api" / "cache" / "service_index.json",
+        BASE_DIR / "api" / "cache" / "service_embeddings.npy",
+    ]
+    respuesta = {
+        "deleted": [],
+        "missing": [],
+        "error": None,
+    }
+
+    try:
+        for cache_path in cache_paths:
+            if cache_path.exists():
+                cache_path.unlink()
+                respuesta["deleted"].append(str(cache_path))
+            else:
+                respuesta["missing"].append(str(cache_path))
+
+        try:
+            from api.services import embedding_search
+
+            embedding_search.semantic_index = None
+        except Exception:
+            pass
+    except Exception as exc:
+        respuesta["error"] = {
+            "type": type(exc).__name__,
+            "message": str(exc),
+        }
+
+    return respuesta
 
 
 @app.get("/semantic-search-test")
@@ -1756,6 +2064,22 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     entidades_catalogo = extraer_entidades_consulta_catalogo(texto)
     usar_entidades_catalogo = consulta_catalogo_mixta_extraida(entidades_catalogo)
 
+    if usar_entidades_catalogo:
+        respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades_catalogo)
+        print(f"FamyBot IA: total_catalogo_entidades={respuesta_catalogo['total']}")
+
+        if respuesta_catalogo["total"] > 0:
+            respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
+                respuesta_catalogo,
+                entidades_catalogo,
+            )
+            return construir_respuesta_catalogo(
+                texto,
+                "consulta_servicios",
+                confianza,
+                respuesta_catalogo,
+            )
+
     if es_consulta_precio_y_ubicacion(texto):
         return construir_respuesta_chat({
             "texto": texto,
@@ -1812,22 +2136,6 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             return construir_respuesta_catalogo(
                 texto,
                 intencion_catalogo,
-                confianza,
-                respuesta_catalogo,
-            )
-
-    if usar_entidades_catalogo:
-        respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades_catalogo)
-        respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
-            respuesta_catalogo,
-            entidades_catalogo,
-        )
-        print(f"FamyBot IA: total_catalogo_entidades={respuesta_catalogo['total']}")
-
-        if respuesta_catalogo["total"] > 0:
-            return construir_respuesta_catalogo(
-                texto,
-                "consulta_servicios",
                 confianza,
                 respuesta_catalogo,
             )
