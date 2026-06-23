@@ -69,6 +69,8 @@ RESPUESTAS_SIMPLES = {
         "mensaje": "No estoy seguro de haber entendido tu consulta. Puedes escribir una nueva consulta o usar el botón Menú principal.",
     },
 }
+MENSAJE_UBICACION_BREVE = "Nos encontramos en Quisquís 1109 y José Mascote, Guayaquil."
+MENSAJE_UBICACION_CON_BOTONES = RESPUESTAS_SIMPLES["consultar_ubicacion"]["mensaje"]
 ACCIONES_FLUJO = {
     "agendar_cita": {
         "accion": "iniciar_agendamiento",
@@ -1798,6 +1800,12 @@ def construir_respuesta_chat(respuesta, search_mode=None, entidades=None):
     )
     if entidades.get("asks_location") or respuesta.get("intencion") == "consultar_ubicacion":
         respuesta["incluir_botones_ubicacion"] = True
+        mensaje = str(respuesta.get("mensaje") or "")
+        if MENSAJE_UBICACION_CON_BOTONES in mensaje:
+            respuesta["mensaje"] = mensaje.replace(
+                MENSAJE_UBICACION_CON_BOTONES,
+                MENSAJE_UBICACION_BREVE,
+            )
     return respuesta
 
 
