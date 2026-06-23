@@ -1,4 +1,5 @@
 import json
+import importlib.util
 from pathlib import Path
 import re
 import unicodedata
@@ -21,18 +22,58 @@ MIN_FINAL_SCORE = 0.25
 
 embedding_model = None
 semantic_index = None
+sentence_transformers_available = None
+embedding_model_error = None
+
+
+def sentence_transformers_disponible():
+    global sentence_transformers_available
+
+    if sentence_transformers_available is not None:
+        return sentence_transformers_available
+
+    sentence_transformers_available = (
+        importlib.util.find_spec("sentence_transformers") is not None
+    )
+
+    return sentence_transformers_available
 
 
 def obtener_embedding_model():
     global embedding_model
+    global embedding_model_error
 
     if embedding_model is not None:
         return embedding_model
 
-    from sentence_transformers import SentenceTransformer
+    try:
+        from sentence_transformers import SentenceTransformer
 
-    embedding_model = SentenceTransformer(MODEL_NAME)
-    return embedding_model
+        embedding_model = SentenceTransformer(MODEL_NAME)
+        embedding_model_error = None
+        return embedding_model
+    except Exception as exc:
+        embedding_model_error = str(exc)
+        raise
+
+
+def indice_semantico_en_cache_disponible():
+    return INDEX_PATH.exists() and EMBEDDINGS_PATH.exists()
+
+
+def busqueda_semantica_disponible():
+    return sentence_transformers_disponible() and indice_semantico_en_cache_disponible()
+
+
+def estado_embeddings():
+    return {
+        "embeddings_enabled": sentence_transformers_disponible(),
+        "sentence_transformers_available": sentence_transformers_disponible(),
+        "semantic_index_available": indice_semantico_en_cache_disponible(),
+        "model_loaded": embedding_model is not None,
+        "model_name": MODEL_NAME,
+        "error": embedding_model_error,
+    }
 
 
 EXPANSIONES_CONSULTA = {
@@ -263,6 +304,11 @@ def guardar_cache(updated_at, documentos, embeddings):
 def construir_indice_semantico(sinonimos_catalogo=None, force_refresh=False):
     global semantic_index
 
+    if not sentence_transformers_disponible():
+        raise RuntimeError(
+            "sentence-transformers no esta instalado; indice semantico deshabilitado"
+        )
+
     catalogo = obtener_servicios_normalizados()
     updated_at = catalogo.get("updated_at")
 
@@ -301,6 +347,16 @@ def buscar_servicios_semanticos(texto, top_k=DEFAULT_TOP_K, sinonimos_catalogo=N
             "total_real": 0,
             "total_conocido": True,
             "resultados": [],
+        }
+
+    if not sentence_transformers_disponible():
+        return {
+            "total": 0,
+            "total_real": 0,
+            "total_conocido": True,
+            "resultados": [],
+            "_semantic_available": False,
+            "_semantic_error": "sentence-transformers no esta instalado",
         }
 
     index = construir_indice_semantico(sinonimos_catalogo=sinonimos_catalogo)

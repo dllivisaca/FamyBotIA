@@ -11,7 +11,18 @@ from typing import Optional
 import unicodedata
 import re
 
-from api.services.embedding_search import buscar_servicios_semanticos
+from api.services.embedding_search import (
+    buscar_servicios_semanticos,
+    busqueda_semantica_disponible,
+    estado_embeddings,
+    obtener_embedding_model as obtener_embedding_model_semantico,
+)
+from api.services.service_index import construir_texto_indexable
+
+try:
+    from rapidfuzz import fuzz as rapidfuzz_fuzz
+except Exception:
+    rapidfuzz_fuzz = None
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "model"
@@ -533,9 +544,7 @@ def obtener_embedding_model():
         return embedding_model
 
     try:
-        from sentence_transformers import SentenceTransformer
-
-        embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+        embedding_model = obtener_embedding_model_semantico()
         embedding_model_error = None
         return embedding_model
     except Exception as exc:
@@ -562,16 +571,53 @@ def home():
 
 @app.get("/health")
 def health():
+    catalog_ok = False
+    services_count = 0
+
+    try:
+        from api.services.famysalud_api import obtener_servicios_normalizados
+
+        servicios_normalizados = obtener_servicios_normalizados(obtener_catalogo())
+        services_count = len(servicios_normalizados.get("servicios", []))
+        catalog_ok = True
+    except Exception:
+        catalog_ok = False
+
+    embeddings_status = estado_embeddings()
+
     return {
         "status": "ok",
         "model_loaded": vectorizer is not None and classifier is not None,
         "model_version": model_version,
         "app_code_version": APP_CODE_VERSION,
+        "catalog_ok": catalog_ok,
+        "services_count": services_count,
+        "embeddings_enabled": embeddings_status["embeddings_enabled"],
+        "sentence_transformers_available": embeddings_status[
+            "sentence_transformers_available"
+        ],
+        "semantic_index_available": embeddings_status["semantic_index_available"],
+        "fallback_search_enabled": True,
     }
+
+
+@app.get("/diagnostics")
+def diagnostics(_auth: bool = Depends(validar_api_key)):
+    return health()
 
 
 @app.get("/embedding-health")
 def embedding_health(_auth: bool = Depends(validar_api_key)):
+    embeddings_status = estado_embeddings()
+
+    if not embeddings_status["sentence_transformers_available"]:
+        return {
+            "status": "disabled",
+            "model_loaded": False,
+            "message": "sentence-transformers no esta instalado; se usara busqueda lexical/fuzzy",
+            **embeddings_status,
+        }
+
     try:
         model = obtener_embedding_model()
         frases = [
@@ -638,6 +684,9 @@ def debug_chat_flow(
             )
             accion_final = respuesta_catalogo["accion"]
             search_mode_final = obtener_search_mode_busqueda(respuesta_catalogo)
+        else:
+            accion_final = "sin_resultados_catalogo"
+            search_mode_final = obtener_search_mode_busqueda(respuesta_catalogo)
 
     entro_acciones_flujo = accion_final is None and intencion in ACCIONES_FLUJO
 
@@ -670,13 +719,21 @@ def debug_service_search(
                 "nombre": resultado.get("nombre"),
                 "area": resultado.get("area"),
                 "precio": resultado.get("precio"),
+                "score": resultado.get("score"),
             }
             for resultado in busqueda.get("resultados", [])[:5]
         ]
 
     entidades = extraer_entidades_consulta_catalogo(texto)
+    embeddings_status = estado_embeddings()
     respuesta = {
         "texto": texto,
+        "embeddings_available": embeddings_status["embeddings_enabled"],
+        "sentence_transformers_available": embeddings_status[
+            "sentence_transformers_available"
+        ],
+        "semantic_index_available": embeddings_status["semantic_index_available"],
+        "fallback_search_enabled": True,
         "entidades": entidades,
         "buscar_servicios_total": None,
         "buscar_servicios_search_mode": "none",
@@ -1219,10 +1276,107 @@ def aplico_sinonimo_catalogo(texto):
     return normalizar_texto(aplicar_sinonimos_catalogo(texto)) != normalizar_texto(texto)
 
 
+EXPANSIONES_LEXICALES_CATALOGO = {
+    "cerebral": ["craneo", "cerebro", "encefalo"],
+    "cerebro": ["craneo", "cerebral", "encefalo"],
+    "craneal": ["craneo", "cerebral"],
+    "magnetica": ["resonancia"],
+    "rm": ["resonancia"],
+    "pierna": ["piernas", "miembros", "inferiores", "venoso"],
+    "piernas": ["pierna", "miembros", "inferiores", "venoso"],
+    "doppler": ["vascular", "venoso", "arterial"],
+    "eco": ["ecografia", "ultrasonido"],
+    "ultrasonido": ["ecografia", "eco"],
+}
+
+
+def ratio_texto_fuzzy(texto_a, texto_b):
+    if rapidfuzz_fuzz is not None:
+        return float(rapidfuzz_fuzz.partial_ratio(texto_a, texto_b)) / 100
+
+    return SequenceMatcher(None, texto_a, texto_b).ratio()
+
+
+def expandir_consulta_lexical(texto):
+    textos = [normalizar_texto(texto)]
+    texto_sinonimo = normalizar_texto(aplicar_sinonimos_catalogo(texto))
+
+    if texto_sinonimo and texto_sinonimo not in textos:
+        textos.append(texto_sinonimo)
+
+    tokens = []
+    for texto_base in list(textos):
+        for token in obtener_tokens_utiles(texto_base):
+            tokens.append(token)
+            tokens.extend(EXPANSIONES_LEXICALES_CATALOGO.get(token, []))
+
+    if tokens:
+        textos.append(" ".join(tokens))
+
+    return " ".join(texto for texto in textos if texto).strip()
+
+
+def calcular_score_servicio_lexical(texto_busqueda, tokens_busqueda, servicio):
+    texto_indexable = normalizar_texto(
+        construir_texto_indexable(servicio, SINONIMOS_CATALOGO)
+    )
+    nombre = normalizar_texto(servicio.get("nombre"))
+    area = normalizar_texto(servicio.get("area"))
+    categoria = normalizar_texto(servicio.get("categoria"))
+    slug = normalizar_texto(servicio.get("slug"))
+    texto_prioritario = " ".join(
+        parte for parte in (nombre, area, categoria, slug) if parte
+    )
+    tokens_servicio = obtener_tokens_servicio(texto_indexable)
+
+    if not tokens_busqueda:
+        return 0.0
+
+    coincidencias = [
+        token
+        for token in tokens_busqueda
+        if token_coincide(token, tokens_servicio, texto_indexable)
+    ]
+    cobertura = len(set(coincidencias)) / max(len(set(tokens_busqueda)), 1)
+    score = cobertura * 0.62
+
+    if texto_busqueda and texto_busqueda in texto_indexable:
+        score += 0.25
+    if texto_busqueda and texto_busqueda in texto_prioritario:
+        score += 0.2
+
+    coincidencias_prioritarias = [
+        token
+        for token in set(tokens_busqueda)
+        if token in texto_prioritario
+    ]
+    score += min(len(coincidencias_prioritarias) * 0.08, 0.24)
+
+    score += ratio_texto_fuzzy(texto_busqueda, texto_prioritario or texto_indexable) * 0.18
+
+    return min(score, 1.0)
+
+
+def resultado_servicio_catalogo(servicio):
+    return {
+        "id": servicio.get("id"),
+        "nombre": servicio.get("nombre"),
+        "area": servicio.get("area"),
+        "precio": servicio.get("precio"),
+        "precio_promocion": servicio.get("precio_promocion"),
+        "presencial": bool(servicio.get("presencial")),
+        "virtual": bool(servicio.get("virtual")),
+    }
+
+
 def buscar_servicios_fuzzy(texto_busqueda):
+    from api.services.famysalud_api import obtener_servicios_normalizados
+
     catalogo = obtener_catalogo()
-    texto = normalizar_texto(texto_busqueda)
-    tokens_busqueda = obtener_tokens_utiles(texto_busqueda)
+    texto_expandido = expandir_consulta_lexical(texto_busqueda)
+    texto = normalizar_texto(texto_expandido)
+    tokens_busqueda = obtener_tokens_utiles(texto_expandido)
+    candidatos = []
     resultados = []
     total_real = 0
     total_conocido = True
@@ -1235,52 +1389,21 @@ def buscar_servicios_fuzzy(texto_busqueda):
             "resultados": resultados,
         }
 
-    areas = catalogo.get("areas", []) if isinstance(catalogo, dict) else []
+    servicios = obtener_servicios_normalizados(catalogo).get("servicios", [])
 
-    for area in areas:
-        servicios = area.get("services", []) if isinstance(area, dict) else []
-        nombre_area = area.get("title") or area.get("name")
-        categoria_area = area.get("category")
+    for servicio in servicios:
+        score = calcular_score_servicio_lexical(texto, tokens_busqueda, servicio)
 
-        for servicio in servicios:
-            campos = [
-                servicio.get("title"),
-                servicio.get("name"),
-                servicio.get("excerpt"),
-                servicio.get("description"),
-                nombre_area,
-                categoria_area,
-                servicio.get("area"),
-                servicio.get("category"),
-            ]
-            texto_servicio = " ".join(normalizar_texto(campo) for campo in campos if campo)
-            tokens_servicio = obtener_tokens_servicio(texto_servicio)
+        if score < 0.45:
+            continue
 
-            if servicio_coincide(texto, tokens_busqueda, texto_servicio, tokens_servicio):
-                total_real += 1
+        resultado = resultado_servicio_catalogo(servicio)
+        resultado["score"] = round(score, 4)
+        candidatos.append(resultado)
 
-                if len(resultados) < 20:
-                    resultados.append({
-                        "id": servicio.get("id"),
-                        "nombre": servicio.get("title") or servicio.get("name"),
-                        "area": nombre_area,
-                        "precio": servicio.get("price") or servicio.get("precio"),
-                        "precio_promocion": (
-                            servicio.get("sale_price")
-                            or servicio.get("promotion_price")
-                            or servicio.get("precio_promocion")
-                        ),
-                        "presencial": bool(
-                            servicio.get("is_presential")
-                            if "is_presential" in servicio
-                            else servicio.get("presencial")
-                        ),
-                        "virtual": bool(
-                            servicio.get("is_virtual")
-                            if "is_virtual" in servicio
-                            else servicio.get("virtual")
-                        ),
-                    })
+    candidatos.sort(key=lambda resultado: resultado.get("score", 0), reverse=True)
+    total_real = len(candidatos)
+    resultados = candidatos[:20]
 
     return {
         "total": total_real,
@@ -1388,7 +1511,14 @@ def combinar_search_modes(search_modes):
     if len(set(modos)) == 1:
         return modos[0]
 
-    for modo_prioritario in ("semantic_fallback", "fuzzy_exact_override", "semantic", "fuzzy"):
+    for modo_prioritario in (
+        "semantic_fallback",
+        "fuzzy_exact_override",
+        "semantic",
+        "lexical_fuzzy",
+        "token_match",
+        "fuzzy",
+    ):
         if modo_prioritario in modos:
             return modo_prioritario
 
@@ -1405,8 +1535,23 @@ def construir_respuesta_chat(respuesta, search_mode=None):
 def buscar_servicios(texto_busqueda):
     if es_consulta_semantica_ambigua(texto_busqueda):
         busqueda_fuzzy = buscar_servicios_fuzzy(texto_busqueda)
-        log_busqueda_catalogo("fuzzy", texto_busqueda, busqueda_fuzzy["total"], "ambigua")
-        return agregar_search_mode(busqueda_fuzzy, "fuzzy")
+        log_busqueda_catalogo(
+            "lexical_fuzzy",
+            texto_busqueda,
+            busqueda_fuzzy["total"],
+            "ambigua",
+        )
+        return agregar_search_mode(busqueda_fuzzy, "lexical_fuzzy")
+
+    if not busqueda_semantica_disponible():
+        busqueda_fuzzy = buscar_servicios_fuzzy(texto_busqueda)
+        log_busqueda_catalogo(
+            "lexical_fuzzy",
+            texto_busqueda,
+            busqueda_fuzzy["total"],
+            "semantic_disabled",
+        )
+        return agregar_search_mode(busqueda_fuzzy, "lexical_fuzzy")
 
     try:
         busqueda_semantica = buscar_servicios_semanticos(
@@ -1851,7 +1996,7 @@ def construir_respuesta_busqueda_catalogo(texto, busqueda):
     total_conocido = busqueda["total_conocido"]
 
     if total == 0:
-        accion = "sin_resultados"
+        accion = "sin_resultados_catalogo"
         mensaje = (
             "No encontré servicios relacionados con tu consulta. Puedes escribir "
             "el nombre del servicio de otra forma o solicitar ayuda con un asesor."
@@ -1908,7 +2053,10 @@ def enriquecer_mensaje_catalogo_con_flags(respuesta_catalogo, entidades):
     extras = (
         ("asks_schedule", RESPUESTAS_SIMPLES["consultar_horario"]["mensaje"]),
         ("asks_location", RESPUESTAS_SIMPLES["consultar_ubicacion"]["mensaje"]),
-        ("asks_booking", ACCIONES_FLUJO["agendar_cita"]["mensaje"]),
+        (
+            "asks_booking",
+            "Si deseas agendar, puedes elegir una de las opciones encontradas y continuar con la solicitud de cita.",
+        ),
     )
     mensaje_normalizado = normalizar_texto(mensaje)
 
@@ -1998,7 +2146,7 @@ def ask_catalog(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     total_conocido = busqueda["total_conocido"]
 
     if total == 0:
-        accion = "sin_resultados"
+        accion = "sin_resultados_catalogo"
         mensaje = (
             "No encontré servicios relacionados con tu consulta. Puedes escribir "
             "el nombre del servicio de otra forma o solicitar ayuda con un asesor."
@@ -2079,6 +2227,13 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
                 confianza,
                 respuesta_catalogo,
             )
+
+        return construir_respuesta_catalogo(
+            texto,
+            "consulta_servicios",
+            confianza,
+            respuesta_catalogo,
+        )
 
     if es_consulta_precio_y_ubicacion(texto):
         return construir_respuesta_chat({

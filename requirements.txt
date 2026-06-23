@@ -6,4 +6,3 @@ pydantic
 requests
 a2wsgi
 numpy
-sentence-transformers

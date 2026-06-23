@@ -1,0 +1,4 @@
+-r requirements.txt
+
+# Optional semantic search dependency. Do not install on shared production hosting.
+sentence-transformers
