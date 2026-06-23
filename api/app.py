@@ -2115,24 +2115,7 @@ def construir_bloque_precio_catalogo(total):
 
 
 def construir_bloque_agendamiento_catalogo(total, resultados):
-    if total == 1:
-        servicio = resultados[0] if resultados else {}
-        nombre = servicio.get("nombre")
-        area = servicio.get("area")
-        if nombre and area:
-            return (
-                "Si deseas agendar tu cita, responde \"agendar\". "
-                f"Luego selecciona el área {area} y el servicio {nombre}."
-            )
-        return (
-            "Si deseas agendar tu cita, responde \"agendar\". "
-            "Luego selecciona el área y servicio correspondiente."
-        )
-
-    return (
-        "Si deseas agendar tu cita, responde \"agendar\". "
-        "Luego podrás seleccionar el área y servicio correspondiente durante el agendamiento."
-    )
+    return "Si deseas agendar tu cita, responde \"agendar\" para comenzar el proceso."
 
 
 def construir_respuesta_busqueda_catalogo(texto, busqueda):
