@@ -70,7 +70,7 @@ RESPUESTAS_SIMPLES = {
     },
 }
 MENSAJE_UBICACION_BOTONES = (
-    "Nos encontramos en Quisquís 1109 y José Mascote, Guayaquil.\n\n"
+    "Estamos ubicados en Quisquís 1109 y José Mascote, Guayaquil.\n\n"
     "Si lo prefieres, puedes usar los botones para abrir la ubicación "
     "en Google Maps o ver el croquis de referencia."
 )
@@ -1288,6 +1288,46 @@ def es_atencion_a_domicilio(texto):
     return "atencion a domicilio" in normalizar_texto(texto)
 
 
+def es_solicitud_asesor(texto):
+    texto_normalizado = normalizar_texto(texto)
+    palabras = set(obtener_palabras_normalizadas(texto))
+
+    if es_atencion_a_domicilio(texto_normalizado):
+        return True
+
+    frases_asesor = (
+        "hablar con asesor",
+        "hablar con un asesor",
+        "hablar con alguien",
+        "atencion al cliente",
+        "ayuda de una persona",
+        "atender un asesor",
+        "atienda un asesor",
+        "comunicar con asesor",
+        "comunicarme con asesor",
+        "comunicarme con un asesor",
+    )
+    if any(frase in texto_normalizado for frase in frases_asesor):
+        return True
+
+    if "asesor" in palabras and bool(
+        palabras
+        & {
+            "asesor",
+            "atender",
+            "atienda",
+            "atencion",
+            "ayuda",
+            "hablar",
+            "necesito",
+            "quiero",
+        }
+    ):
+        return True
+
+    return False
+
+
 def detectar_intencion_defensiva(texto):
     texto_normalizado = normalizar_texto(texto)
     palabras = set(obtener_palabras_normalizadas(texto))
@@ -1296,6 +1336,9 @@ def detectar_intencion_defensiva(texto):
         return "trabajo"
 
     if "atencion a domicilio" in texto_normalizado:
+        return "hablar_asesor"
+
+    if es_solicitud_asesor(texto_normalizado):
         return "hablar_asesor"
 
     if contiene_indicador_cotizacion(texto_normalizado, palabras):
@@ -2532,7 +2575,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     usar_entidades_catalogo = consulta_catalogo_mixta_extraida(entidades_catalogo)
     tiene_servicio_medico = tiene_servicio_medico_claro(texto, entidades_catalogo)
 
-    if es_atencion_a_domicilio(texto):
+    if es_solicitud_asesor(texto):
         accion_flujo = ACCIONES_FLUJO["hablar_asesor"]
         return construir_respuesta_chat({
             "texto": texto,
