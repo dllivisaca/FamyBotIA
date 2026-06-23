@@ -211,6 +211,7 @@ FRASES_TRABAJO = {
     "enviar mi hoja de vida",
     "hoja de vida",
     "medico general",
+    "oferta laboral",
     "personal requieren",
     "recursos humanos",
     "requieren de terapeuta",
@@ -236,12 +237,50 @@ ESPECIALIDADES_CONOCIDAS = {
     "cardiologia",
     "dermatologia",
     "gastroenterologia",
+    "gastroenterologo",
     "neumologia",
     "nutricion",
     "oftalmologia",
     "pediatria",
     "traumatologia",
     "urologia",
+}
+TERMINOS_MEDICOS_CLAROS = {
+    "audiometria",
+    "blanqueamiento",
+    "calce",
+    "calces",
+    "caries",
+    "cordal",
+    "cordales",
+    "doppler",
+    "ecocardiograma",
+    "ecografia",
+    "eco",
+    "electrocardiograma",
+    "electromiografia",
+    "endodoncia",
+    "espirometria",
+    "embarazo",
+    "extraccion",
+    "hepatobiliar",
+    "holter",
+    "lavado",
+    "limpieza",
+    "mamografia",
+    "mamas",
+    "molar",
+    "molares",
+    "muela",
+    "odontologia",
+    "prostata",
+    "protesis",
+    "radiografia",
+    "renal",
+    "resonancia",
+    "tomografia",
+    "torax",
+    "transvaginal",
 }
 PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
     "al",
@@ -251,6 +290,7 @@ PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
     "cual",
     "cuanto",
     "cuesta",
+    "d",
     "de",
     "del",
     "dia",
@@ -258,12 +298,23 @@ PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
     "dispone",
     "disponen",
     "el",
+    "exacta",
     "es",
+    "favor",
+    "gracias",
+    "guayaquil",
+    "hacerme",
+    "indicar",
     "la",
     "las",
     "lo",
     "los",
+    "m",
+    "mucha",
+    "muchas",
+    "orden",
     "precio",
+    "por",
     "q",
     "que",
     "salen",
@@ -283,13 +334,23 @@ MODIFICADORES_COMERCIALES_NO_SERVICIO = {
     "atencion",
     "atender",
     "atienden",
+    "ayuda",
+    "ayudan",
+    "ayudar",
+    "ayuden",
     "consulta",
     "costo",
     "cuesta",
+    "directamente",
     "examen",
     "examenes",
+    "favor",
+    "gracias",
     "horario",
     "horarios",
+    "indicar",
+    "necesario",
+    "orden",
     "precio",
     "prueba",
     "servicio",
@@ -311,6 +372,7 @@ MODIFICADORES_ENTIDAD_CATALOGO = MODIFICADORES_COMERCIALES_NO_SERVICIO | {
     "quisiera",
     "reservar",
     "saber",
+    "sacar",
     "turno",
     "ubicacion",
     "ubicaciones",
@@ -333,6 +395,7 @@ PALABRAS_UBICACION_CONSULTA = {
     "ubicados",
 }
 PALABRAS_AGENDAMIENTO_CONSULTA = {
+    "ajendar",
     "agendar",
     "cita",
     "reservar",
@@ -414,6 +477,7 @@ SINONIMOS_CATALOGO = {
     "ecografia transvaginal": "ecografia endovaginal",
     "ultrasonido transvaginal": "ecografia endovaginal",
     "protesis dental": "protesis removible acrilica",
+    "protesis": "protesis removible acrilica",
     "protesis removible": "protesis removible acrilica",
     "dientes postizos": "protesis removible acrilica",
     "sacar tercer molar": "extraccion de tercer molar",
@@ -438,6 +502,7 @@ SINONIMOS_CATALOGO = {
     "resonancia cerebral contrastada": "resonancia craneo simple contrastada",
     "examenes de audiometria": "audiometria",
     "examen de audiometria": "audiometria",
+    "radiografia": "rayos x",
     "eco morfologico": "ecografia morfologica",
     "eco de las 20 semanas": "ecografia morfologica",
     "3er molar": "extraccion de tercer molar",
@@ -463,6 +528,7 @@ CORRECCIONES_TEXTO = (
     (r"\bsirealisan(?=\w)", "si realizan "),
     (r"\bsirealisan\b", "si realizan"),
     (r"\brealisan\b", "realizan"),
+    (r"\bajendar\b", "agendar"),
     (r"\basen\b", "hacen"),
     (r"\becocardiogrma\b", "ecocardiograma"),
     (r"\bextracion\b", "extraccion"),
@@ -1212,6 +1278,10 @@ def contiene_indicador_agendamiento(palabras):
     return bool({"agendar", "cita", "reservar", "turno"} & palabras)
 
 
+def es_atencion_a_domicilio(texto):
+    return "atencion a domicilio" in normalizar_texto(texto)
+
+
 def detectar_intencion_defensiva(texto):
     texto_normalizado = normalizar_texto(texto)
     palabras = set(obtener_palabras_normalizadas(texto))
@@ -1219,14 +1289,14 @@ def detectar_intencion_defensiva(texto):
     if contiene_indicador_trabajo(texto_normalizado, palabras):
         return "trabajo"
 
+    if "atencion a domicilio" in texto_normalizado:
+        return "hablar_asesor"
+
     if contiene_indicador_cotizacion(texto_normalizado, palabras):
         return "cotizar_servicio"
 
     if contiene_indicador_agendamiento(palabras) or "sacar cita" in texto_normalizado:
         return "agendar_cita"
-
-    if "atencion a domicilio" in texto_normalizado:
-        return "hablar_asesor"
 
     if ESPECIALIDADES_CONOCIDAS & palabras:
         return "consulta_especialidades"
@@ -1547,9 +1617,59 @@ def agregar_intencion(intenciones, intencion):
         intenciones.append(intencion)
 
 
+def tiene_servicio_medico_claro(texto, entidades=None):
+    entidades = entidades or extraer_entidades_consulta_catalogo(texto)
+    texto_normalizado = normalizar_texto(texto)
+    palabras = set(obtener_palabras_normalizadas(texto_normalizado))
+
+    if entidades.get("has_specialty") or ESPECIALIDADES_CONOCIDAS & palabras:
+        return True
+
+    if TERMINOS_MEDICOS_CLAROS & palabras:
+        return True
+
+    if any(termino in texto_normalizado for termino in TERMINOS_MEDICOS_CLAROS):
+        return True
+
+    for servicio in entidades.get("services", []) or []:
+        tokens_servicio = set(obtener_tokens_utiles(servicio))
+        if tokens_servicio & (TERMINOS_MEDICOS_CLAROS | ESPECIALIDADES_CONOCIDAS):
+            return True
+
+    return False
+
+
+def es_consulta_ubicacion_pura(entidades):
+    return (
+        entidades.get("asks_location")
+        and not entidades.get("asks_price")
+        and not entidades.get("asks_schedule")
+        and not entidades.get("asks_booking")
+    )
+
+
+def es_consulta_horario_pura(entidades):
+    return (
+        entidades.get("asks_schedule")
+        and not entidades.get("asks_price")
+        and not entidades.get("asks_location")
+        and not entidades.get("asks_booking")
+    )
+
+
+def es_agendamiento_puro(entidades):
+    return (
+        entidades.get("asks_booking")
+        and not entidades.get("asks_price")
+        and not entidades.get("asks_location")
+        and not entidades.get("asks_schedule")
+    )
+
+
 def detectar_intenciones_multiples(texto, intencion_principal=None, entidades=None):
     entidades = entidades or extraer_entidades_consulta_catalogo(texto)
     intenciones = []
+    tiene_servicio = tiene_servicio_medico_claro(texto, entidades)
 
     if intencion_principal == "saludo" and not any(
         entidades.get(clave)
@@ -1557,7 +1677,13 @@ def detectar_intenciones_multiples(texto, intencion_principal=None, entidades=No
     ):
         return ["saludo"]
 
-    if entidades.get("services"):
+    if intencion_principal == "trabajo":
+        return ["trabajo"]
+
+    if intencion_principal == "hablar_asesor":
+        return ["hablar_asesor"]
+
+    if tiene_servicio:
         agregar_intencion(intenciones, "consulta_servicios")
     if entidades.get("asks_price"):
         agregar_intencion(intenciones, "cotizar_servicio")
@@ -1570,7 +1696,10 @@ def detectar_intenciones_multiples(texto, intencion_principal=None, entidades=No
     if entidades.get("has_specialty"):
         agregar_intencion(intenciones, "consulta_especialidades")
 
-    if intencion_principal in INTENCIONES_CATALOGO:
+    if intencion_principal == "consulta_servicios":
+        if tiene_servicio:
+            agregar_intencion(intenciones, intencion_principal)
+    elif intencion_principal in INTENCIONES_CATALOGO:
         agregar_intencion(intenciones, intencion_principal)
     elif intencion_principal in RESPUESTAS_SIMPLES or intencion_principal in ACCIONES_FLUJO:
         agregar_intencion(intenciones, intencion_principal)
@@ -1590,13 +1719,30 @@ def determinar_intencion_principal_catalogo(intencion_predicha, entidades):
 
 def construir_respuesta_flags_simples(texto, intencion, confianza, entidades):
     bloques = []
+    intencion_flags = intencion
+    texto_normalizado = normalizar_texto(texto)
+    pregunta_donde_agendar = bool(
+        entidades.get("asks_location")
+        and entidades.get("asks_booking")
+        and "donde" in texto_normalizado
+        and (
+            "agendar" in texto_normalizado
+            or "ajendar" in texto_normalizado
+            or "reservar" in texto_normalizado
+        )
+    )
 
     if entidades.get("asks_location"):
         bloques.append(RESPUESTAS_SIMPLES["consultar_ubicacion"]["mensaje"])
+        intencion_flags = "agendar_cita" if pregunta_donde_agendar else "consultar_ubicacion"
     if entidades.get("asks_schedule"):
         bloques.append(RESPUESTAS_SIMPLES["consultar_horario"]["mensaje"])
+        if not entidades.get("asks_location"):
+            intencion_flags = "consultar_horario"
     if entidades.get("asks_booking"):
         bloques.append(ACCIONES_FLUJO["agendar_cita"]["mensaje"])
+        if not entidades.get("asks_location") and not entidades.get("asks_schedule"):
+            intencion_flags = "agendar_cita"
 
     if not bloques:
         return None
@@ -1607,10 +1753,34 @@ def construir_respuesta_flags_simples(texto, intencion, confianza, entidades):
 
     return construir_respuesta_chat({
         "texto": texto,
-        "intencion": intencion,
+        "intencion": intencion_flags,
         "confianza": confianza,
         "accion": accion,
         "mensaje": "\n\n".join(bloques),
+    }, entidades=entidades)
+
+
+def construir_respuesta_cotizacion_generica(texto, confianza, entidades):
+    bloques = [
+        (
+            "Para indicarte un valor exacto, escribe el nombre de la especialidad, "
+            "examen o servicio que necesitas."
+        )
+    ]
+
+    if entidades.get("asks_location"):
+        bloques.append(RESPUESTAS_SIMPLES["consultar_ubicacion"]["mensaje"])
+
+    return construir_respuesta_chat({
+        "texto": texto,
+        "intencion": "cotizar_servicio",
+        "confianza": confianza,
+        "accion": "consulta_ubicacion" if entidades.get("asks_location") else "listar_opciones",
+        "mensaje": "\n\n".join(bloques),
+        "total": 0,
+        "total_real": 0,
+        "total_conocido": True,
+        "resultados": [],
     }, entidades=entidades)
 
 
@@ -2348,6 +2518,68 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
 
     entidades_catalogo = extraer_entidades_consulta_catalogo(texto)
     usar_entidades_catalogo = consulta_catalogo_mixta_extraida(entidades_catalogo)
+    tiene_servicio_medico = tiene_servicio_medico_claro(texto, entidades_catalogo)
+
+    if es_atencion_a_domicilio(texto):
+        accion_flujo = ACCIONES_FLUJO["hablar_asesor"]
+        return construir_respuesta_chat({
+            "texto": texto,
+            "intencion": "hablar_asesor",
+            "confianza": confianza,
+            "accion": accion_flujo["accion"],
+            "mensaje": accion_flujo["mensaje"],
+        }, entidades=entidades_catalogo)
+
+    if intencion == "trabajo":
+        accion_flujo = ACCIONES_FLUJO["trabajo"]
+        return construir_respuesta_chat({
+            "texto": texto,
+            "intencion": "trabajo",
+            "confianza": confianza,
+            "accion": accion_flujo["accion"],
+            "mensaje": accion_flujo["mensaje"],
+        }, entidades=entidades_catalogo)
+
+    if es_consulta_ubicacion_pura(entidades_catalogo) and not tiene_servicio_medico:
+        respuesta_simple = RESPUESTAS_SIMPLES["consultar_ubicacion"]
+        return construir_respuesta_chat({
+            "texto": texto,
+            "intencion": "consultar_ubicacion",
+            "confianza": confianza,
+            "accion": respuesta_simple["accion"],
+            "mensaje": respuesta_simple["mensaje"],
+        }, entidades=entidades_catalogo)
+
+    if es_consulta_horario_pura(entidades_catalogo) and not tiene_servicio_medico:
+        respuesta_simple = RESPUESTAS_SIMPLES["consultar_horario"]
+        return construir_respuesta_chat({
+            "texto": texto,
+            "intencion": "consultar_horario",
+            "confianza": confianza,
+            "accion": respuesta_simple["accion"],
+            "mensaje": respuesta_simple["mensaje"],
+        }, entidades=entidades_catalogo)
+
+    if es_agendamiento_puro(entidades_catalogo) and not tiene_servicio_medico:
+        accion_flujo = ACCIONES_FLUJO["agendar_cita"]
+        return construir_respuesta_chat({
+            "texto": texto,
+            "intencion": "agendar_cita",
+            "confianza": confianza,
+            "accion": accion_flujo["accion"],
+            "mensaje": accion_flujo["mensaje"],
+        }, entidades=entidades_catalogo)
+
+    if (
+        entidades_catalogo.get("asks_price")
+        and not tiene_servicio_medico
+        and not entidades_catalogo.get("services")
+    ):
+        return construir_respuesta_cotizacion_generica(
+            texto,
+            confianza,
+            entidades_catalogo,
+        )
 
     if usar_entidades_catalogo:
         respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades_catalogo)
@@ -2392,7 +2624,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     if es_consulta_precio_y_ubicacion(texto):
         return construir_respuesta_chat({
             "texto": texto,
-            "intencion": "consulta_servicios",
+            "intencion": "cotizar_servicio",
             "confianza": confianza,
             "accion": "consulta_ubicacion",
             "mensaje": (
@@ -2456,7 +2688,9 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             )
 
     if intencion in INTENCIONES_CATALOGO:
-        if usar_entidades_catalogo:
+        if usar_entidades_catalogo or (
+            entidades_catalogo.get("services") and tiene_servicio_medico
+        ):
             respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades_catalogo)
         else:
             consulta_catalogo = preparar_consulta_catalogo(texto)

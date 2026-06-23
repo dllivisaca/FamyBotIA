@@ -1,0 +1,329 @@
+{
+  "total_ejecutados": 10,
+  "aprobados": 8,
+  "fallidos": 2,
+  "accuracy_general": 0.8,
+  "accuracy_intencion": 1.0,
+  "accuracy_accion": 0.8,
+  "accuracy_intenciones_detectadas_exacta": 1.0,
+  "accuracy_intenciones_detectadas_contiene_esperadas": 1.0,
+  "matriz_confusion_intencion": {
+    "agendar_cita": {
+      "agendar_cita": 8
+    },
+    "consulta_servicios": {
+      "consulta_servicios": 2
+    }
+  },
+  "fallos_por_categoria_fuente": {
+    "agendar_cita": 2
+  },
+  "fallos_por_campo": {
+    "accion": 2
+  },
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 1,
+    "limit": 10,
+    "category": "agendar_cita",
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "fallos": [
+    {
+      "index": 150,
+      "texto": "Buenas necesito que me ayuden con una orden de tomografía",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 151,
+      "texto": "Buenas necesito que me ayuden con una orden de tomografia",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    }
+  ],
+  "resultados": [
+    {
+      "index": 147,
+      "ok": true,
+      "texto": "me gustaría agendar una cita de laboratorio, que incluya este paquete",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 148,
+      "ok": true,
+      "texto": "me gustaria agendar una cita de laboratorio, que incluya este paquete",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 149,
+      "ok": true,
+      "texto": "me gustaría ajendar una cita de laboratorio, que incluya este paquete",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 150,
+      "ok": false,
+      "texto": "Buenas necesito que me ayuden con una orden de tomografía",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 151,
+      "ok": false,
+      "texto": "Buenas necesito que me ayuden con una orden de tomografia",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 152,
+      "ok": true,
+      "texto": "¿Dónde puedo agendar mi cita?",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 153,
+      "ok": true,
+      "texto": "¿Donde puedo agendar mi cita?",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 154,
+      "ok": true,
+      "texto": "¿Dónde puedo ajendar mi cita?",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 155,
+      "ok": true,
+      "texto": "¿Puedo reservar una cita?",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 156,
+      "ok": true,
+      "texto": "¿Como puedo agendar una cita?",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "diferencias": []
+    }
+  ]
+}

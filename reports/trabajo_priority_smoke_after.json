@@ -1,0 +1,293 @@
+{
+  "total_ejecutados": 12,
+  "aprobados": 12,
+  "fallidos": 0,
+  "accuracy_general": 1.0,
+  "accuracy_intencion": 1.0,
+  "accuracy_accion": 1.0,
+  "accuracy_intenciones_detectadas_exacta": 1.0,
+  "accuracy_intenciones_detectadas_contiene_esperadas": 1.0,
+  "matriz_confusion_intencion": {
+    "trabajo": {
+      "trabajo": 12
+    }
+  },
+  "fallos_por_categoria_fuente": {},
+  "fallos_por_campo": {},
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 1,
+    "limit": 12,
+    "category": "trabajo",
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "fallos": [],
+  "resultados": [
+    {
+      "index": 161,
+      "ok": true,
+      "texto": "Una pregunta donde puedo entregar mi hoja de vida",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 162,
+      "ok": true,
+      "texto": "Muy buenas tardes me comunicaba con ustedes para saber si tienen un correo de recursos humanos que puedan brindarme",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 163,
+      "ok": true,
+      "texto": "Soy enfermera auxiliar",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 164,
+      "ok": true,
+      "texto": "Buenas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 165,
+      "ok": true,
+      "texto": "Buenas tardes, disculpe estan necesitando personal medico ? Algun correo al que pueda enviar un curriculum",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 166,
+      "ok": true,
+      "texto": "Bnas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum",
+      "categoria_fuente": "trabajo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 167,
+      "ok": true,
+      "texto": "Hola buenas noches me ayuda con un correo para enviar mi CV",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 168,
+      "ok": true,
+      "texto": "Buenas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 169,
+      "ok": true,
+      "texto": "Buenas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro medico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 170,
+      "ok": true,
+      "texto": "Bnas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "categoria_fuente": "trabajo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 171,
+      "ok": true,
+      "texto": "buenas tardes me pueden ayudar con un mail para trabajo soy enfermera profesional",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 172,
+      "ok": true,
+      "texto": "Solicito comedidamente me ayude direccionando un correo electrónico para enviar mi hoja de vida",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    }
+  ]
+}

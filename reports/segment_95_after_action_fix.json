@@ -1,0 +1,947 @@
+{
+  "total_ejecutados": 22,
+  "aprobados": 16,
+  "fallidos": 6,
+  "accuracy_general": 0.7273,
+  "accuracy_intencion": 1.0,
+  "accuracy_accion": 0.7273,
+  "accuracy_intenciones_detectadas_exacta": 0.8636,
+  "accuracy_intenciones_detectadas_contiene_esperadas": 0.8636,
+  "matriz_confusion_intencion": {
+    "consulta_servicios": {
+      "consulta_servicios": 22
+    }
+  },
+  "fallos_por_categoria_fuente": {
+    "consulta_servicios": 6
+  },
+  "fallos_por_campo": {
+    "accion": 6,
+    "intenciones_detectadas": 3
+  },
+  "fallos_por_accion_esperada_vs_obtenida": {
+    "listar_opciones -> sin_resultados_catalogo": 2,
+    "respuesta_directa -> listar_opciones": 1,
+    "respuesta_directa -> sin_resultados_catalogo": 3
+  },
+  "fallos_por_intencion_esperada_vs_obtenida": {
+    "consulta_servicios -> consulta_servicios": 6
+  },
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 95,
+    "limit": 22,
+    "category": null,
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "top_20_fallos_resumidos": [
+    {
+      "index": 97,
+      "categoria_fuente": "consulta_servicios",
+      "texto": "Precio de la eco de las 20 semanas de embarazo",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "campos": [
+        "accion"
+      ]
+    },
+    {
+      "index": 111,
+      "categoria_fuente": "consulta_servicios",
+      "texto": "uds mismo hacen la radiografía",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "campos": [
+        "accion"
+      ]
+    },
+    {
+      "index": 112,
+      "categoria_fuente": "consulta_servicios",
+      "texto": "uds mismo hacen la radiografia",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "campos": [
+        "accion"
+      ]
+    },
+    {
+      "index": 114,
+      "categoria_fuente": "consulta_servicios",
+      "texto": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "campos": [
+        "intenciones_detectadas",
+        "accion"
+      ]
+    },
+    {
+      "index": 115,
+      "categoria_fuente": "consulta_servicios",
+      "texto": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un nino de tres anos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "campos": [
+        "intenciones_detectadas",
+        "accion"
+      ]
+    },
+    {
+      "index": 116,
+      "categoria_fuente": "consulta_servicios",
+      "texto": "Bnas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "campos": [
+        "intenciones_detectadas",
+        "accion"
+      ]
+    }
+  ],
+  "fallos": [
+    {
+      "index": 97,
+      "texto": "Precio de la eco de las 20 semanas de embarazo",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 111,
+      "texto": "uds mismo hacen la radiografía",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 112,
+      "texto": "uds mismo hacen la radiografia",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 114,
+      "texto": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 115,
+      "texto": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un nino de tres anos",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 116,
+      "texto": "Bnas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    }
+  ],
+  "resultados": [
+    {
+      "index": 95,
+      "ok": true,
+      "texto": "Precio de la ecografía de las 20 semanas de embarazo",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 96,
+      "ok": true,
+      "texto": "Precio de la ecografia de las 20 semanas de embarazo",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 97,
+      "ok": false,
+      "texto": "Precio de la eco de las 20 semanas de embarazo",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 98,
+      "ok": true,
+      "texto": "3er molares",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 99,
+      "ok": true,
+      "texto": "Buen día realizan exámenes en las mamas",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 100,
+      "ok": true,
+      "texto": "Buen dia realizan examenes en las mamas",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 101,
+      "ok": true,
+      "texto": "Tiene servicio para mamografía",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 102,
+      "ok": true,
+      "texto": "Tiene servicio para mamografia",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 103,
+      "ok": true,
+      "texto": "Realizan tomografia de craneo",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 104,
+      "ok": true,
+      "texto": "Tomografia de craneo",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 105,
+      "ok": true,
+      "texto": "Le pregunto si realizan tomografia de craneo",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 106,
+      "ok": true,
+      "texto": "Buenos días que precio tiene el eco renal",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 107,
+      "ok": true,
+      "texto": "Buenos dias que precio tiene el eco renal",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 108,
+      "ok": true,
+      "texto": "Bnos dias que precio tiene el eco renal",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 109,
+      "ok": true,
+      "texto": "Siasenprotesis",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 110,
+      "ok": true,
+      "texto": "Quiero saber sirealisanprotesis",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 111,
+      "ok": false,
+      "texto": "uds mismo hacen la radiografía",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 112,
+      "ok": false,
+      "texto": "uds mismo hacen la radiografia",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 113,
+      "ok": true,
+      "texto": "Buenos dias en su centro realizan resonancia contrastada abdominal",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 114,
+      "ok": false,
+      "texto": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 115,
+      "ok": false,
+      "texto": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un nino de tres anos",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 116,
+      "ok": false,
+      "texto": "Bnas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    }
+  ]
+}

@@ -76,8 +76,11 @@ def local_chat(text, disable_semantic=True):
         app.busqueda_semantica_disponible = lambda: False
 
     if not getattr(local_chat, "_catalog_cached", False):
-        cache_catalog(app)
-        local_chat._catalog_cached = True
+        try:
+            cache_catalog(app)
+            local_chat._catalog_cached = True
+        except Exception:
+            local_chat._catalog_cached = False
 
     with contextlib.redirect_stdout(io.StringIO()):
         return app.chat(app.SearchRequest(texto=text))
@@ -128,6 +131,12 @@ def evaluate_case(case, response):
         })
 
     return diffs
+
+
+def intents_contain_expected(expected, actual):
+    expected_set = set(normalize_intents(expected))
+    actual_set = set(normalize_intents(actual))
+    return expected_set.issubset(actual_set)
 
 
 def expected_snapshot(case):
@@ -242,11 +251,24 @@ def print_summary(results):
     passed = sum(1 for result in results if result["ok"])
     failed = total - passed
     accuracy = passed / total if total else 0.0
+    metrics = calculate_metrics(results)
     print("\nReporte:")
     print(f"  total_ejecutados: {total}")
     print(f"  aprobados: {passed}")
     print(f"  fallidos: {failed}")
     print(f"  accuracy_general: {accuracy:.4f}")
+    print(f"  accuracy_intencion: {metrics['accuracy_intencion']:.4f}")
+    print(f"  accuracy_accion: {metrics['accuracy_accion']:.4f}")
+    print(
+        "  accuracy_intenciones_detectadas_exacta: "
+        f"{metrics['accuracy_intenciones_detectadas_exacta']:.4f}"
+    )
+    print(
+        "  accuracy_intenciones_detectadas_contiene_esperadas: "
+        f"{metrics['accuracy_intenciones_detectadas_contiene_esperadas']:.4f}"
+    )
+    print(f"  fallos_por_categoria: {metrics['fallos_por_categoria_fuente']}")
+    print(f"  fallos_por_campo: {metrics['fallos_por_campo']}")
 
     if failed:
         print("\nDiferencias:")
@@ -259,6 +281,99 @@ def print_summary(results):
                     f"  {diff['field']}: "
                     f"esperado={diff['expected']!r} obtenido={diff['actual']!r}"
                 )
+
+
+def increment_counter(counter, key):
+    counter[key] = counter.get(key, 0) + 1
+
+
+def calculate_metrics(results):
+    total = len(results)
+    intent_ok = 0
+    action_ok = 0
+    intents_exact_ok = 0
+    intents_contains_ok = 0
+    confusion = {}
+    failures_by_category = {}
+    failures_by_field = {}
+    failures_by_action_pair = {}
+    failures_by_intent_pair = {}
+
+    for result in results:
+        expected = result.get("esperado") or {}
+        actual = result.get("obtenido") or {}
+        expected_intent = expected.get("intencion")
+        actual_intent = actual.get("intencion")
+
+        if actual_intent == expected_intent:
+            intent_ok += 1
+        if actual.get("accion") == expected.get("accion"):
+            action_ok += 1
+        if normalize_intents(actual.get("intenciones_detectadas")) == normalize_intents(
+            expected.get("intenciones_detectadas")
+        ):
+            intents_exact_ok += 1
+        if intents_contain_expected(
+            expected.get("intenciones_detectadas"),
+            actual.get("intenciones_detectadas"),
+        ):
+            intents_contains_ok += 1
+
+        confusion.setdefault(str(expected_intent), {})
+        increment_counter(confusion[str(expected_intent)], str(actual_intent))
+
+        if not result["ok"]:
+            increment_counter(
+                failures_by_category,
+                result.get("categoria_fuente") or "(sin_categoria)",
+            )
+            increment_counter(
+                failures_by_action_pair,
+                f"{expected.get('accion')} -> {actual.get('accion')}",
+            )
+            increment_counter(
+                failures_by_intent_pair,
+                f"{expected_intent} -> {actual_intent}",
+            )
+            for diff in result.get("diffs", []):
+                increment_counter(failures_by_field, diff.get("field", "unknown"))
+
+    divisor = total or 1
+    return {
+        "accuracy_intencion": round(intent_ok / divisor, 4),
+        "accuracy_accion": round(action_ok / divisor, 4),
+        "accuracy_intenciones_detectadas_exacta": round(intents_exact_ok / divisor, 4),
+        "accuracy_intenciones_detectadas_contiene_esperadas": round(
+            intents_contains_ok / divisor,
+            4,
+        ),
+        "matriz_confusion_intencion": confusion,
+        "fallos_por_categoria_fuente": dict(sorted(failures_by_category.items())),
+        "fallos_por_campo": dict(sorted(failures_by_field.items())),
+        "fallos_por_accion_esperada_vs_obtenida": dict(
+            sorted(failures_by_action_pair.items())
+        ),
+        "fallos_por_intencion_esperada_vs_obtenida": dict(
+            sorted(failures_by_intent_pair.items())
+        ),
+    }
+
+
+def build_failure_summary(failures, limit=20):
+    summary = []
+    for failure in failures[:limit]:
+        summary.append({
+            "index": failure["index"],
+            "categoria_fuente": failure.get("categoria_fuente"),
+            "texto": failure["texto"],
+            "esperado": failure.get("esperado"),
+            "obtenido": failure.get("obtenido"),
+            "campos": [
+                diff.get("field")
+                for diff in failure.get("diferencias", [])
+            ],
+        })
+    return summary
 
 
 def build_report(results, filters):
@@ -280,12 +395,15 @@ def build_report(results, filters):
             "diferencias": result.get("diffs", []),
         })
 
+    metrics = calculate_metrics(results)
     return {
         "total_ejecutados": total,
         "aprobados": passed,
         "fallidos": failed,
         "accuracy_general": round(passed / total, 4) if total else 0.0,
+        **metrics,
         "filters": filters,
+        "top_20_fallos_resumidos": build_failure_summary(failures, 20),
         "fallos": failures,
         "resultados": [
             {

@@ -1,0 +1,463 @@
+{
+  "total_ejecutados": 10,
+  "aprobados": 6,
+  "fallidos": 4,
+  "accuracy_general": 0.6,
+  "accuracy_intencion": 0.6,
+  "accuracy_accion": 0.6,
+  "accuracy_intenciones_detectadas_exacta": 0.6,
+  "accuracy_intenciones_detectadas_contiene_esperadas": 0.6,
+  "matriz_confusion_intencion": {
+    "trabajo": {
+      "None": 1,
+      "trabajo": 6,
+      "consulta_servicios": 3
+    }
+  },
+  "fallos_por_categoria_fuente": {
+    "trabajo": 4
+  },
+  "fallos_por_campo": {
+    "accion": 3,
+    "exception": 1,
+    "intencion": 3,
+    "intenciones_detectadas": 3
+  },
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 1,
+    "limit": 10,
+    "category": "trabajo",
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "fallos": [
+    {
+      "index": 161,
+      "texto": "Una pregunta donde puedo entregar mi hoja de vida",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": null,
+      "diferencias": [
+        {
+          "field": "exception",
+          "expected": "respuesta valida",
+          "actual": "HTTPException: 502: No se pudo obtener el catalogo de servicios"
+        }
+      ]
+    },
+    {
+      "index": 168,
+      "texto": "Buenas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "trabajo",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "trabajo"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "abrir_trabajo",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 169,
+      "texto": "Buenas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro medico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "trabajo",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "trabajo"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "abrir_trabajo",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 170,
+      "texto": "Bnas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "categoria_fuente": "trabajo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "trabajo",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "trabajo"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "abrir_trabajo",
+          "actual": "listar_opciones"
+        }
+      ]
+    }
+  ],
+  "resultados": [
+    {
+      "index": 161,
+      "ok": false,
+      "texto": "Una pregunta donde puedo entregar mi hoja de vida",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": null,
+      "diferencias": [
+        {
+          "field": "exception",
+          "expected": "respuesta valida",
+          "actual": "HTTPException: 502: No se pudo obtener el catalogo de servicios"
+        }
+      ]
+    },
+    {
+      "index": 162,
+      "ok": true,
+      "texto": "Muy buenas tardes me comunicaba con ustedes para saber si tienen un correo de recursos humanos que puedan brindarme",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 163,
+      "ok": true,
+      "texto": "Soy enfermera auxiliar",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 164,
+      "ok": true,
+      "texto": "Buenas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 165,
+      "ok": true,
+      "texto": "Buenas tardes, disculpe estan necesitando personal medico ? Algun correo al que pueda enviar un curriculum",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 166,
+      "ok": true,
+      "texto": "Bnas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum",
+      "categoria_fuente": "trabajo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 167,
+      "ok": true,
+      "texto": "Hola buenas noches me ayuda con un correo para enviar mi CV",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 168,
+      "ok": false,
+      "texto": "Buenas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "trabajo",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "trabajo"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "abrir_trabajo",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 169,
+      "ok": false,
+      "texto": "Buenas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro medico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "trabajo",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "trabajo"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "abrir_trabajo",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 170,
+      "ok": false,
+      "texto": "Bnas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "categoria_fuente": "trabajo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "trabajo",
+        "intenciones_detectadas": [
+          "trabajo"
+        ],
+        "accion": "abrir_trabajo"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "trabajo",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "trabajo"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "abrir_trabajo",
+          "actual": "listar_opciones"
+        }
+      ]
+    }
+  ]
+}

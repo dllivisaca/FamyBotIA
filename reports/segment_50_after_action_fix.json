@@ -1,0 +1,556 @@
+{
+  "total_ejecutados": 15,
+  "aprobados": 13,
+  "fallidos": 2,
+  "accuracy_general": 0.8667,
+  "accuracy_intencion": 1.0,
+  "accuracy_accion": 0.8667,
+  "accuracy_intenciones_detectadas_exacta": 0.8667,
+  "accuracy_intenciones_detectadas_contiene_esperadas": 0.8667,
+  "matriz_confusion_intencion": {
+    "cotizar_servicio": {
+      "cotizar_servicio": 6
+    },
+    "consulta_servicios": {
+      "consulta_servicios": 9
+    }
+  },
+  "fallos_por_categoria_fuente": {
+    "cotizar_servicio": 2
+  },
+  "fallos_por_campo": {
+    "accion": 2,
+    "intenciones_detectadas": 2
+  },
+  "fallos_por_accion_esperada_vs_obtenida": {
+    "respuesta_directa -> sin_resultados_catalogo": 2
+  },
+  "fallos_por_intencion_esperada_vs_obtenida": {
+    "consulta_servicios -> consulta_servicios": 2
+  },
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 50,
+    "limit": 15,
+    "category": null,
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "top_20_fallos_resumidos": [
+    {
+      "index": 63,
+      "categoria_fuente": "cotizar_servicio",
+      "texto": "Buenas noches que precio tiene la recanalizacion de trompas",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "campos": [
+        "intenciones_detectadas",
+        "accion"
+      ]
+    },
+    {
+      "index": 64,
+      "categoria_fuente": "cotizar_servicio",
+      "texto": "Bnas noches que precio tiene la recanalizacion de trompas",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "campos": [
+        "intenciones_detectadas",
+        "accion"
+      ]
+    }
+  ],
+  "fallos": [
+    {
+      "index": 63,
+      "texto": "Buenas noches que precio tiene la recanalizacion de trompas",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 64,
+      "texto": "Bnas noches que precio tiene la recanalizacion de trompas",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    }
+  ],
+  "resultados": [
+    {
+      "index": 50,
+      "ok": true,
+      "texto": "buenas tardes m puede ayudar con el costo d la consulta",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 51,
+      "ok": true,
+      "texto": "Cuál es el valor de una resonancia magnética de columna completa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 52,
+      "ok": true,
+      "texto": "Cual es el valor de una resonancia magnetica de columna completa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 53,
+      "ok": true,
+      "texto": "Cuál es el valor de una RM de columna completa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 54,
+      "ok": true,
+      "texto": "Buenos días que precio tiene la consulta y donde están ubicados disculpe gracias",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "consultar_ubicacion",
+          "cotizar_servicio"
+        ],
+        "accion": "consulta_ubicacion"
+      },
+      "obtenido": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "consultar_ubicacion",
+          "cotizar_servicio"
+        ],
+        "accion": "consulta_ubicacion"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 55,
+      "ok": true,
+      "texto": "Buenos dias que precio tiene la consulta y donde estan ubicados disculpe gracias",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "consultar_ubicacion",
+          "cotizar_servicio"
+        ],
+        "accion": "consulta_ubicacion"
+      },
+      "obtenido": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "consultar_ubicacion",
+          "cotizar_servicio"
+        ],
+        "accion": "consulta_ubicacion"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 56,
+      "ok": true,
+      "texto": "Bnos dias que precio tiene la consulta y donde están ubicados disculpe gracias",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "consultar_ubicacion",
+          "cotizar_servicio"
+        ],
+        "accion": "consulta_ubicacion"
+      },
+      "obtenido": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "consultar_ubicacion",
+          "cotizar_servicio"
+        ],
+        "accion": "consulta_ubicacion"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 57,
+      "ok": true,
+      "texto": "Dónde están ubicados y qué precio tiene la consulta",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "cambio_orden",
+      "esperado": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "consultar_ubicacion",
+          "cotizar_servicio"
+        ],
+        "accion": "consulta_ubicacion"
+      },
+      "obtenido": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "consultar_ubicacion",
+          "cotizar_servicio"
+        ],
+        "accion": "consulta_ubicacion"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 58,
+      "ok": true,
+      "texto": "Muy buenas noches, querria saber si en esta sección se hace las pruebas de embarazo de sangre? cuanto seria el costo?",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 59,
+      "ok": true,
+      "texto": "Muy buenas noches, querria saber si en esta seccion se hace las pruebas de embarazo de sangre? cuanto seria el costo?",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 60,
+      "ok": true,
+      "texto": "Eco transvaginal precio?",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 61,
+      "ok": true,
+      "texto": "Valor de la consulta, muchas gracias.",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "cotizar_servicio",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 62,
+      "ok": true,
+      "texto": "Cuanto salen las protesis",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 63,
+      "ok": false,
+      "texto": "Buenas noches que precio tiene la recanalizacion de trompas",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 64,
+      "ok": false,
+      "texto": "Bnas noches que precio tiene la recanalizacion de trompas",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "cotizar_servicio"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    }
+  ]
+}

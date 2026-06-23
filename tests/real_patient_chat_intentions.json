@@ -660,7 +660,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "cotizar_servicio",
       "variant_type": "base"
     },
@@ -671,7 +671,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "cotizar_servicio",
       "variant_type": "sin_tildes",
       "source_text": "Muy buenas noches, querria saber si en esta sección se hace las pruebas de embarazo de sangre? cuanto seria el costo?"
@@ -683,7 +683,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "cotizar_servicio",
       "variant_type": "base"
     },
@@ -749,7 +749,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "cotizar_servicio",
       "variant_type": "base"
     },
@@ -771,7 +771,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "cotizar_servicio",
       "variant_type": "base"
     },
@@ -810,11 +810,12 @@
     },
     {
       "texto": "Donde están ubicados y cuanto vale la consulta con el gastroenterologo",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "consulta_especialidades",
         "consultar_ubicacion",
-        "cotizar_servicio",
-        "consulta_especialidades"
+        "cotizar_servicio"
       ],
       "accion_esperada": "respuesta_directa",
       "categoria_fuente": "cotizar_servicio",
@@ -822,11 +823,12 @@
     },
     {
       "texto": "Donde estan ubicados y cuanto vale la consulta con el gastroenterologo",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "consulta_especialidades",
         "consultar_ubicacion",
-        "cotizar_servicio",
-        "consulta_especialidades"
+        "cotizar_servicio"
       ],
       "accion_esperada": "respuesta_directa",
       "categoria_fuente": "cotizar_servicio",
@@ -835,11 +837,12 @@
     },
     {
       "texto": "Donde están ubicadps y cuanto vale la consulta con el gastroenterologo",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "consulta_especialidades",
         "consultar_ubicacion",
-        "cotizar_servicio",
-        "consulta_especialidades"
+        "cotizar_servicio"
       ],
       "accion_esperada": "respuesta_directa",
       "categoria_fuente": "cotizar_servicio",
@@ -896,7 +899,7 @@
       "intenciones_detectadas_esperadas": [
         "consulta_servicios"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "base"
     },
@@ -906,7 +909,7 @@
       "intenciones_detectadas_esperadas": [
         "consulta_servicios"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "sin_tildes",
       "source_text": "Información de ecografía abdominal completa"
@@ -917,7 +920,7 @@
       "intenciones_detectadas_esperadas": [
         "consulta_servicios"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "errores_ortograficos",
       "source_text": "Información de ecografía abdominal completa"
@@ -928,7 +931,7 @@
       "intenciones_detectadas_esperadas": [
         "consulta_servicios"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "base"
     },
@@ -1023,7 +1026,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "base"
     },
@@ -1034,7 +1037,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "base"
     },
@@ -1045,7 +1048,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "sin_tildes",
       "source_text": "Buenas tardes que precio tiene el eco de las 20 semanas, eco morfológico"
@@ -1057,7 +1060,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "errores_ortograficos",
       "source_text": "Buenas tardes que precio tiene el eco de las 20 semanas, eco morfológico"
@@ -1113,7 +1116,7 @@
       "intenciones_detectadas_esperadas": [
         "consulta_servicios"
       ],
-      "accion_esperada": "listar_opciones",
+      "accion_esperada": "respuesta_directa",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "base"
     },
@@ -1123,7 +1126,7 @@
       "intenciones_detectadas_esperadas": [
         "consulta_servicios"
       ],
-      "accion_esperada": "listar_opciones",
+      "accion_esperada": "respuesta_directa",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "sin_tildes",
       "source_text": "Buen día realizan exámenes en las mamas"
@@ -1134,7 +1137,7 @@
       "intenciones_detectadas_esperadas": [
         "consulta_servicios"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "base"
     },
@@ -1144,7 +1147,7 @@
       "intenciones_detectadas_esperadas": [
         "consulta_servicios"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "sin_tildes",
       "source_text": "Tiene servicio para mamografía"
@@ -1186,7 +1189,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "base"
     },
@@ -1197,7 +1200,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "sin_tildes",
       "source_text": "Buenos días que precio tiene el eco renal"
@@ -1209,7 +1212,7 @@
         "consulta_servicios",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "errores_ortograficos",
       "source_text": "Buenos días que precio tiene el eco renal"
@@ -1261,7 +1264,7 @@
       "intenciones_detectadas_esperadas": [
         "consulta_servicios"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "consulta_servicios",
       "variant_type": "base"
     },
@@ -1333,8 +1336,9 @@
     },
     {
       "texto": "cardiología",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1343,8 +1347,9 @@
     },
     {
       "texto": "cardiologia",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1354,8 +1359,9 @@
     },
     {
       "texto": "tienen nutrición",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1364,8 +1370,9 @@
     },
     {
       "texto": "tienen nutricion",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1375,8 +1382,9 @@
     },
     {
       "texto": "Buen día cuenta con la especialidad de Cardiólogia?",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1385,8 +1393,9 @@
     },
     {
       "texto": "Buen dia cuenta con la especialidad de Cardiologia?",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1396,8 +1405,9 @@
     },
     {
       "texto": "Servicio de cardiología",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1406,8 +1416,9 @@
     },
     {
       "texto": "Servicio de cardiologia",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1417,8 +1428,9 @@
     },
     {
       "texto": "Urología",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1427,8 +1439,9 @@
     },
     {
       "texto": "Urologia",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1438,8 +1451,9 @@
     },
     {
       "texto": "Oftalmología",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -1448,8 +1462,9 @@
     },
     {
       "texto": "Oftalmologia",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "respuesta_directa",
@@ -2367,7 +2382,7 @@
         "consultar_horario",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "multi_intencion",
       "variant_type": "base"
     },
@@ -2380,7 +2395,7 @@
         "consultar_horario",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "multi_intencion",
       "variant_type": "sin_tildes",
       "source_text": "Me recomendaron hacerme una mamografía. puedo agendar el examen directamente? Qué horarios tienen disponibles y cuál sería el costo?"
@@ -2394,15 +2409,16 @@
         "consultar_horario",
         "cotizar_servicio"
       ],
-      "accion_esperada": "respuesta_directa",
+      "accion_esperada": "listar_opciones",
       "categoria_fuente": "multi_intencion",
       "variant_type": "errores_ortograficos",
       "source_text": "Me recomendaron hacerme una mamografía. puedo agendar el examen directamente? Qué horarios tienen disponibles y cuál sería el costo?"
     },
     {
       "texto": "quisiera información sobre las áreas de pediatría y dermatologia",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "listar_opciones",
@@ -2411,8 +2427,9 @@
     },
     {
       "texto": "quisiera informacion sobre las areas de pediatria y dermatologia",
-      "intencion_esperada": "consulta_especialidades",
+      "intencion_esperada": "consulta_servicios",
       "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
         "consulta_especialidades"
       ],
       "accion_esperada": "listar_opciones",

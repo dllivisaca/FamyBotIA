@@ -1,0 +1,249 @@
+{
+  "total_ejecutados": 10,
+  "aprobados": 10,
+  "fallidos": 0,
+  "accuracy_general": 1.0,
+  "accuracy_intencion": 1.0,
+  "accuracy_accion": 1.0,
+  "accuracy_intenciones_detectadas_exacta": 1.0,
+  "accuracy_intenciones_detectadas_contiene_esperadas": 1.0,
+  "matriz_confusion_intencion": {
+    "consultar_ubicacion": {
+      "consultar_ubicacion": 10
+    }
+  },
+  "fallos_por_categoria_fuente": {},
+  "fallos_por_campo": {},
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 1,
+    "limit": 10,
+    "category": "consultar_ubicacion",
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "fallos": [],
+  "resultados": [
+    {
+      "index": 190,
+      "ok": true,
+      "texto": "¿Cuál es su ubicación?",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 191,
+      "ok": true,
+      "texto": "¿Cual es su ubicacion?",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 192,
+      "ok": true,
+      "texto": "Dónde están ubicados",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 193,
+      "ok": true,
+      "texto": "Donde estan ubicados",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 194,
+      "ok": true,
+      "texto": "Dónde están ubicadps",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 195,
+      "ok": true,
+      "texto": "fonde estan ubicadod yo vivo en Milagro",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 196,
+      "ok": true,
+      "texto": "donde están ubicados.",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 197,
+      "ok": true,
+      "texto": "donde estan ubicados.",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 198,
+      "ok": true,
+      "texto": "donde están ubicadps.",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 199,
+      "ok": true,
+      "texto": "deme su ubicación",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    }
+  ]
+}

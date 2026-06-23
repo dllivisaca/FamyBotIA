@@ -1,0 +1,126 @@
+{
+  "total_ejecutados": 4,
+  "aprobados": 4,
+  "fallidos": 0,
+  "accuracy_general": 1.0,
+  "accuracy_intencion": 1.0,
+  "accuracy_accion": 1.0,
+  "accuracy_intenciones_detectadas_exacta": 1.0,
+  "accuracy_intenciones_detectadas_contiene_esperadas": 1.0,
+  "matriz_confusion_intencion": {
+    "agendar_cita": {
+      "agendar_cita": 4
+    }
+  },
+  "fallos_por_categoria_fuente": {},
+  "fallos_por_campo": {},
+  "fallos_por_accion_esperada_vs_obtenida": {},
+  "fallos_por_intencion_esperada_vs_obtenida": {},
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 152,
+    "limit": 4,
+    "category": null,
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "top_20_fallos_resumidos": [],
+  "fallos": [],
+  "resultados": [
+    {
+      "index": 152,
+      "ok": true,
+      "texto": "¿Dónde puedo agendar mi cita?",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 153,
+      "ok": true,
+      "texto": "¿Donde puedo agendar mi cita?",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 154,
+      "ok": true,
+      "texto": "¿Dónde puedo ajendar mi cita?",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita",
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 155,
+      "ok": true,
+      "texto": "¿Puedo reservar una cita?",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "obtenido": {
+        "intencion": "agendar_cita",
+        "intenciones_detectadas": [
+          "agendar_cita"
+        ],
+        "accion": "iniciar_agendamiento"
+      },
+      "diferencias": []
+    }
+  ]
+}

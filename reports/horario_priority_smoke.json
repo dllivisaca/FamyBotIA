@@ -1,0 +1,249 @@
+{
+  "total_ejecutados": 10,
+  "aprobados": 10,
+  "fallidos": 0,
+  "accuracy_general": 1.0,
+  "accuracy_intencion": 1.0,
+  "accuracy_accion": 1.0,
+  "accuracy_intenciones_detectadas_exacta": 1.0,
+  "accuracy_intenciones_detectadas_contiene_esperadas": 1.0,
+  "matriz_confusion_intencion": {
+    "consultar_horario": {
+      "consultar_horario": 10
+    }
+  },
+  "fallos_por_categoria_fuente": {},
+  "fallos_por_campo": {},
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 1,
+    "limit": 10,
+    "category": "consultar_horario",
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "fallos": [],
+  "resultados": [
+    {
+      "index": 132,
+      "ok": true,
+      "texto": "Hola atienden mañana o el sábado",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 133,
+      "ok": true,
+      "texto": "Hola atienden manana o el sabado",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 134,
+      "ok": true,
+      "texto": "¿Cuál es su horario de atención?",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 135,
+      "ok": true,
+      "texto": "¿Cual es su horario de atencion?",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 136,
+      "ok": true,
+      "texto": "Atienden los días sábados",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 137,
+      "ok": true,
+      "texto": "Atienden los dias sabados",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 138,
+      "ok": true,
+      "texto": "Buenos días disculpe hoy atienden",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 139,
+      "ok": true,
+      "texto": "Buenos dias disculpe hoy atienden",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 140,
+      "ok": true,
+      "texto": "Bnos dias disculpe hoy atienden",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 141,
+      "ok": true,
+      "texto": "Quisiera saber si hoy atienden",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consultar_horario",
+        "intenciones_detectadas": [
+          "consultar_horario"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    }
+  ]
+}
