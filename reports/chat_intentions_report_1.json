@@ -1,0 +1,1162 @@
+{
+  "total_ejecutados": 25,
+  "aprobados": 12,
+  "fallidos": 13,
+  "accuracy_general": 0.48,
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 1,
+    "limit": 25,
+    "category": null,
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "fallos": [
+    {
+      "index": 3,
+      "texto": "Bnas tardes",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "saludo"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "saludo"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "texto": "Bnos dias",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "saludo"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "saludo"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "texto": "Bnas noches",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "saludo"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "saludo"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "texto": "Hola que precio tiene la ecografía venosa",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "texto": "Hola que precio tiene la ecografia venosa",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 16,
+      "texto": "Hola que precio tiene la eco venosa",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 19,
+      "texto": "Buenas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 20,
+      "texto": "Buenas tardes disculpe que valor tiene consulta con neumologia y dispone tambien de espirometria y electrocardiograma?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 21,
+      "texto": "Bnas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 22,
+      "texto": "Buenas, que costo tiene una ecografia hepatobiliar?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 23,
+      "texto": "Buenas, que costo tiene una eco hepatobiliar?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 24,
+      "texto": "Necesito saber el costo de una ecografia hepatobiliar",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 25,
+      "texto": "Necesito saber el costo de una eco hepatobiliar",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    }
+  ],
+  "resultados": [
+    {
+      "index": 1,
+      "ok": true,
+      "texto": "Hola buenas",
+      "categoria_fuente": "saludo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 2,
+      "ok": true,
+      "texto": "Buenas tardes",
+      "categoria_fuente": "saludo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 3,
+      "ok": false,
+      "texto": "Bnas tardes",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "saludo"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "saludo"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "ok": true,
+      "texto": "Buenos días",
+      "categoria_fuente": "saludo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 5,
+      "ok": true,
+      "texto": "Buenos dias",
+      "categoria_fuente": "saludo",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 6,
+      "ok": false,
+      "texto": "Bnos dias",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "saludo"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "saludo"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "ok": true,
+      "texto": "Hola",
+      "categoria_fuente": "saludo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 8,
+      "ok": true,
+      "texto": "Buen día",
+      "categoria_fuente": "saludo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 9,
+      "ok": true,
+      "texto": "Buen dia",
+      "categoria_fuente": "saludo",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 10,
+      "ok": true,
+      "texto": "Buenas noches",
+      "categoria_fuente": "saludo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 11,
+      "ok": false,
+      "texto": "Bnas noches",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "saludo"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "saludo"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "ok": true,
+      "texto": "Hhola",
+      "categoria_fuente": "saludo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 13,
+      "ok": true,
+      "texto": "holaaaaa",
+      "categoria_fuente": "saludo",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 14,
+      "ok": false,
+      "texto": "Hola que precio tiene la ecografía venosa",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "ok": false,
+      "texto": "Hola que precio tiene la ecografia venosa",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 16,
+      "ok": false,
+      "texto": "Hola que precio tiene la eco venosa",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 17,
+      "ok": true,
+      "texto": "Que valor tiene una audiometría",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 18,
+      "ok": true,
+      "texto": "Que valor tiene una audiometria",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 19,
+      "ok": false,
+      "texto": "Buenas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 20,
+      "ok": false,
+      "texto": "Buenas tardes disculpe que valor tiene consulta con neumologia y dispone tambien de espirometria y electrocardiograma?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 21,
+      "ok": false,
+      "texto": "Bnas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 22,
+      "ok": false,
+      "texto": "Buenas, que costo tiene una ecografia hepatobiliar?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 23,
+      "ok": false,
+      "texto": "Buenas, que costo tiene una eco hepatobiliar?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 24,
+      "ok": false,
+      "texto": "Necesito saber el costo de una ecografia hepatobiliar",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 25,
+      "ok": false,
+      "texto": "Necesito saber el costo de una eco hepatobiliar",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    }
+  ]
+}

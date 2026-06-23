@@ -1,0 +1,2456 @@
+{
+  "schema_version": 1,
+  "description": "Casos reales de pacientes para validar /chat: intencion, intenciones_detectadas y accion.",
+  "total_cases": 224,
+  "cases": [
+    {
+      "texto": "Hola buenas",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Bnas tardes",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas tardes"
+    },
+    {
+      "texto": "Buenos días",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenos dias",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenos días"
+    },
+    {
+      "texto": "Bnos dias",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenos días"
+    },
+    {
+      "texto": "Hola",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buen día",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buen dia",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "sin_tildes",
+      "source_text": "Buen día"
+    },
+    {
+      "texto": "Buenas noches",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Bnas noches",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas noches"
+    },
+    {
+      "texto": "Hhola",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "holaaaaa",
+      "intencion_esperada": "saludo",
+      "intenciones_detectadas_esperadas": [
+        "saludo"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "saludo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Hola que precio tiene la ecografía venosa",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Hola que precio tiene la ecografia venosa",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Hola que precio tiene la ecografía venosa"
+    },
+    {
+      "texto": "Hola que precio tiene la eco venosa",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Hola que precio tiene la ecografía venosa"
+    },
+    {
+      "texto": "Que valor tiene una audiometría",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Que valor tiene una audiometria",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Que valor tiene una audiometría"
+    },
+    {
+      "texto": "Buenas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio",
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes disculpe que valor tiene consulta con neumologia y dispone tambien de espirometria y electrocardiograma?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio",
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?"
+    },
+    {
+      "texto": "Bnas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio",
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas tardes disculpe que valor tiene consulta con neumología y dispone también de espirometria y electrocardiograma?"
+    },
+    {
+      "texto": "Buenas, que costo tiene una ecografia hepatobiliar?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas, que costo tiene una eco hepatobiliar?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas, que costo tiene una ecografia hepatobiliar?"
+    },
+    {
+      "texto": "Necesito saber el costo de una ecografia hepatobiliar",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Necesito saber el costo de una eco hepatobiliar",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Necesito saber el costo de una ecografia hepatobiliar"
+    },
+    {
+      "texto": "Cuánto cuesta un lavado de oído?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Cuanto cuesta un lavado de oido?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Cuánto cuesta un lavado de oído?"
+    },
+    {
+      "texto": "Que precio tiene la consulta con traumatología",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "consulta_especialidades",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Que precio tiene la consulta con traumatologia",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "consulta_especialidades",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Que precio tiene la consulta con traumatología"
+    },
+    {
+      "texto": "Hola buen dia cual es el costo de la resonancia magnética",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Hola buen dia cual es el costo de la resonancia magnetica",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Hola buen dia cual es el costo de la resonancia magnética"
+    },
+    {
+      "texto": "Hola buen dia cual es el costo de la RM",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Hola buen dia cual es el costo de la resonancia magnética"
+    },
+    {
+      "texto": "Una consulta que costo tiene electromiografia",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Qué precio tienen las tomografías",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Que precio tienen las tomografias",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Qué precio tienen las tomografías"
+    },
+    {
+      "texto": "Buen día que costo tiene la consulta para neumólogia ??",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "consulta_especialidades",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buen dia que costo tiene la consulta para neumologia ??",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "consulta_especialidades",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Buen día que costo tiene la consulta para neumólogia ??"
+    },
+    {
+      "texto": "Cuál es el costo de la primera consulta para embarazo y ecografía",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Cual es el costo de la primera consulta para embarazo y ecografia",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Cuál es el costo de la primera consulta para embarazo y ecografía"
+    },
+    {
+      "texto": "Cuál es el costo de la primera consulta para embarazo y eco",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Cuál es el costo de la primera consulta para embarazo y ecografía"
+    },
+    {
+      "texto": "Quisiera saber cuánto cuesta la consulta de primer embarazo y ecografía",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Quisiera saber cuanto cuesta la consulta de primer embarazo y ecografia",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Quisiera saber cuánto cuesta la consulta de primer embarazo y ecografía"
+    },
+    {
+      "texto": "Quisiera saber cuánto cuesta la consulta de primer embarazo y eco",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Quisiera saber cuánto cuesta la consulta de primer embarazo y ecografía"
+    },
+    {
+      "texto": "Hola buenas noches Quisiera saber si hacen resonancia cerebral con contraste y en que precio?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas noches disculpe hacen ecografías de tórax?? Y si , si que costó tiene",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas noches disculpe hacen ecografias de torax?? Y si , si que costo tiene",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenas noches disculpe hacen ecografías de tórax?? Y si , si que costó tiene"
+    },
+    {
+      "texto": "Bnas noches disculpe hacen ecografías de tórax?? Y si , si que costó tiene",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas noches disculpe hacen ecografías de tórax?? Y si , si que costó tiene"
+    },
+    {
+      "texto": "Buenas noches, que cuesta el lavado de oidos?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Bnas noches, que cuesta el lavado de oidos?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas noches, que cuesta el lavado de oidos?"
+    },
+    {
+      "texto": "buenas tardes m puede ayudar con el costo d la consulta",
+      "intencion_esperada": "cotizar_servicio",
+      "intenciones_detectadas_esperadas": [
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Cuál es el valor de una resonancia magnética de columna completa",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Cual es el valor de una resonancia magnetica de columna completa",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Cuál es el valor de una resonancia magnética de columna completa"
+    },
+    {
+      "texto": "Cuál es el valor de una RM de columna completa",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Cuál es el valor de una resonancia magnética de columna completa"
+    },
+    {
+      "texto": "Buenos días que precio tiene la consulta y donde están ubicados disculpe gracias",
+      "intencion_esperada": "cotizar_servicio",
+      "intenciones_detectadas_esperadas": [
+        "cotizar_servicio",
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "consulta_ubicacion",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenos dias que precio tiene la consulta y donde estan ubicados disculpe gracias",
+      "intencion_esperada": "cotizar_servicio",
+      "intenciones_detectadas_esperadas": [
+        "cotizar_servicio",
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "consulta_ubicacion",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenos días que precio tiene la consulta y donde están ubicados disculpe gracias"
+    },
+    {
+      "texto": "Bnos dias que precio tiene la consulta y donde están ubicados disculpe gracias",
+      "intencion_esperada": "cotizar_servicio",
+      "intenciones_detectadas_esperadas": [
+        "cotizar_servicio",
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "consulta_ubicacion",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenos días que precio tiene la consulta y donde están ubicados disculpe gracias"
+    },
+    {
+      "texto": "Dónde están ubicados y qué precio tiene la consulta",
+      "intencion_esperada": "cotizar_servicio",
+      "intenciones_detectadas_esperadas": [
+        "cotizar_servicio",
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "consulta_ubicacion",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "cambio_orden",
+      "source_text": "Buenos días que precio tiene la consulta y donde están ubicados disculpe gracias"
+    },
+    {
+      "texto": "Muy buenas noches, querria saber si en esta sección se hace las pruebas de embarazo de sangre? cuanto seria el costo?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Muy buenas noches, querria saber si en esta seccion se hace las pruebas de embarazo de sangre? cuanto seria el costo?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Muy buenas noches, querria saber si en esta sección se hace las pruebas de embarazo de sangre? cuanto seria el costo?"
+    },
+    {
+      "texto": "Eco transvaginal precio?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Valor de la consulta, muchas gracias.",
+      "intencion_esperada": "cotizar_servicio",
+      "intenciones_detectadas_esperadas": [
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Cuanto salen las protesis",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas noches que precio tiene la recanalizacion de trompas",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Bnas noches que precio tiene la recanalizacion de trompas",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas noches que precio tiene la recanalizacion de trompas"
+    },
+    {
+      "texto": "para sacar un tercer molar q vale.",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "costo de un tratamiento de conducto",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Q precio tiene el calce de muela",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Precio de blancamiento dental",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Los calces q precio tienen",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buen dia , precio de extracion de muela o tercer molar",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Quisiera saber precio de una extracion de muela o tercer molar",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Donde están ubicados y cuanto vale la consulta con el gastroenterologo",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion",
+        "cotizar_servicio",
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Donde estan ubicados y cuanto vale la consulta con el gastroenterologo",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion",
+        "cotizar_servicio",
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "sin_tildes",
+      "source_text": "Donde están ubicados y cuanto vale la consulta con el gastroenterologo"
+    },
+    {
+      "texto": "Donde están ubicadps y cuanto vale la consulta con el gastroenterologo",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion",
+        "cotizar_servicio",
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Donde están ubicados y cuanto vale la consulta con el gastroenterologo"
+    },
+    {
+      "texto": "Buenas noches precio de un ecocardiogrma y una prueba de holter de arritmia",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Bnas noches precio de un ecocardiogrma y una prueba de holter de arritmia",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "cotizar_servicio",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas noches precio de un ecocardiogrma y una prueba de holter de arritmia"
+    },
+    {
+      "texto": "Realizan resonancias magnéticas ?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Realizan resonancias magneticas ?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Realizan resonancias magnéticas ?"
+    },
+    {
+      "texto": "Información de ecografía abdominal completa",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Informacion de ecografia abdominal completa",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Información de ecografía abdominal completa"
+    },
+    {
+      "texto": "Información de eco abdominal completa",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Información de ecografía abdominal completa"
+    },
+    {
+      "texto": "Buenas, tmb quitan caries?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Hola quisiera saber si uds hacen operaciones",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "hiperplasia prostatica, calcificaciones en la prostata",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes resonancia magnética",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes resonancia magnetica",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenas tardes resonancia magnética"
+    },
+    {
+      "texto": "Bnas tardes resonancia magnética",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas tardes resonancia magnética"
+    },
+    {
+      "texto": "Buenos días, quisiera saber si hacen exámenes de audiometría",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenos dias, quisiera saber si hacen examenes de audiometria",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenos días, quisiera saber si hacen exámenes de audiometría"
+    },
+    {
+      "texto": "Bnos dias, quisiera saber si hacen exámenes de audiometría",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenos días, quisiera saber si hacen exámenes de audiometría"
+    },
+    {
+      "texto": "Hola buenas que cuesta una prueba de embarazo",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes que precio tiene el eco de las 20 semanas, eco morfológico",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes que precio tiene el eco de las 20 semanas, eco morfologico",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenas tardes que precio tiene el eco de las 20 semanas, eco morfológico"
+    },
+    {
+      "texto": "Bnas tardes que precio tiene el eco de las 20 semanas, eco morfológico",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas tardes que precio tiene el eco de las 20 semanas, eco morfológico"
+    },
+    {
+      "texto": "Precio de la ecografía de las 20 semanas de embarazo",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Precio de la ecografia de las 20 semanas de embarazo",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Precio de la ecografía de las 20 semanas de embarazo"
+    },
+    {
+      "texto": "Precio de la eco de las 20 semanas de embarazo",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Precio de la ecografía de las 20 semanas de embarazo"
+    },
+    {
+      "texto": "3er molares",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buen día realizan exámenes en las mamas",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buen dia realizan examenes en las mamas",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Buen día realizan exámenes en las mamas"
+    },
+    {
+      "texto": "Tiene servicio para mamografía",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Tiene servicio para mamografia",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Tiene servicio para mamografía"
+    },
+    {
+      "texto": "Realizan tomografia de craneo",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Tomografia de craneo",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Le pregunto si realizan tomografia de craneo",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenos días que precio tiene el eco renal",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenos dias que precio tiene el eco renal",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenos días que precio tiene el eco renal"
+    },
+    {
+      "texto": "Bnos dias que precio tiene el eco renal",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenos días que precio tiene el eco renal"
+    },
+    {
+      "texto": "Siasenprotesis",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Quiero saber sirealisanprotesis",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "uds mismo hacen la radiografía",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "uds mismo hacen la radiografia",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "uds mismo hacen la radiografía"
+    },
+    {
+      "texto": "Buenos dias en su centro realizan resonancia contrastada abdominal",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un nino de tres anos",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años"
+    },
+    {
+      "texto": "Bnas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas tardes hacen tratamiento con gas de la risa q valor tiene es para un niño de tres años"
+    },
+    {
+      "texto": "Quiero aserme limpieza y tapar caries",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Necesito sacarme las cordales ya tengo la panorámica",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Necesito sacarme las cordales ya tengo la panoramica",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "consulta_servicios",
+      "variant_type": "sin_tildes",
+      "source_text": "Necesito sacarme las cordales ya tengo la panorámica"
+    },
+    {
+      "texto": "cardiología",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "base"
+    },
+    {
+      "texto": "cardiologia",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "sin_tildes",
+      "source_text": "cardiología"
+    },
+    {
+      "texto": "tienen nutrición",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "base"
+    },
+    {
+      "texto": "tienen nutricion",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "sin_tildes",
+      "source_text": "tienen nutrición"
+    },
+    {
+      "texto": "Buen día cuenta con la especialidad de Cardiólogia?",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buen dia cuenta con la especialidad de Cardiologia?",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "sin_tildes",
+      "source_text": "Buen día cuenta con la especialidad de Cardiólogia?"
+    },
+    {
+      "texto": "Servicio de cardiología",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Servicio de cardiologia",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "sin_tildes",
+      "source_text": "Servicio de cardiología"
+    },
+    {
+      "texto": "Urología",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Urologia",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "sin_tildes",
+      "source_text": "Urología"
+    },
+    {
+      "texto": "Oftalmología",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Oftalmologia",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "consulta_especialidades",
+      "variant_type": "sin_tildes",
+      "source_text": "Oftalmología"
+    },
+    {
+      "texto": "Hola atienden mañana o el sábado",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Hola atienden manana o el sabado",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "source_text": "Hola atienden mañana o el sábado"
+    },
+    {
+      "texto": "¿Cuál es su horario de atención?",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base"
+    },
+    {
+      "texto": "¿Cual es su horario de atencion?",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "source_text": "¿Cuál es su horario de atención?"
+    },
+    {
+      "texto": "Atienden los días sábados",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Atienden los dias sabados",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "source_text": "Atienden los días sábados"
+    },
+    {
+      "texto": "Buenos días disculpe hoy atienden",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenos dias disculpe hoy atienden",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenos días disculpe hoy atienden"
+    },
+    {
+      "texto": "Bnos dias disculpe hoy atienden",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenos días disculpe hoy atienden"
+    },
+    {
+      "texto": "Quisiera saber si hoy atienden",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Horarios de atención",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Horarios de atencion",
+      "intencion_esperada": "consultar_horario",
+      "intenciones_detectadas_esperadas": [
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "source_text": "Horarios de atención"
+    },
+    {
+      "texto": "favor indicar dirección y horario",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion",
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "base"
+    },
+    {
+      "texto": "favor indicar direccion y horario",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion",
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "sin_tildes",
+      "source_text": "favor indicar dirección y horario"
+    },
+    {
+      "texto": "Horario y dirección por favor",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion",
+        "consultar_horario"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_horario",
+      "variant_type": "cambio_orden",
+      "source_text": "favor indicar dirección y horario"
+    },
+    {
+      "texto": "me gustaría agendar una cita de laboratorio, que incluya este paquete",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base"
+    },
+    {
+      "texto": "me gustaria agendar una cita de laboratorio, que incluya este paquete",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "sin_tildes",
+      "source_text": "me gustaría agendar una cita de laboratorio, que incluya este paquete"
+    },
+    {
+      "texto": "me gustaría ajendar una cita de laboratorio, que incluya este paquete",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "errores_ortograficos",
+      "source_text": "me gustaría agendar una cita de laboratorio, que incluya este paquete"
+    },
+    {
+      "texto": "Buenas necesito que me ayuden con una orden de tomografía",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas necesito que me ayuden con una orden de tomografia",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenas necesito que me ayuden con una orden de tomografía"
+    },
+    {
+      "texto": "¿Dónde puedo agendar mi cita?",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita",
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base"
+    },
+    {
+      "texto": "¿Donde puedo agendar mi cita?",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita",
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "sin_tildes",
+      "source_text": "¿Dónde puedo agendar mi cita?"
+    },
+    {
+      "texto": "¿Dónde puedo ajendar mi cita?",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita",
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "errores_ortograficos",
+      "source_text": "¿Dónde puedo agendar mi cita?"
+    },
+    {
+      "texto": "¿Puedo reservar una cita?",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base"
+    },
+    {
+      "texto": "¿Como puedo agendar una cita?",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base"
+    },
+    {
+      "texto": "¿Como puedo ajendar una cita?",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "errores_ortograficos",
+      "source_text": "¿Como puedo agendar una cita?"
+    },
+    {
+      "texto": "Quiero reservar una cita.",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Algún número para comunicarme o sacar cita",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Algun numero para comunicarme o sacar cita",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "agendar_cita",
+      "variant_type": "sin_tildes",
+      "source_text": "Algún número para comunicarme o sacar cita"
+    },
+    {
+      "texto": "Una pregunta donde puedo entregar mi hoja de vida",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Muy buenas tardes me comunicaba con ustedes para saber si tienen un correo de recursos humanos que puedan brindarme",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Soy enfermera auxiliar",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes, disculpe estan necesitando personal medico ? Algun correo al que pueda enviar un curriculum",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum"
+    },
+    {
+      "texto": "Bnas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas tardes, disculpe están necesitando personal médico ? Algún correo al que pueda enviar un curriculum"
+    },
+    {
+      "texto": "Hola buenas noches me ayuda con un correo para enviar mi CV",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro medico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenas tardes, saludos Le saluda Obst. Luis Chavez.\nEscribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia."
+    },
+    {
+      "texto": "Bnas tardes, saludos Le saluda Obst. Luis Chavez. Escribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia.",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas tardes, saludos Le saluda Obst. Luis Chavez.\nEscribia con el fin de obtener informacion sobre el centro médico y si existe oferta laboral para servicios de consulta en area de obstetricia y ginecologia, diplomado en ecografia y colposcopia."
+    },
+    {
+      "texto": "buenas tardes me pueden ayudar con un mail para trabajo soy enfermera profesional",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Solicito comedidamente me ayude direccionando un correo electrónico para enviar mi hoja de vida",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Solicito comedidamente me ayude direccionando un correo electronico para enviar mi hoja de vida",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "source_text": "Solicito comedidamente me ayude direccionando un correo electrónico para enviar mi hoja de vida"
+    },
+    {
+      "texto": "Buen día disculpe tienen alguna vacante laboral",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buen dia disculpe tienen alguna vacante laboral",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "source_text": "Buen día disculpe tienen alguna vacante laboral"
+    },
+    {
+      "texto": "Buenas noches con mi respeto usted no nesesita una doc odontologa",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Bnas noches con mi respeto usted no nesesita una doc odontologa",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas noches con mi respeto usted no nesesita una doc odontologa"
+    },
+    {
+      "texto": "buenas tardes me llamo yerferzon Urdaneta soy médico general me gustaría trabajar con ustedes",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "buenas tardes me llamo yerferzon Urdaneta soy medico general me gustaria trabajar con ustedes",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "source_text": "buenas tardes me llamo yerferzon Urdaneta soy médico general me gustaría trabajar con ustedes"
+    },
+    {
+      "texto": "buenas noches de pronto no estarán contratando aux de fisioterapia",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "buenas noches de pronto no estaran contratando aux de fisioterapia",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "source_text": "buenas noches de pronto no estarán contratando aux de fisioterapia"
+    },
+    {
+      "texto": "Mi nombre es Jennyfer Patiño Paredes He trabajado como asistente dental desde hace años",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Mi nombre es Jennyfer Patino Paredes He trabajado como asistente dental desde hace anos",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "source_text": "Mi nombre es Jennyfer Patiño Paredes\nHe trabajado como asistente dental desde hace años"
+    },
+    {
+      "texto": "Buenos días, el día de ayer envié a su correo electrónico un mail con mi CV",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenos dias, el dia de ayer envie a su correo electronico un mail con mi CV",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenos días, el día de ayer envié a su correo electrónico un mail con mi CV"
+    },
+    {
+      "texto": "Bnos dias, el día de ayer envié a su correo electrónico un mail con mi CV",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenos días, el día de ayer envié a su correo electrónico un mail con mi CV"
+    },
+    {
+      "texto": "buenas tardes disculpe la molestia pero dentro de su personal requieren de terapeuta respiratorio?",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Soy medico general",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Deseo entragar ni curriculo Tiene algun correo para poderlo enviar ? O me puedo hacercar a entregarlo?",
+      "intencion_esperada": "trabajo",
+      "intenciones_detectadas_esperadas": [
+        "trabajo"
+      ],
+      "accion_esperada": "abrir_trabajo",
+      "categoria_fuente": "trabajo",
+      "variant_type": "base"
+    },
+    {
+      "texto": "¿Cuál es su ubicación?",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "¿Cual es su ubicacion?",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "source_text": "¿Cuál es su ubicación?"
+    },
+    {
+      "texto": "Dónde están ubicados",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Donde estan ubicados",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "source_text": "Dónde están ubicados"
+    },
+    {
+      "texto": "Dónde están ubicadps",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Dónde están ubicados"
+    },
+    {
+      "texto": "fonde estan ubicadod yo vivo en Milagro",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "donde están ubicados.",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "donde estan ubicados.",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "source_text": "donde están ubicados."
+    },
+    {
+      "texto": "donde están ubicadps.",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "errores_ortograficos",
+      "source_text": "donde están ubicados."
+    },
+    {
+      "texto": "deme su ubicación",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "deme su ubicacion",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "source_text": "deme su ubicación"
+    },
+    {
+      "texto": "donde ubicados",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "donde ubicadps",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "errores_ortograficos",
+      "source_text": "donde ubicados"
+    },
+    {
+      "texto": "Donde esta ubicado?",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Ola mucho gusto disculpe dirección exacta en Guayaquil",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Ola mucho gusto disculpe direccion exacta en Guayaquil",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "source_text": "Ola mucho gusto disculpe dirección exacta en Guayaquil"
+    },
+    {
+      "texto": "disculpe dirección exacta en Guayaquil",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "disculpe direccion exacta en Guayaquil",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "source_text": "disculpe dirección exacta en Guayaquil"
+    },
+    {
+      "texto": "dirección exacta en Guayaquil",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "direccion exacta en Guayaquil",
+      "intencion_esperada": "consultar_ubicacion",
+      "intenciones_detectadas_esperadas": [
+        "consultar_ubicacion"
+      ],
+      "accion_esperada": "respuesta_simple",
+      "categoria_fuente": "consultar_ubicacion",
+      "variant_type": "sin_tildes",
+      "source_text": "dirección exacta en Guayaquil"
+    },
+    {
+      "texto": "Buenos días tiene atención a domicilio gracias",
+      "intencion_esperada": "hablar_asesor",
+      "intenciones_detectadas_esperadas": [
+        "hablar_asesor"
+      ],
+      "accion_esperada": "derivar_asesor",
+      "categoria_fuente": "hablar_asesor",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Buenos dias tiene atencion a domicilio gracias",
+      "intencion_esperada": "hablar_asesor",
+      "intenciones_detectadas_esperadas": [
+        "hablar_asesor"
+      ],
+      "accion_esperada": "derivar_asesor",
+      "categoria_fuente": "hablar_asesor",
+      "variant_type": "sin_tildes",
+      "source_text": "Buenos días tiene atención a domicilio gracias"
+    },
+    {
+      "texto": "Bnos dias tiene atención a domicilio gracias",
+      "intencion_esperada": "hablar_asesor",
+      "intenciones_detectadas_esperadas": [
+        "hablar_asesor"
+      ],
+      "accion_esperada": "derivar_asesor",
+      "categoria_fuente": "hablar_asesor",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenos días tiene atención a domicilio gracias"
+    },
+    {
+      "texto": "Buenas noches para hacerme una ecografia es necesario sacar cita.",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "agendar_cita"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "hablar_asesor",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Bnas noches para hacerme una ecografia es necesario sacar cita.",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "agendar_cita"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "hablar_asesor",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Buenas noches para hacerme una ecografia es necesario sacar cita."
+    },
+    {
+      "texto": "Quiero hacerme una ecografia es necesario sacar cita.",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "agendar_cita"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "hablar_asesor",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Quiero hacerme una eco es necesario sacar cita.",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "agendar_cita"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "hablar_asesor",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Quiero hacerme una ecografia es necesario sacar cita."
+    },
+    {
+      "texto": "Me recomendaron hacerme una mamografía. puedo agendar el examen directamente? Qué horarios tienen disponibles y cuál sería el costo?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "agendar_cita",
+        "consultar_horario",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "multi_intencion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Me recomendaron hacerme una mamografia. puedo agendar el examen directamente? Que horarios tienen disponibles y cual seria el costo?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "agendar_cita",
+        "consultar_horario",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "multi_intencion",
+      "variant_type": "sin_tildes",
+      "source_text": "Me recomendaron hacerme una mamografía. puedo agendar el examen directamente? Qué horarios tienen disponibles y cuál sería el costo?"
+    },
+    {
+      "texto": "Me recomendaron hacerme una mamografía. puedo ajendar el examen directamente? Qué horarios tienen disponibles y cuál sería el costo?",
+      "intencion_esperada": "consulta_servicios",
+      "intenciones_detectadas_esperadas": [
+        "consulta_servicios",
+        "agendar_cita",
+        "consultar_horario",
+        "cotizar_servicio"
+      ],
+      "accion_esperada": "respuesta_directa",
+      "categoria_fuente": "multi_intencion",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Me recomendaron hacerme una mamografía. puedo agendar el examen directamente? Qué horarios tienen disponibles y cuál sería el costo?"
+    },
+    {
+      "texto": "quisiera información sobre las áreas de pediatría y dermatologia",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "multi_intencion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "quisiera informacion sobre las areas de pediatria y dermatologia",
+      "intencion_esperada": "consulta_especialidades",
+      "intenciones_detectadas_esperadas": [
+        "consulta_especialidades"
+      ],
+      "accion_esperada": "listar_opciones",
+      "categoria_fuente": "multi_intencion",
+      "variant_type": "sin_tildes",
+      "source_text": "quisiera información sobre las áreas de pediatría y dermatologia"
+    },
+    {
+      "texto": "Disculpe una última interrogante hay que agendar cita o solo acercarse?",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "multi_intencion",
+      "variant_type": "base"
+    },
+    {
+      "texto": "Disculpe una ultima interrogante hay que agendar cita o solo acercarse?",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "multi_intencion",
+      "variant_type": "sin_tildes",
+      "source_text": "Disculpe una última interrogante hay que agendar cita o solo acercarse?"
+    },
+    {
+      "texto": "Disculpe una última interrogante hay que ajendar cita o solo acercarse?",
+      "intencion_esperada": "agendar_cita",
+      "intenciones_detectadas_esperadas": [
+        "agendar_cita"
+      ],
+      "accion_esperada": "iniciar_agendamiento",
+      "categoria_fuente": "multi_intencion",
+      "variant_type": "errores_ortograficos",
+      "source_text": "Disculpe una última interrogante hay que agendar cita o solo acercarse?"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "total_ejecutados": 1,
+  "aprobados": 0,
+  "fallidos": 1,
+  "accuracy_general": 0.0,
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 1,
+    "limit": null,
+    "category": null,
+    "only_failed": true,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "fallos": [
+    {
+      "index": 3,
+      "texto": "Bnas tardes",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "saludo"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "saludo"
+          ]
+        }
+      ]
+    }
+  ],
+  "resultados": [
+    {
+      "index": 3,
+      "ok": false,
+      "texto": "Bnas tardes",
+      "categoria_fuente": "saludo",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "saludo",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "saludo"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "saludo"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "saludo"
+          ]
+        }
+      ]
+    }
+  ]
+}

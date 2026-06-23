@@ -1,0 +1,193 @@
+{
+  "total_ejecutados": 2,
+  "aprobados": 0,
+  "fallidos": 2,
+  "accuracy_general": 0.0,
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 1,
+    "limit": 2,
+    "category": "ubicacion",
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "fallos": [
+    {
+      "index": 190,
+      "texto": "¿Cuál es su ubicación?",
+      "categoria_fuente": "ubicacion",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "consultar_ubicacion"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consultar_ubicacion",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consultar_ubicacion"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "consultar_ubicacion"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_simple",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 191,
+      "texto": "¿Cual es su ubicacion?",
+      "categoria_fuente": "ubicacion",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "consultar_ubicacion"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consultar_ubicacion",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consultar_ubicacion"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "consultar_ubicacion"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_simple",
+          "actual": "listar_opciones"
+        }
+      ]
+    }
+  ],
+  "resultados": [
+    {
+      "index": 190,
+      "ok": false,
+      "texto": "¿Cuál es su ubicación?",
+      "categoria_fuente": "ubicacion",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "consultar_ubicacion"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consultar_ubicacion",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consultar_ubicacion"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "consultar_ubicacion"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_simple",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 191,
+      "ok": false,
+      "texto": "¿Cual es su ubicacion?",
+      "categoria_fuente": "ubicacion",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consultar_ubicacion",
+        "intenciones_detectadas": [
+          "consultar_ubicacion"
+        ],
+        "accion": "respuesta_simple"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "consultar_ubicacion"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consultar_ubicacion",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consultar_ubicacion"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "consultar_ubicacion"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_simple",
+          "actual": "listar_opciones"
+        }
+      ]
+    }
+  ]
+}

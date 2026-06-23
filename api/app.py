@@ -100,6 +100,10 @@ ACCIONES_FLUJO = {
     },
 }
 PALABRAS_SALUDO_PURO = {
+    "bna",
+    "bnas",
+    "bno",
+    "bnos",
     "buen",
     "buena",
     "buenas",
@@ -392,6 +396,7 @@ SINONIMOS_CATALOGO = {
     "resonancia de columna completa": "resonancia columna total",
     "resonancia magnetica de columna completa": "resonancia columna total",
     "rm columna completa": "resonancia columna total",
+    "r.m. columna completa": "resonancia columna total",
     "lavado de oído": "lavado oidos",
     "prueba de embarazo": "prueba hcg",
     "test de embarazo": "prueba hcg",
@@ -447,6 +452,8 @@ SINONIMOS_CATALOGO = {
     "calces": "restauracion",
     "blancamiento dental": "blanqueamiento dental",
     "gastroenterologo": "gastroenterologia",
+    "rm": "resonancia magnetica",
+    "r.m.": "resonancia magnetica",
 }
 
 CORRECCIONES_TEXTO = (
@@ -463,6 +470,7 @@ CORRECCIONES_TEXTO = (
     (r"\benal\b", "renal"),
     (r"\bneumologia\b", "neumologia"),
     (r"\bprotesi\b", "protesis"),
+    (r"\br\.?\s*m\.?\b", "resonancia magnetica"),
 )
 
 vectorizer = None
@@ -1270,7 +1278,12 @@ def aplicar_sinonimos_catalogo(texto):
     texto_normalizado = normalizar_texto(texto)
 
     for frase, termino_catalogo in SINONIMOS_CATALOGO.items():
-        if normalizar_texto(frase) in texto_normalizado:
+        frase_normalizada = normalizar_texto(frase)
+        if len(frase_normalizada) <= 3:
+            if re.search(rf"\b{re.escape(frase_normalizada)}\b", texto_normalizado):
+                return termino_catalogo
+            continue
+        if frase_normalizada in texto_normalizado:
             return termino_catalogo
 
     return texto
@@ -1538,6 +1551,12 @@ def detectar_intenciones_multiples(texto, intencion_principal=None, entidades=No
     entidades = entidades or extraer_entidades_consulta_catalogo(texto)
     intenciones = []
 
+    if intencion_principal == "saludo" and not any(
+        entidades.get(clave)
+        for clave in ("asks_price", "asks_location", "asks_schedule", "asks_booking")
+    ):
+        return ["saludo"]
+
     if entidades.get("services"):
         agregar_intencion(intenciones, "consulta_servicios")
     if entidades.get("asks_price"):
@@ -1548,6 +1567,8 @@ def detectar_intenciones_multiples(texto, intencion_principal=None, entidades=No
         agregar_intencion(intenciones, "consultar_horario")
     if entidades.get("asks_booking"):
         agregar_intencion(intenciones, "agendar_cita")
+    if entidades.get("has_specialty"):
+        agregar_intencion(intenciones, "consulta_especialidades")
 
     if intencion_principal in INTENCIONES_CATALOGO:
         agregar_intencion(intenciones, intencion_principal)
@@ -1859,20 +1880,39 @@ def limpiar_segmento_entidad_catalogo(segmento):
 
 
 def extraer_entidades_consulta_catalogo(texto):
+    texto_original_normalizado = normalizar_texto(texto)
+    palabras_originales = set(obtener_palabras_normalizadas(texto))
     texto_normalizado = aplicar_normalizaciones_comerciales_controladas(texto)
     palabras = set(obtener_palabras_normalizadas(texto_normalizado))
+    pide_precio = (
+        any(frase in texto_original_normalizado for frase in FRASES_COTIZACION)
+        or any(frase in texto_normalizado for frase in FRASES_COTIZACION)
+        or bool(PALABRAS_COTIZACION & palabras_originales)
+        or bool(PALABRAS_COTIZACION & palabras)
+        or "en que precio" in texto_original_normalizado
+        or "q vale" in texto_original_normalizado
+        or "que vale" in texto_original_normalizado
+    )
+    pide_horario = bool(
+        PALABRAS_HORARIO_CONSULTA & (palabras_originales | palabras)
+    )
+    pide_ubicacion = bool(
+        PALABRAS_UBICACION_CONSULTA & (palabras_originales | palabras)
+    )
+    pide_agendamiento = (
+        bool(PALABRAS_AGENDAMIENTO_CONSULTA & (palabras_originales | palabras))
+        or "sacar cita" in texto_original_normalizado
+        or "sacar cita" in texto_normalizado
+    )
+    tiene_especialidad = bool(ESPECIALIDADES_CONOCIDAS & (palabras_originales | palabras))
+
     entidades = {
         "services": [],
-        "asks_price": (
-            any(frase in texto_normalizado for frase in FRASES_COTIZACION)
-            or bool(PALABRAS_COTIZACION & palabras)
-        ),
-        "asks_schedule": bool(PALABRAS_HORARIO_CONSULTA & palabras),
-        "asks_location": bool(PALABRAS_UBICACION_CONSULTA & palabras),
-        "asks_booking": (
-            bool(PALABRAS_AGENDAMIENTO_CONSULTA & palabras)
-            or "sacar cita" in texto_normalizado
-        ),
+        "asks_price": pide_precio,
+        "asks_schedule": pide_horario,
+        "asks_location": pide_ubicacion,
+        "asks_booking": pide_agendamiento,
+        "has_specialty": tiene_especialidad,
     }
     servicios_vistos = set()
     tokens = re.findall(r"[a-z0-9]+|[,.]", texto_normalizado)

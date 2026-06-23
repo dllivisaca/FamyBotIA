@@ -1,0 +1,1247 @@
+{
+  "total_ejecutados": 25,
+  "aprobados": 11,
+  "fallidos": 14,
+  "accuracy_general": 0.44,
+  "filters": {
+    "cases": "C:\\famybot_ia\\tests\\real_patient_chat_intentions.json",
+    "offset": 25,
+    "limit": 25,
+    "category": null,
+    "only_failed": false,
+    "base_url": null,
+    "allow_semantic": false
+  },
+  "fallos": [
+    {
+      "index": 25,
+      "texto": "Necesito saber el costo de una eco hepatobiliar",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 26,
+      "texto": "Cuánto cuesta un lavado de oído?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 27,
+      "texto": "Cuanto cuesta un lavado de oido?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 28,
+      "texto": "Que precio tiene la consulta con traumatología",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_especialidades",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consulta_especialidades",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 29,
+      "texto": "Que precio tiene la consulta con traumatologia",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_especialidades",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consulta_especialidades",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 32,
+      "texto": "Hola buen dia cual es el costo de la RM",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 36,
+      "texto": "Buen día que costo tiene la consulta para neumólogia ??",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_especialidades",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consulta_especialidades",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 37,
+      "texto": "Buen dia que costo tiene la consulta para neumologia ??",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_especialidades",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consulta_especialidades",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 44,
+      "texto": "Hola buenas noches Quisiera saber si hacen resonancia cerebral con contraste y en que precio?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 45,
+      "texto": "Buenas noches disculpe hacen ecografías de tórax?? Y si , si que costó tiene",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 46,
+      "texto": "Buenas noches disculpe hacen ecografias de torax?? Y si , si que costo tiene",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 47,
+      "texto": "Bnas noches disculpe hacen ecografías de tórax?? Y si , si que costó tiene",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 48,
+      "texto": "Buenas noches, que cuesta el lavado de oidos?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 49,
+      "texto": "Bnas noches, que cuesta el lavado de oidos?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        }
+      ]
+    }
+  ],
+  "resultados": [
+    {
+      "index": 25,
+      "ok": false,
+      "texto": "Necesito saber el costo de una eco hepatobiliar",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 26,
+      "ok": false,
+      "texto": "Cuánto cuesta un lavado de oído?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 27,
+      "ok": false,
+      "texto": "Cuanto cuesta un lavado de oido?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 28,
+      "ok": false,
+      "texto": "Que precio tiene la consulta con traumatología",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_especialidades",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consulta_especialidades",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 29,
+      "ok": false,
+      "texto": "Que precio tiene la consulta con traumatologia",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_especialidades",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consulta_especialidades",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 30,
+      "ok": true,
+      "texto": "Hola buen dia cual es el costo de la resonancia magnética",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 31,
+      "ok": true,
+      "texto": "Hola buen dia cual es el costo de la resonancia magnetica",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 32,
+      "ok": false,
+      "texto": "Hola buen dia cual es el costo de la RM",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "listar_opciones",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 33,
+      "ok": true,
+      "texto": "Una consulta que costo tiene electromiografia",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 34,
+      "ok": true,
+      "texto": "Qué precio tienen las tomografías",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 35,
+      "ok": true,
+      "texto": "Que precio tienen las tomografias",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 36,
+      "ok": false,
+      "texto": "Buen día que costo tiene la consulta para neumólogia ??",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_especialidades",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consulta_especialidades",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 37,
+      "ok": false,
+      "texto": "Buen dia que costo tiene la consulta para neumologia ??",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_especialidades",
+        "intenciones_detectadas": [
+          "consulta_especialidades",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intencion",
+          "expected": "consulta_especialidades",
+          "actual": "consulta_servicios"
+        },
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_especialidades",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 38,
+      "ok": true,
+      "texto": "Cuál es el costo de la primera consulta para embarazo y ecografía",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 39,
+      "ok": true,
+      "texto": "Cual es el costo de la primera consulta para embarazo y ecografia",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 40,
+      "ok": true,
+      "texto": "Cuál es el costo de la primera consulta para embarazo y eco",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 41,
+      "ok": true,
+      "texto": "Quisiera saber cuánto cuesta la consulta de primer embarazo y ecografía",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 42,
+      "ok": true,
+      "texto": "Quisiera saber cuanto cuesta la consulta de primer embarazo y ecografia",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 43,
+      "ok": true,
+      "texto": "Quisiera saber cuánto cuesta la consulta de primer embarazo y eco",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": []
+    },
+    {
+      "index": 44,
+      "ok": false,
+      "texto": "Hola buenas noches Quisiera saber si hacen resonancia cerebral con contraste y en que precio?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        },
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 45,
+      "ok": false,
+      "texto": "Buenas noches disculpe hacen ecografías de tórax?? Y si , si que costó tiene",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 46,
+      "ok": false,
+      "texto": "Buenas noches disculpe hacen ecografias de torax?? Y si , si que costo tiene",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "sin_tildes",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "listar_opciones"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "listar_opciones"
+        }
+      ]
+    },
+    {
+      "index": 47,
+      "ok": false,
+      "texto": "Bnas noches disculpe hacen ecografías de tórax?? Y si , si que costó tiene",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "sin_resultados_catalogo"
+      },
+      "diferencias": [
+        {
+          "field": "accion",
+          "expected": "respuesta_directa",
+          "actual": "sin_resultados_catalogo"
+        }
+      ]
+    },
+    {
+      "index": 48,
+      "ok": false,
+      "texto": "Buenas noches, que cuesta el lavado de oidos?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "base",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 49,
+      "ok": false,
+      "texto": "Bnas noches, que cuesta el lavado de oidos?",
+      "categoria_fuente": "cotizar_servicios",
+      "variant_type": "errores_ortograficos",
+      "esperado": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios",
+          "cotizar_servicio"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "obtenido": {
+        "intencion": "consulta_servicios",
+        "intenciones_detectadas": [
+          "consulta_servicios"
+        ],
+        "accion": "respuesta_directa"
+      },
+      "diferencias": [
+        {
+          "field": "intenciones_detectadas",
+          "expected": [
+            "consulta_servicios",
+            "cotizar_servicio"
+          ],
+          "actual": [
+            "consulta_servicios"
+          ]
+        }
+      ]
+    }
+  ]
+}

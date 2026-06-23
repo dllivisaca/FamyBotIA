@@ -66,6 +66,13 @@ def obtener_terminos_medicos_controlados(servicio):
             "abdomen",
         ])
 
+    if area == "ecografias" and (
+        "pleural" in nombre
+        or "torax" in nombre
+        or "torac" in nombre
+    ):
+        terminos.extend(["torax", "toracica", "toracico", "pecho", "pleural"])
+
     if "tercer molar" in nombre:
         terminos.extend([
             "muela del juicio",
