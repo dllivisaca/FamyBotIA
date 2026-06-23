@@ -62,11 +62,11 @@ RESPUESTAS_SIMPLES = {
     },
     "consultar_ubicacion": {
         "accion": "respuesta_simple",
-        "mensaje": "Nos encontramos en Quisquís 1109 y José Mascote, Guayaquil. Si lo prefieres, puedes usar los botones de navegación para ver el croquis o abrir la ubicación directamente en Google Maps.",
+        "mensaje": "Nos encontramos en Quisquís 1109 y José Mascote, Guayaquil. Puedes abrir la ubicación en Google Maps o ver el croquis usando los botones disponibles.",
     },
     "desconocido": {
         "accion": "fallback",
-        "mensaje": "No estoy seguro de haber entendido tu consulta. Puedes escribirla de otra forma o elegir una opción del menú principal.",
+        "mensaje": "No estoy seguro de haber entendido tu consulta. Puedes escribir una nueva consulta o usar el botón Menú principal.",
     },
 }
 ACCIONES_FLUJO = {
@@ -664,7 +664,7 @@ def debug_chat_flow(
 ):
     texto = texto.strip()
     prediccion = predecir_intencion(texto)
-    intencion = prediccion["intencion"]
+    intencion = str(prediccion["intencion"])
     entidades = extraer_entidades_consulta_catalogo(texto)
     usar_entidades_catalogo = consulta_catalogo_mixta_extraida(entidades)
     entro_branch_entidades = False
@@ -1257,6 +1257,10 @@ def detectar_intencion_frecuente_fuzzy(texto):
     return None
 
 
+def es_respuesta_numerica_sin_estado(texto):
+    return bool(re.fullmatch(r"\s*\d+\s*", str(texto or "")))
+
+
 def preparar_consulta_sin_relleno(texto):
     palabras = obtener_palabras_clave_intencion(texto)
     return " ".join(palabras) or texto
@@ -1525,10 +1529,84 @@ def combinar_search_modes(search_modes):
     return "none"
 
 
-def construir_respuesta_chat(respuesta, search_mode=None):
+def agregar_intencion(intenciones, intencion):
+    if intencion and intencion not in intenciones:
+        intenciones.append(intencion)
+
+
+def detectar_intenciones_multiples(texto, intencion_principal=None, entidades=None):
+    entidades = entidades or extraer_entidades_consulta_catalogo(texto)
+    intenciones = []
+
+    if entidades.get("services"):
+        agregar_intencion(intenciones, "consulta_servicios")
+    if entidades.get("asks_price"):
+        agregar_intencion(intenciones, "cotizar_servicio")
+    if entidades.get("asks_location"):
+        agregar_intencion(intenciones, "consultar_ubicacion")
+    if entidades.get("asks_schedule"):
+        agregar_intencion(intenciones, "consultar_horario")
+    if entidades.get("asks_booking"):
+        agregar_intencion(intenciones, "agendar_cita")
+
+    if intencion_principal in INTENCIONES_CATALOGO:
+        agregar_intencion(intenciones, intencion_principal)
+    elif intencion_principal in RESPUESTAS_SIMPLES or intencion_principal in ACCIONES_FLUJO:
+        agregar_intencion(intenciones, intencion_principal)
+
+    return intenciones or [intencion_principal or "desconocido"]
+
+
+def determinar_intencion_principal_catalogo(intencion_predicha, entidades):
+    if entidades.get("services"):
+        return "consulta_servicios"
+    if entidades.get("asks_price"):
+        return "cotizar_servicio"
+    if intencion_predicha in INTENCIONES_CATALOGO:
+        return intencion_predicha
+    return "consulta_servicios"
+
+
+def construir_respuesta_flags_simples(texto, intencion, confianza, entidades):
+    bloques = []
+
+    if entidades.get("asks_location"):
+        bloques.append(RESPUESTAS_SIMPLES["consultar_ubicacion"]["mensaje"])
+    if entidades.get("asks_schedule"):
+        bloques.append(RESPUESTAS_SIMPLES["consultar_horario"]["mensaje"])
+    if entidades.get("asks_booking"):
+        bloques.append(ACCIONES_FLUJO["agendar_cita"]["mensaje"])
+
+    if not bloques:
+        return None
+
+    accion = "respuesta_simple"
+    if entidades.get("asks_booking") and len(bloques) == 1:
+        accion = ACCIONES_FLUJO["agendar_cita"]["accion"]
+
+    return construir_respuesta_chat({
+        "texto": texto,
+        "intencion": intencion,
+        "confianza": confianza,
+        "accion": accion,
+        "mensaje": "\n\n".join(bloques),
+    }, entidades=entidades)
+
+
+def construir_respuesta_chat(respuesta, search_mode=None, entidades=None):
     respuesta = dict(respuesta)
+    entidades = entidades or extraer_entidades_consulta_catalogo(respuesta.get("texto", ""))
     respuesta["model_version"] = model_version
     respuesta["search_mode"] = search_mode or respuesta.get("search_mode") or "none"
+    respuesta["intenciones_detectadas"] = respuesta.get(
+        "intenciones_detectadas"
+    ) or detectar_intenciones_multiples(
+        respuesta.get("texto", ""),
+        respuesta.get("intencion"),
+        entidades,
+    )
+    if entidades.get("asks_location") or respuesta.get("intencion") == "consultar_ubicacion":
+        respuesta["incluir_botones_ubicacion"] = True
     return respuesta
 
 
@@ -1990,6 +2068,73 @@ def filtrar_busqueda_por_tokens_exactos(busqueda, consulta):
     }
 
 
+def construir_mensaje_catalogo(total, total_conocido, resultados):
+    if total == 0:
+        return (
+            "No encontré servicios relacionados con tu consulta. Puedes escribir "
+            "el nombre completo del servicio o escribir una nueva consulta."
+        )
+
+    if total == 1:
+        servicio = resultados[0]
+        return (
+            f"El servicio {servicio.get('nombre')} pertenece al área "
+            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')} "
+            "en efectivo o transferencia."
+        )
+
+    if total > 10 and total_conocido:
+        return (
+            f"Encontré {total} opciones relacionadas con tu consulta. "
+            "Te muestro las primeras 10. Puedes responder con el nombre completo "
+            "del servicio o escribir una nueva consulta."
+        )
+
+    if total > 10:
+        return (
+            "Encontré varias opciones relacionadas con tu consulta. "
+            "Te muestro las primeras 10. Puedes responder con el nombre completo "
+            "del servicio o escribir una nueva consulta."
+        )
+
+    return (
+        f"Encontré {total} opciones relacionadas con tu consulta. "
+        "Puedes responder con el nombre completo del servicio o escribir "
+        "una nueva consulta."
+    )
+
+
+def construir_bloque_precio_catalogo(total):
+    if total == 1:
+        return "El valor indicado corresponde a pago en efectivo o transferencia."
+
+    return (
+        "Los valores mostrados corresponden a pago en efectivo o transferencia. "
+        "Puedes responder con el nombre completo del servicio o escribir una nueva consulta."
+    )
+
+
+def construir_bloque_agendamiento_catalogo(total, resultados):
+    if total == 1:
+        servicio = resultados[0] if resultados else {}
+        nombre = servicio.get("nombre")
+        area = servicio.get("area")
+        if nombre and area:
+            return (
+                "Si deseas agendar tu cita, responde \"agendar\". "
+                f"Luego selecciona el área {area} y el servicio {nombre}."
+            )
+        return (
+            "Si deseas agendar tu cita, responde \"agendar\". "
+            "Luego selecciona el área y servicio correspondiente."
+        )
+
+    return (
+        "Si deseas agendar tu cita, responde \"agendar\". "
+        "Luego podrás seleccionar el área y servicio correspondiente durante el agendamiento."
+    )
+
+
 def construir_respuesta_busqueda_catalogo(texto, busqueda):
     resultados = busqueda["resultados"]
     total = busqueda["total"]
@@ -1997,38 +2142,12 @@ def construir_respuesta_busqueda_catalogo(texto, busqueda):
 
     if total == 0:
         accion = "sin_resultados_catalogo"
-        mensaje = (
-            "No encontré servicios relacionados con tu consulta. Puedes escribir "
-            "el nombre del servicio de otra forma o solicitar ayuda con un asesor."
-        )
     elif total == 1:
         accion = "respuesta_directa"
-        servicio = resultados[0]
-        mensaje = (
-            f"El servicio {servicio.get('nombre')} pertenece al área "
-            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')} "
-            "en efectivo o transferencia."
-        )
     else:
         accion = "listar_opciones"
-        if total > 10 and total_conocido:
-            mensaje = (
-                f"Encontré {total} opciones relacionadas con tu consulta. "
-                "Te muestro las primeras 10. Puedes responder con el nombre "
-                "del servicio que deseas consultar."
-            )
-        elif total > 10:
-            mensaje = (
-                "Encontré varias opciones relacionadas con tu consulta. "
-                "Te muestro las primeras 10. Puedes responder con el nombre "
-                "del servicio que deseas consultar."
-            )
-        else:
-            mensaje = (
-                f"Encontré {total} opciones relacionadas con tu consulta. Puedes "
-                "revisar la lista y responder con el nombre del servicio que deseas "
-                "consultar."
-            )
+
+    mensaje = construir_mensaje_catalogo(total, total_conocido, resultados)
 
     return {
         "texto": texto,
@@ -2050,13 +2169,13 @@ def enriquecer_mensaje_catalogo_con_flags(respuesta_catalogo, entidades):
 
     mensaje = str(respuesta_catalogo.get("mensaje") or "")
     partes_adicionales = []
+    total = int(respuesta_catalogo.get("total") or 0)
+    resultados = respuesta_catalogo.get("resultados") or []
     extras = (
-        ("asks_schedule", RESPUESTAS_SIMPLES["consultar_horario"]["mensaje"]),
+        ("asks_price", construir_bloque_precio_catalogo(total)),
         ("asks_location", RESPUESTAS_SIMPLES["consultar_ubicacion"]["mensaje"]),
-        (
-            "asks_booking",
-            "Si deseas agendar, puedes elegir una de las opciones encontradas y continuar con la solicitud de cita.",
-        ),
+        ("asks_schedule", RESPUESTAS_SIMPLES["consultar_horario"]["mensaje"]),
+        ("asks_booking", construir_bloque_agendamiento_catalogo(total, resultados)),
     )
     mensaje_normalizado = normalizar_texto(mensaje)
 
@@ -2102,7 +2221,13 @@ def buscar_catalogo_comercial(texto):
     )
 
 
-def construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo):
+def construir_respuesta_catalogo(
+    texto,
+    intencion,
+    confianza,
+    respuesta_catalogo,
+    entidades=None,
+):
     return construir_respuesta_chat({
         "texto": texto,
         "intencion": intencion,
@@ -2113,7 +2238,7 @@ def construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo
         "total_real": respuesta_catalogo["total_real"],
         "total_conocido": respuesta_catalogo["total_conocido"],
         "resultados": respuesta_catalogo["resultados"],
-    }, respuesta_catalogo.get("_search_mode"))
+    }, respuesta_catalogo.get("_search_mode"), entidades)
 
 
 @app.get("/catalog")
@@ -2147,38 +2272,12 @@ def ask_catalog(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
 
     if total == 0:
         accion = "sin_resultados_catalogo"
-        mensaje = (
-            "No encontré servicios relacionados con tu consulta. Puedes escribir "
-            "el nombre del servicio de otra forma o solicitar ayuda con un asesor."
-        )
     elif total == 1:
         accion = "respuesta_directa"
-        servicio = resultados[0]
-        mensaje = (
-            f"El servicio {servicio.get('nombre')} pertenece al área "
-            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')} "
-            "en efectivo o transferencia."
-        )
     else:
         accion = "listar_opciones"
-        if total > 10 and total_conocido:
-            mensaje = (
-                f"Encontré {total} opciones relacionadas con tu consulta. "
-                "Te muestro las primeras 10. Puedes responder con el nombre "
-                "del servicio que deseas consultar."
-            )
-        elif total > 10:
-            mensaje = (
-                "Encontré varias opciones relacionadas con tu consulta. "
-                "Te muestro las primeras 10. Puedes responder con el nombre "
-                "del servicio que deseas consultar."
-            )
-        else:
-            mensaje = (
-                f"Encontré {total} opciones relacionadas con tu consulta. Puedes "
-                "revisar la lista y responder con el nombre del servicio que deseas "
-                "consultar."
-            )
+
+    mensaje = construir_mensaje_catalogo(total, total_conocido, resultados)
 
     return {
         "texto": texto,
@@ -2194,8 +2293,23 @@ def ask_catalog(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
 @app.post("/chat")
 def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
     texto = request.texto.strip()
+
+    if es_respuesta_numerica_sin_estado(texto):
+        return construir_respuesta_chat({
+            "texto": texto,
+            "intencion": "desconocido",
+            "intenciones_detectadas": ["desconocido"],
+            "confianza": None,
+            "accion": "seleccion_sin_contexto",
+            "mensaje": (
+                "No pude identificar el servicio seleccionado. Puedes escribir "
+                "el nombre completo del servicio o responder \"agendar\" para iniciar "
+                "el proceso de agendamiento."
+            ),
+        })
+
     prediccion = predecir_intencion(texto)
-    intencion = prediccion["intencion"]
+    intencion = str(prediccion["intencion"])
     confianza = prediccion["confianza"]
     print(f"FamyBot IA: intencion_original={intencion} confianza={confianza}")
 
@@ -2226,6 +2340,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
                 "consulta_servicios",
                 confianza,
                 respuesta_catalogo,
+                entidades_catalogo,
             )
 
         return construir_respuesta_catalogo(
@@ -2233,7 +2348,23 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             "consulta_servicios",
             confianza,
             respuesta_catalogo,
+            entidades_catalogo,
         )
+
+    flags_simples = [
+        entidades_catalogo.get("asks_location"),
+        entidades_catalogo.get("asks_schedule"),
+        entidades_catalogo.get("asks_booking"),
+    ]
+    if not entidades_catalogo.get("services") and sum(bool(flag) for flag in flags_simples) > 1:
+        respuesta_flags = construir_respuesta_flags_simples(
+            texto,
+            intencion,
+            confianza,
+            entidades_catalogo,
+        )
+        if respuesta_flags is not None:
+            return respuesta_flags
 
     if es_consulta_precio_y_ubicacion(texto):
         return construir_respuesta_chat({
@@ -2245,13 +2376,13 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
                 "Para indicarte el valor exacto de la consulta, por favor dime "
                 "la especialidad o área que necesitas. Como referencia, la "
                 "consulta de Medicina General tiene un valor de $15 en efectivo "
-                "o transferencia. También puedo compartirte nuestra ubicación."
+                "o transferencia. Nos encontramos en Quisquís 1109 y José Mascote, Guayaquil."
             ),
             "total": 0,
             "total_real": 0,
             "total_conocido": True,
             "resultados": [],
-        })
+        }, entidades=entidades_catalogo)
 
     if es_consulta_catalogo_comercial(texto):
         if usar_entidades_catalogo:
@@ -2263,12 +2394,16 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             entidades_catalogo,
         )
         print(f"FamyBot IA: total_catalogo_comercial={respuesta_catalogo['total']}")
-        intencion_catalogo = intencion if intencion in INTENCIONES_CATALOGO else "consulta_servicios"
+        intencion_catalogo = determinar_intencion_principal_catalogo(
+            intencion,
+            entidades_catalogo,
+        )
         return construir_respuesta_catalogo(
             texto,
             intencion_catalogo,
             confianza,
             respuesta_catalogo,
+            entidades_catalogo,
         )
 
     if aplico_sinonimo_catalogo(texto):
@@ -2281,8 +2416,9 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
         print(f"FamyBot IA: total_catalogo_sinonimo={respuesta_catalogo['total']}")
 
         if respuesta_catalogo["total"] > 0:
-            intencion_catalogo = (
-                intencion if intencion in INTENCIONES_CATALOGO else "consulta_servicios"
+            intencion_catalogo = determinar_intencion_principal_catalogo(
+                intencion,
+                entidades_catalogo,
             )
             respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
                 respuesta_catalogo,
@@ -2293,6 +2429,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
                 intencion_catalogo,
                 confianza,
                 respuesta_catalogo,
+                entidades_catalogo,
             )
 
     if intencion in INTENCIONES_CATALOGO:
@@ -2310,9 +2447,34 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             entidades_catalogo,
         )
         print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
-        return construir_respuesta_catalogo(texto, intencion, confianza, respuesta_catalogo)
+        intencion_catalogo = determinar_intencion_principal_catalogo(
+            intencion,
+            entidades_catalogo,
+        )
+        return construir_respuesta_catalogo(
+            texto,
+            intencion_catalogo,
+            confianza,
+            respuesta_catalogo,
+            entidades_catalogo,
+        )
 
     if intencion in ACCIONES_FLUJO:
+        if entidades_catalogo.get("services"):
+            respuesta_catalogo = buscar_catalogo_por_entidades(texto, entidades_catalogo)
+            respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
+                respuesta_catalogo,
+                entidades_catalogo,
+            )
+            print(f"FamyBot IA: total_catalogo_pre_flujo={respuesta_catalogo['total']}")
+            return construir_respuesta_catalogo(
+                texto,
+                "consulta_servicios",
+                confianza,
+                respuesta_catalogo,
+                entidades_catalogo,
+            )
+
         if confianza is None or confianza < MIN_CONF_ACCION_FLUJO:
             print(
                 "FamyBot IA: accion_flujo_bloqueada_por_baja_confianza="
@@ -2349,11 +2511,16 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
 
             if respuesta_catalogo["total"] > 0:
+                intencion_catalogo = determinar_intencion_principal_catalogo(
+                    intencion,
+                    entidades_catalogo,
+                )
                 return construir_respuesta_catalogo(
                     texto,
-                    intencion,
+                    intencion_catalogo,
                     confianza,
                     respuesta_catalogo,
+                    entidades_catalogo,
                 )
 
             respuesta_simple = RESPUESTAS_SIMPLES["desconocido"]
@@ -2411,6 +2578,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
                 "consulta_servicios",
                 confianza,
                 respuesta_catalogo,
+                entidades_catalogo,
             )
 
     if intencion in RESPUESTAS_SIMPLES:
