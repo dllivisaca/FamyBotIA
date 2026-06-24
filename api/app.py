@@ -2493,8 +2493,9 @@ def construir_contexto_medico_catalogo(resultados, texto_original=None):
 def construir_mensaje_catalogo(total, total_conocido, resultados, texto_original=None):
     if total == 0:
         return (
-            "No logr\u00e9 encontrar ese servicio en el cat\u00e1logo. Puedes intentar "
-            "escribirlo de otra forma o hablar con un asesor para confirmarlo."
+            "No pude identificar el servicio que buscas.\n\n"
+            "Puedes intentar escribir el nombre de otra manera o utilizar los "
+            "botones de navegaci\u00f3n para recibir ayuda de un asesor."
         )
 
     if total == 1:
