@@ -263,6 +263,7 @@ TERMINOS_MEDICOS_CLAROS = {
     "ecocardiograma",
     "ecografia",
     "eco",
+    "electrocardiogrma",
     "electrocardiograma",
     "electromiografia",
     "endodoncia",
@@ -270,20 +271,37 @@ TERMINOS_MEDICOS_CLAROS = {
     "embarazo",
     "extraccion",
     "hepatobiliar",
+    "hcg",
     "holter",
     "lavado",
     "limpieza",
     "mamografia",
     "mamas",
+    "morfológica",
+    "morfologica",
     "molar",
     "molares",
     "muela",
+    "neumólogia",
+    "neumologia",
     "odontologia",
+    "placa",
     "prostata",
     "protesis",
+    "profilaxis",
+    "rayos",
     "radiografia",
+    "recanalizacion",
     "renal",
     "resonancia",
+    "restauracion",
+    "rx",
+    "sedacion",
+    "trompas",
+    "tubarica",
+    "falopio",
+    "nitroso",
+    "oxido",
     "tomografia",
     "torax",
     "transvaginal",
@@ -329,6 +347,8 @@ PALABRAS_IGNORADAS_COMERCIAL = PALABRAS_SALUDO_PURO | {
     "tambien",
     "tiene",
     "tienen",
+    "uds",
+    "usted",
     "un",
     "una",
     "valor",
@@ -412,6 +432,9 @@ NORMALIZACIONES_COMERCIALES_CONTROLADAS = (
     (r"\bprueba\s+holter\b", "holter"),
     (r"\bexamen\s+de\s+holter\b", "holter"),
     (r"\becocardiogrma\b", "ecocardiograma"),
+    (r"\belectrocardiogrma\b", "electrocardiograma"),
+    (r"\bneumólogia\b", "neumologia"),
+    (r"\bneumologia\b", "neumologia"),
 )
 CONECTORES_SERVICIOS = {
     "ademas",
@@ -438,6 +461,8 @@ PALABRAS_IGNORADAS_CATALOGO = {
     "las",
     "los",
     "me",
+    "misma",
+    "mismo",
     "para",
     "por",
     "precio",
@@ -451,6 +476,8 @@ PALABRAS_IGNORADAS_CATALOGO = {
     "sobre",
     "tiene",
     "tienen",
+    "uds",
+    "usted",
     "un",
     "una",
     "valor",
@@ -471,6 +498,7 @@ SINONIMOS_CATALOGO = {
     "test de embarazo": "prueba hcg",
     "examen de embarazo": "prueba hcg",
     "embarazo en sangre": "prueba hcg",
+    "embarazo sangre": "prueba hcg",
     "prueba de embarazo de sangre": "prueba hcg",
     "pruebas de embarazo de sangre": "prueba hcg",
     "examen de embarazo en sangre": "prueba hcg",
@@ -491,13 +519,17 @@ SINONIMOS_CATALOGO = {
     "extraccion tercer molar": "extraccion de tercer molar",
     "muela del juicio": "extraccion de tercer molar",
     "cordal": "extraccion de tercer molar",
+    "tercer molar": "extraccion de tercer molar",
+    "terceros molares": "extraccion de tercer molar",
     "calce de muela": "restauracion",
     "calce dental": "restauracion",
     "calce de diente": "restauracion",
     "restauracion dental": "restauracion",
+    "resina": "restauracion",
     "extraccion de muela": "extraccion dental",
     "extraccion muela": "extraccion dental",
     "sacar muela": "extraccion dental",
+    "limpieza dental": "profilaxis",
     "ecografia abdominal completa": "ecografia abdominal",
     "quitan caries": "restauracion",
     "tapar caries": "restauracion",
@@ -508,9 +540,27 @@ SINONIMOS_CATALOGO = {
     "resonancia cerebral contrastada": "resonancia craneo simple contrastada",
     "examenes de audiometria": "audiometria",
     "examen de audiometria": "audiometria",
-    "radiografia": "rayos x",
+    "rayos x": "radiografia",
+    "rx": "radiografia",
+    "placa": "radiografia",
     "eco morfologico": "ecografia morfologica",
+    "eco morfológico": "ecografia morfologica",
+    "eco 20 semanas": "ecografia morfologica",
     "eco de las 20 semanas": "ecografia morfologica",
+    "eco de las 20 semanas de embarazo": "ecografia morfologica",
+    "ecografia morfologica": "ecografia morfologica",
+    "ecografía morfológica": "ecografia morfologica",
+    "morfologica": "ecografia morfologica",
+    "morfológica": "ecografia morfologica",
+    "gas de la risa": "sedacion consciente oxido nitroso",
+    "oxido nitroso": "sedacion consciente oxido nitroso",
+    "óxido nitroso": "sedacion consciente oxido nitroso",
+    "sedacion consciente": "sedacion consciente",
+    "recanalizacion de trompas": "recanalizacion tubarica trompas de falopio",
+    "recanalización de trompas": "recanalizacion tubarica trompas de falopio",
+    "recanalizacion tubarica": "recanalizacion tubarica",
+    "recanalización tubárica": "recanalizacion tubarica",
+    "trompas de falopio": "trompas de falopio",
     "3er molar": "extraccion de tercer molar",
     "3er molares": "extraccion de tercer molar",
     "cordales": "extraccion de tercer molar",
@@ -537,6 +587,7 @@ CORRECCIONES_TEXTO = (
     (r"\bajendar\b", "agendar"),
     (r"\basen\b", "hacen"),
     (r"\becocardiogrma\b", "ecocardiograma"),
+    (r"\belectrocardiogrma\b", "electrocardiograma"),
     (r"\bextracion\b", "extraccion"),
     (r"\bblancamiento\b", "blanqueamiento"),
     (r"\benal\b", "renal"),
@@ -1668,7 +1719,7 @@ def agregar_intencion(intenciones, intencion):
 
 def tiene_servicio_medico_claro(texto, entidades=None):
     entidades = entidades or extraer_entidades_consulta_catalogo(texto)
-    texto_normalizado = normalizar_texto(texto)
+    texto_normalizado = normalizar_texto(aplicar_sinonimos_catalogo(texto))
     palabras = set(obtener_palabras_normalizadas(texto_normalizado))
 
     if entidades.get("has_specialty") or ESPECIALIDADES_CONOCIDAS & palabras:
@@ -2333,6 +2384,30 @@ def filtrar_busqueda_por_tokens_exactos(busqueda, consulta):
     }
 
 
+def filtrar_eco_morfologica_embarazo(busqueda, texto):
+    texto_normalizado = normalizar_texto(texto)
+
+    if "20 semana" not in texto_normalizado or "embarazo" not in texto_normalizado:
+        return busqueda
+
+    resultados = [
+        resultado
+        for resultado in busqueda.get("resultados", [])
+        if normalizar_texto(resultado.get("nombre")) == "ecografia morfologica"
+    ]
+
+    if not resultados:
+        return busqueda
+
+    return {
+        "total": len(resultados),
+        "total_real": len(resultados),
+        "total_conocido": busqueda["total_conocido"],
+        "resultados": resultados,
+        "_search_mode": obtener_search_mode_busqueda(busqueda),
+    }
+
+
 def construir_mensaje_catalogo(total, total_conocido, resultados):
     if total == 0:
         return (
@@ -2446,6 +2521,7 @@ def buscar_catalogo_comercial(texto):
         buscar_servicios(consulta_catalogo),
         consulta_catalogo,
     )
+    busqueda = filtrar_eco_morfologica_embarazo(busqueda, texto)
 
     if not tiene_conectores_servicios(texto):
         return construir_respuesta_busqueda_catalogo(consulta_catalogo, busqueda)
@@ -2718,7 +2794,11 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
 
     if aplico_sinonimo_catalogo(texto):
         consulta_catalogo = preparar_consulta_catalogo(texto)
-        busqueda = buscar_servicios(consulta_catalogo)
+        busqueda = filtrar_busqueda_por_tokens_exactos(
+            buscar_servicios(consulta_catalogo),
+            consulta_catalogo,
+        )
+        busqueda = filtrar_eco_morfologica_embarazo(busqueda, texto)
         respuesta_catalogo = construir_respuesta_busqueda_catalogo(
             consulta_catalogo,
             busqueda,
