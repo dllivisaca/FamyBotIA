@@ -2289,7 +2289,11 @@ def buscar_catalogo_por_entidades(texto, entidades):
             buscar_servicios(consulta_catalogo),
             consulta_catalogo,
         )
-        return construir_respuesta_busqueda_catalogo(consulta_catalogo, busqueda)
+        return construir_respuesta_busqueda_catalogo(
+            consulta_catalogo,
+            busqueda,
+            texto,
+        )
 
     print(
         "FamyBot IA: query_entity_extractor "
@@ -2303,6 +2307,7 @@ def buscar_catalogo_por_entidades(texto, entidades):
     return construir_respuesta_busqueda_catalogo(
         consulta_catalogo,
         combinar_busquedas_catalogo(busquedas),
+        texto,
     )
 
 
@@ -2408,20 +2413,60 @@ def filtrar_eco_morfologica_embarazo(busqueda, texto):
     }
 
 
-def construir_mensaje_catalogo(total, total_conocido, resultados):
-    if total == 0:
+def resultados_incluyen_hcg(resultados):
+    return any("hcg" in normalizar_texto(resultado.get("nombre")) for resultado in resultados)
+
+
+def resultados_son_ecografias(resultados):
+    return any(
+        "ecografia" in normalizar_texto(resultado.get("nombre"))
+        or "ecografias" in normalizar_texto(resultado.get("area"))
+        for resultado in resultados
+    )
+
+
+def consulta_paciente_embarazo_hcg(texto):
+    texto_normalizado = normalizar_texto(texto)
+    patrones = (
+        "prueba de embarazo",
+        "embarazo en sangre",
+        "beta hcg",
+        "bhcg",
+        "hcg",
+        "examen de embarazo",
+        "embarazo",
+    )
+    return any(patron in texto_normalizado for patron in patrones)
+
+
+def consulta_paciente_eco_morfologica(texto):
+    texto_normalizado = normalizar_texto(texto)
+    patrones = (
+        "eco 20 semana",
+        "ecografia 20 semana",
+        "eco de las 20 semana",
+        "ecografia de las 20 semana",
+        "eco morfologica",
+        "ecografia morfologica",
+        "morfologica",
+    )
+    return any(patron in texto_normalizado for patron in patrones)
+
+
+def construir_intro_catalogo(total, total_conocido, resultados, texto_original=None):
+    texto_original = texto_original or ""
+
+    if consulta_paciente_embarazo_hcg(texto_original) and resultados_incluyen_hcg(resultados):
+        return "Para prueba de embarazo en sangre, encontr\u00e9 estas opciones disponibles."
+
+    if consulta_paciente_eco_morfologica(texto_original) and resultados_son_ecografias(resultados):
         return (
-            "No encontr\u00e9 servicios relacionados con tu consulta. Puedes escribir "
-            "el nombre completo del servicio o escribir una nueva consulta."
+            "Para la ecograf\u00eda de las 20 semanas, generalmente se busca la "
+            "ecograf\u00eda morfol\u00f3gica. Estas son las opciones relacionadas."
         )
 
-    if total == 1:
-        servicio = resultados[0]
-        return (
-            f"El servicio {servicio.get('nombre')} pertenece al \u00e1rea "
-            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')} "
-            "en efectivo o transferencia."
-        )
+    if resultados_son_ecografias(resultados):
+        return "Encontr\u00e9 estas opciones relacionadas con la ecograf\u00eda que consultas."
 
     if total > 10 and total_conocido:
         return (
@@ -2438,6 +2483,37 @@ def construir_mensaje_catalogo(total, total_conocido, resultados):
     return f"Encontr\u00e9 {total} opciones relacionadas con tu consulta."
 
 
+def construir_contexto_medico_catalogo(resultados, texto_original=None):
+    if consulta_paciente_embarazo_hcg(texto_original or "") and resultados_incluyen_hcg(resultados):
+        return "En el sistema puede aparecer como HCG, que es el nombre t\u00e9cnico del examen."
+
+    return ""
+
+
+def construir_mensaje_catalogo(total, total_conocido, resultados, texto_original=None):
+    if total == 0:
+        return (
+            "No logr\u00e9 encontrar ese servicio en el cat\u00e1logo. Puedes intentar "
+            "escribirlo de otra forma o hablar con un asesor para confirmarlo."
+        )
+
+    if total == 1:
+        servicio = resultados[0]
+        return (
+            f"El servicio {servicio.get('nombre')} pertenece al \u00e1rea "
+            f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')} "
+            "en efectivo o transferencia."
+        )
+
+    partes = [construir_intro_catalogo(total, total_conocido, resultados, texto_original)]
+    contexto_medico = construir_contexto_medico_catalogo(resultados, texto_original)
+
+    if contexto_medico:
+        partes.append(contexto_medico)
+
+    return "\n\n".join(partes)
+
+
 def construir_bloque_precio_catalogo(total):
     if total == 1:
         return ""
@@ -2449,7 +2525,7 @@ def construir_bloque_agendamiento_catalogo(total, resultados):
     return "Si deseas agendar tu cita, responde \"agendar\" para comenzar el proceso."
 
 
-def construir_respuesta_busqueda_catalogo(texto, busqueda):
+def construir_respuesta_busqueda_catalogo(texto, busqueda, texto_original=None):
     resultados = busqueda["resultados"]
     total = busqueda["total"]
     total_conocido = busqueda["total_conocido"]
@@ -2461,7 +2537,12 @@ def construir_respuesta_busqueda_catalogo(texto, busqueda):
     else:
         accion = "listar_opciones"
 
-    mensaje = construir_mensaje_catalogo(total, total_conocido, resultados)
+    mensaje = construir_mensaje_catalogo(
+        total,
+        total_conocido,
+        resultados,
+        texto_original or texto,
+    )
 
     return {
         "texto": texto,
@@ -2523,7 +2604,11 @@ def buscar_catalogo_comercial(texto):
     busqueda = filtrar_eco_morfologica_embarazo(busqueda, texto)
 
     if not tiene_conectores_servicios(texto):
-        return construir_respuesta_busqueda_catalogo(consulta_catalogo, busqueda)
+        return construir_respuesta_busqueda_catalogo(
+            consulta_catalogo,
+            busqueda,
+            texto,
+        )
 
     busquedas = []
 
@@ -2536,11 +2621,16 @@ def buscar_catalogo_comercial(texto):
             busquedas.append(busqueda_termino)
 
     if not busquedas:
-        return construir_respuesta_busqueda_catalogo(consulta_catalogo, busqueda)
+        return construir_respuesta_busqueda_catalogo(
+            consulta_catalogo,
+            busqueda,
+            texto,
+        )
 
     return construir_respuesta_busqueda_catalogo(
         consulta_catalogo,
         combinar_busquedas_catalogo(busquedas),
+        texto,
     )
 
 
@@ -2801,6 +2891,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
         respuesta_catalogo = construir_respuesta_busqueda_catalogo(
             consulta_catalogo,
             busqueda,
+            texto,
         )
         print(f"FamyBot IA: total_catalogo_sinonimo={respuesta_catalogo['total']}")
 
@@ -2832,6 +2923,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             respuesta_catalogo = construir_respuesta_busqueda_catalogo(
                 consulta_catalogo,
                 busqueda,
+                texto,
             )
         respuesta_catalogo = enriquecer_mensaje_catalogo_con_flags(
             respuesta_catalogo,
@@ -2898,6 +2990,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
             respuesta_catalogo = construir_respuesta_busqueda_catalogo(
                 consulta_catalogo,
                 busqueda,
+                texto,
             )
             print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
 
@@ -2960,6 +3053,7 @@ def chat(request: SearchRequest, _auth: bool = Depends(validar_api_key)):
         respuesta_catalogo = construir_respuesta_busqueda_catalogo(
             consulta_catalogo,
             busqueda,
+            texto,
         )
         print(f"FamyBot IA: total_catalogo={respuesta_catalogo['total']}")
 
