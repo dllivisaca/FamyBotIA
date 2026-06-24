@@ -2411,47 +2411,38 @@ def filtrar_eco_morfologica_embarazo(busqueda, texto):
 def construir_mensaje_catalogo(total, total_conocido, resultados):
     if total == 0:
         return (
-            "No encontré servicios relacionados con tu consulta. Puedes escribir "
+            "No encontr\u00e9 servicios relacionados con tu consulta. Puedes escribir "
             "el nombre completo del servicio o escribir una nueva consulta."
         )
 
     if total == 1:
         servicio = resultados[0]
         return (
-            f"El servicio {servicio.get('nombre')} pertenece al área "
+            f"El servicio {servicio.get('nombre')} pertenece al \u00e1rea "
             f"{servicio.get('area')} y tiene un valor de ${servicio.get('precio')} "
             "en efectivo o transferencia."
         )
 
     if total > 10 and total_conocido:
         return (
-            f"Encontré {total} opciones relacionadas con tu consulta. "
-            "Te muestro las primeras 10. Puedes responder con el nombre completo "
-            "del servicio o escribir una nueva consulta."
+            f"Encontr\u00e9 {total} opciones relacionadas con tu consulta. "
+            f"Te muestro las primeras {len(resultados)}."
         )
 
     if total > 10:
         return (
-            "Encontré varias opciones relacionadas con tu consulta. "
-            "Te muestro las primeras 10. Puedes responder con el nombre completo "
-            "del servicio o escribir una nueva consulta."
+            "Encontr\u00e9 varias opciones relacionadas con tu consulta. "
+            f"Te muestro las primeras {len(resultados)}."
         )
 
-    return (
-        f"Encontré {total} opciones relacionadas con tu consulta. "
-        "Puedes responder con el nombre completo del servicio o escribir "
-        "una nueva consulta."
-    )
+    return f"Encontr\u00e9 {total} opciones relacionadas con tu consulta."
 
 
 def construir_bloque_precio_catalogo(total):
     if total == 1:
-        return "El valor indicado corresponde a pago en efectivo o transferencia."
+        return ""
 
-    return (
-        "Los valores mostrados corresponden a pago en efectivo o transferencia. "
-        "Puedes responder con el nombre completo del servicio o escribir una nueva consulta."
-    )
+    return "Los valores mostrados corresponden a pago en efectivo o transferencia."
 
 
 def construir_bloque_agendamiento_catalogo(total, resultados):
@@ -2501,12 +2492,20 @@ def enriquecer_mensaje_catalogo_con_flags(respuesta_catalogo, entidades):
         ("asks_booking", construir_bloque_agendamiento_catalogo(total, resultados)),
     )
     mensaje_normalizado = normalizar_texto(mensaje)
+    partes_normalizadas = {mensaje_normalizado}
 
     for flag, texto_extra in extras:
         if not entidades.get(flag):
             continue
-        if normalizar_texto(texto_extra) in mensaje_normalizado:
+        texto_extra = str(texto_extra or "").strip()
+        texto_extra_normalizado = normalizar_texto(texto_extra)
+        if not texto_extra_normalizado:
             continue
+        if texto_extra_normalizado in partes_normalizadas:
+            continue
+        if texto_extra_normalizado in mensaje_normalizado:
+            continue
+        partes_normalizadas.add(texto_extra_normalizado)
         partes_adicionales.append(texto_extra)
 
     if partes_adicionales:
